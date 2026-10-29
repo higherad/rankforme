@@ -18,6 +18,7 @@
 - 배포: GitHub `higherad/rankforme`(Public, Pages) → `rankforme.kro.kr`(CNAME 파일 포함). 로컬 폴더 `HigherAD Code/RankForMe` (예전 `rank-app`은 잠겨서 복사로 이전 — 삭제 대상)
 - `index.html` 프로토타입 전체. 브라우저 저장(localStorage) 사용 안 함 — 데모 데이터는 새로고침하면 처음 상태
 - 메뉴 화면 공통 헤더 카드(`pageHead`): 그룹·'기획 중' 배지(현재 모든 메뉴 기획 중), 제목, 설명, 참고 사이트, 우측 "기획 전달" 버튼. 상단 헤더 제목은 메뉴 화면에서 생략(활성 메뉴 표시로 대체)
+- 새 버전 감지: 하이어애드 어드민과 같은 방식(index.html Last-Modified 비교, 클릭 시 확인, 5분 주기) → 새로고침 팝업(바깥 클릭·Esc로 안 꺼짐, 새로고침 버튼만). 팝업 안에 `update-notes.json` [{at:'YYYY-MM-DDTHH:MM'(KST), text}] 중 지금 화면 배포 이후 항목만 짧게 표시 — 배포할 때 사용자에게 보이는 변경은 한 줄씩 추가
 - 기획 전달하기: 모든 메뉴 헤더의 "기획 전달" 버튼 → 팝업(이름+내용 저장, 그 메뉴에 전달된 기획 목록) → 모두가 봄. Firebase RTDB(higherad-b9d62) `rfm/notes/{메뉴키}/{push id}={a,t,ts}`, 규칙은 누구나 읽기·새 글만(수정·삭제는 관리자 토큰으로만). 전체 메뉴 → "전달된 기획 모아보기"(전체 복사)
 - 전체 메뉴 정의 = `index.html`의 `TREE`(그룹 8개). `go` 있으면 구현된 화면, 없으면 '기획 중' 페이지(`#/m/키`) + 세부 기획 메모(localStorage `notes`, 전체 복사 기능)
 - `manifest.json`·`sw.js`·`icon-*.png` PWA 설치용 — 서비스워커·설치는 http(s)에서만 동작(file:// 더블클릭은 화면만)

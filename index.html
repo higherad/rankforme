@@ -897,6 +897,30 @@ function installApp(){
   sheet(`<h2>홈 화면에 설치하기</h2><div class="spec"><h4>안드로이드 (크롬/삼성인터넷)</h4><ul><li>주소창 메뉴(⋮) → <b>앱 설치</b> 또는 <b>홈 화면에 추가</b></li></ul>
     <h4>아이폰 (사파리)</h4><ul><li>하단 공유 버튼(□↑) → <b>홈 화면에 추가</b></li><li>설치 후 열어야 푸시 알림을 받을 수 있어요 (iOS 16.4+)</li></ul></div>
     <button class="btn block" style="margin-top:16px" onclick="closeSheet()">확인</button>`)}
+/* --- 새 버전 배포 감지 (하이어애드 어드민과 같은 방식) ---
+   GitHub Pages는 배포 때마다 Last-Modified가 배포 시각으로 바뀜 → 지금 화면보다 새로우면 아무 곳이나 누를 때 새로고침 안내
+   Pages CDN 캐시(10분)를 건너뛰려고 확인·새로고침 모두 ?v=시각을 붙임
+   업데이트 내용 = update-notes.json [{at:'YYYY-MM-DDTHH:MM'(KST), text}] 중 지금 화면 배포 이후 것만 팝업에 표시 */
+const loadedAt=Date.parse(document.lastModified);
+let lastCheck=0,outdated=false,changes=[];
+async function checkVersion(){
+  if(outdated||Date.now()-lastCheck<60000||!location.protocol.startsWith('http'))return;
+  lastCheck=Date.now();
+  try{const r=await fetch(`index.html?v=${Date.now()}`,{method:'HEAD',cache:'no-store'});outdated=Date.parse(r.headers.get('Last-Modified'))>loadedAt;
+    if(outdated)changes=(await (await fetch(`update-notes.json?v=${Date.now()}`,{cache:'no-store'})).json()).filter(n=>Date.parse(n.at+':00+09:00')>loadedAt).map(n=>n.text)}catch(e){}}
+function showReloadNotice(){
+  if($('#reload-notice'))return;
+  const el=document.createElement('div');el.id='reload-notice';el.className='adwrap';
+  el.innerHTML=`<div class="adbox" style="padding:26px 22px"><div style="font-size:18px;font-weight:800">새 버전이 나왔어요</div>
+    <div class="small muted" style="margin:8px 0 14px">최신 기능을 쓰려면 새로고침해 주세요.</div>
+    ${changes.length?`<ul class="small" style="text-align:left;margin:0 0 16px;padding:12px 12px 12px 30px;background:var(--bg);border-radius:12px;max-height:200px;overflow:auto;line-height:1.7">${changes.map(t=>`<li>${esc(t)}</li>`).join('')}</ul>`:''}
+    <button class="btn block" onclick="location.replace(location.pathname+'?v='+Date.now()+location.hash)">새로고침</button></div>`;
+  document.body.append(el)}
+// 새 버전이면 어떤 클릭이든 막고 안내 — 새로고침 버튼만 통과
+document.addEventListener('click',e=>{
+  if(outdated&&!e.target.closest('#reload-notice')){e.stopPropagation();e.preventDefault();showReloadNotice()}
+  else checkVersion()},true);
+setInterval(checkVersion,5*60000);
 if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 
 S.menus=Object.keys(MENUS).map(k=>({k,on:true}));
