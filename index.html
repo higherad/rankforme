@@ -1,0 +1,899 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#3b5bfd">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="랭포미">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>랭포미 RankForMe - 순위 조회</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{--bg:#f3f5f9;--card:#fff;--text:#131722;--sub:#6b7385;--line:#e5e8ef;--pri:#3b5bfd;--pri-soft:#edf0ff;--up:#e5383b;--down:#2f6fed;--ok:#03a65a;--kakao:#fee500;--shadow:0 1px 2px rgba(20,25,40,.06),0 4px 14px rgba(20,25,40,.05);
+  --place:#03c75a;--shop:#ff7a00;--blog:#7b61ff}
+[data-theme=dark]{--bg:#0e1118;--card:#171b25;--text:#e8ebf2;--sub:#8d95a8;--line:#262c3a;--pri:#6d86ff;--pri-soft:#1e2540;--up:#ff5c5f;--down:#5a8dff;--shadow:none}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:"Pretendard Variable",Pretendard,-apple-system,system-ui,sans-serif;font-size:15px;letter-spacing:-.2px}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none;padding:0}
+a{color:var(--pri)}
+.app{min-height:100dvh}
+header.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:8px;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px)}
+header.top h1{font-size:20px;margin:0;flex:1;font-weight:800}
+.logo{color:var(--pri)}
+.plan-badge{font-size:11px;font-weight:800;padding:3px 8px;border-radius:99px;background:var(--line);color:var(--sub)}
+.plan-badge.pro{background:linear-gradient(90deg,#3b5bfd,#a74bff);color:#fff}
+.iconbtn{position:relative;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:var(--text)}
+.iconbtn:active{background:var(--line)}
+.dot{position:absolute;top:5px;right:4px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--up);color:#fff;font-size:10px;font-weight:800;display:grid;place-items:center}
+main{max-width:760px;margin:0 auto;padding:4px 16px calc(96px + env(safe-area-inset-bottom))}
+nav#nav{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+nav#nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 0 8px;font-size:11px;color:var(--sub);font-weight:600}
+nav#nav button.on{color:var(--pri)}
+nav#nav .brand,nav#nav .subs,nav#nav .car{display:none}
+.subbar{margin:0 -16px 12px;padding:0 16px}
+details.grp summary{list-style:none;cursor:pointer}
+details.grp summary::-webkit-details-marker{display:none}
+details.grp summary h3{margin:0}
+details.grp[open] summary h3{margin-bottom:8px}
+details.grp summary h3:after{content:"▸";color:var(--sub);font-size:13px;margin-left:8px}
+details.grp[open] summary h3:after{content:"▾"}
+.fab{position:fixed;right:16px;bottom:calc(78px + env(safe-area-inset-bottom));z-index:25;height:52px;padding:0 18px 0 14px;border-radius:26px;background:linear-gradient(135deg,#3b5bfd,#8b5cf6);color:#fff;display:flex;align-items:center;gap:6px;font-weight:700;box-shadow:0 8px 24px rgba(59,91,253,.35)}
+@media (min-width:900px){
+  nav#nav{top:0;right:auto;width:220px;flex-direction:column;border-top:0;border-right:1px solid var(--line);padding:18px 12px 12px;gap:2px}
+  nav#nav{overflow-y:auto}
+  nav#nav .brand{display:block;padding:4px 14px 22px;cursor:pointer}
+  nav#nav .car{display:inline;color:var(--sub);font-size:12px}
+  nav#nav .subs{display:block;margin:2px 0 8px 25px;padding-left:8px;border-left:1px solid var(--line)}
+  nav#nav .sb{display:flex;align-items:center;gap:6px;width:100%;text-align:left;padding:7px 10px;font-size:14px;color:var(--sub);border-radius:8px;font-weight:500}
+  nav#nav .sb.on{color:var(--pri);background:var(--pri-soft);font-weight:700}
+  nav#nav .sb i{width:5px;height:5px;border-radius:50%;background:var(--line);flex:none}
+  nav#nav .brand b{display:block;font-size:22px;font-weight:800;color:var(--pri)}
+  nav#nav .brand span{font-size:12px;color:var(--sub);font-weight:600}
+  nav#nav button{flex:none;flex-direction:row;gap:10px;padding:11px 14px;border-radius:12px;font-size:15px;text-align:left}
+  nav#nav button.on{background:var(--pri-soft)}
+  .app{padding-left:220px}
+  header.top{padding-left:24px}
+  main{padding-bottom:48px}
+  .fab{bottom:28px;right:28px}
+}
+.card{background:var(--card);border-radius:18px;padding:16px;box-shadow:var(--shadow);margin-bottom:12px}
+.card h3{margin:0 0 12px;font-size:16px;display:flex;align-items:center;gap:6px}
+.card h3 .more{margin-left:auto;font-size:13px;color:var(--sub);font-weight:500}
+.muted{color:var(--sub)}.small{font-size:13px}.tiny{font-size:11px}
+.row{display:flex;align-items:center;gap:8px}
+.grow{flex:1;min-width:0}
+.btn{height:44px;padding:0 16px;border-radius:12px;background:var(--pri);color:#fff;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap}
+.btn.sub{background:var(--pri-soft);color:var(--pri)}
+.btn.ghost{background:var(--line);color:var(--text)}
+.btn.sm{height:34px;padding:0 12px;font-size:13px;border-radius:10px}
+.btn.block{width:100%}
+.btn:disabled{opacity:.45}
+.input,select.input,textarea.input{width:100%;height:46px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:var(--bg);outline:none}
+textarea.input{height:auto;padding:12px 14px;resize:vertical}
+.input:focus{border-color:var(--pri)}
+label.lb{display:block;font-size:13px;font-weight:700;margin:14px 0 6px}
+.seg{display:flex;background:var(--line);border-radius:12px;padding:3px;gap:3px}
+.seg button{flex:1;height:36px;border-radius:9px;font-size:14px;font-weight:600;color:var(--sub)}
+.seg button.on{background:var(--card);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;height:32px;padding:0 12px;border-radius:99px;border:1px solid var(--line);background:var(--card);font-size:13px;font-weight:600;color:var(--sub);display:inline-flex;align-items:center;gap:4px}
+.chip.on{background:var(--text);color:var(--card);border-color:var(--text)}
+.tag{display:inline-block;white-space:nowrap;flex:none;font-size:11px;font-weight:700;padding:2px 7px;border-radius:6px;background:var(--line);color:var(--sub)}
+.tag.place{background:color-mix(in srgb,var(--place) 15%,transparent);color:var(--place)}
+.tag.shop{background:color-mix(in srgb,var(--shop) 15%,transparent);color:var(--shop)}
+.tag.blog{background:color-mix(in srgb,var(--blog) 15%,transparent);color:var(--blog)}
+.up{color:var(--up);font-weight:700}.down{color:var(--down);font-weight:700}.same{color:var(--sub)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center}
+.stats div{background:var(--bg);border-radius:12px;padding:10px 4px}
+.stats b{display:block;font-size:20px}
+.stats span{font-size:12px;color:var(--sub)}
+.item{display:flex;align-items:center;gap:12px;padding:14px;background:var(--card);border-radius:16px;box-shadow:var(--shadow);margin-bottom:8px;cursor:pointer}
+.item:active{transform:scale(.99)}
+.rk{width:56px;flex:none;text-align:center}
+.rk b{font-size:24px;font-weight:800;line-height:1}
+.rk small{font-size:12px;color:var(--sub);margin-left:1px}
+.rk .out{font-size:13px;color:var(--sub);font-weight:700}
+.kw{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nm{font-size:13px;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.rt{text-align:right;flex:none;font-size:13px}
+.list-row{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}
+.list-row:last-child{border-bottom:0}
+.list-row.me{background:var(--pri-soft);margin:0 -10px;padding:11px 10px;border-radius:10px;border:0}
+.num{width:26px;font-weight:800;text-align:center;flex:none}
+.empty{text-align:center;padding:40px 10px;color:var(--sub)}
+.switch{position:relative;width:46px;height:28px;flex:none}
+.switch input{display:none}
+.switch span{position:absolute;inset:0;background:var(--line);border-radius:99px;transition:.2s}
+.switch span:after{content:"";position:absolute;width:22px;height:22px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.switch input:checked+span{background:var(--pri)}
+.switch input:checked+span:after{left:21px}
+.bd{position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:50;animation:fade .2s}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:51;background:var(--card);border-radius:22px 22px 0 0;max-height:90dvh;overflow:auto;padding:8px 18px calc(20px + env(safe-area-inset-bottom));animation:slide .25s cubic-bezier(.2,.8,.2,1)}
+.sheet .grab{width:40px;height:5px;border-radius:3px;background:var(--line);margin:4px auto 12px}
+.sheet h2{font-size:19px;margin:4px 0 4px}
+@media (min-width:700px){.sheet{left:50%;right:auto;width:560px;transform:translateX(-50%);bottom:auto;top:50%;translate:0 -50%;border-radius:22px;animation:fade .2s}}
+@keyframes slide{from{transform:translateY(100%)}}
+@keyframes fade{from{opacity:0}}
+.toast{position:fixed;left:50%;bottom:calc(140px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:80;background:#1c2130;color:#fff;padding:12px 18px;border-radius:14px;font-size:14px;max-width:calc(100% - 32px);white-space:pre-line;animation:fade .2s;box-shadow:0 8px 30px rgba(0,0,0,.25)}
+.adwrap{position:fixed;inset:0;z-index:90;background:rgba(5,8,15,.85);display:grid;place-items:center;padding:16px;animation:fade .2s}
+.adbox{width:100%;max-width:380px;background:var(--card);border-radius:20px;overflow:hidden;text-align:center}
+.adimg{height:260px;display:grid;place-items:center;background:linear-gradient(135deg,#ffcf5c,#ff7a59);color:#fff;font-size:22px;font-weight:800;position:relative;padding:20px}
+.adimg .adtag{position:absolute;top:10px;left:10px;font-size:11px;background:rgba(0,0,0,.35);padding:2px 7px;border-radius:5px}
+.adbox .in{padding:16px}
+.bar{height:4px;background:var(--line);border-radius:2px;overflow:hidden;margin:10px 0 14px}
+.bar i{display:block;height:100%;background:var(--pri);width:0;transition:width 1s linear}
+.chat{display:flex;flex-direction:column;gap:10px;padding-bottom:150px}
+.msg{max-width:86%;overflow-wrap:anywhere;padding:11px 14px;border-radius:18px;line-height:1.55;font-size:14.5px;white-space:pre-line}
+.msg.me{align-self:flex-end;background:var(--pri);color:#fff;border-bottom-right-radius:6px}
+.msg.bot{align-self:flex-start;background:var(--card);box-shadow:var(--shadow);border-bottom-left-radius:6px}
+.msg.bot .btn{margin-top:8px}
+.composer{position:fixed;left:0;right:0;bottom:calc(62px + env(safe-area-inset-bottom));z-index:24;background:var(--bg);padding:8px 16px 10px;border-top:1px solid var(--line)}
+@media (min-width:900px){.composer{left:220px;bottom:0}}
+.composer .in{max-width:760px;margin:0 auto}
+.kakao{background:#b2c7da;border-radius:14px;padding:12px}
+.kakao .bub{background:#fff;border-radius:12px;overflow:hidden;color:#111;font-size:13.5px;max-width:270px}
+.kakao .bub .h{background:var(--kakao);padding:9px 12px;font-weight:800}
+.kakao .bub .b{padding:12px;white-space:pre-line;line-height:1.55}
+.sms{background:#e9e9eb;color:#111;border-radius:16px;padding:10px 13px;font-size:13.5px;white-space:pre-line;max-width:270px;line-height:1.5}
+.sched{display:flex;gap:12px;align-items:flex-start}
+.sched .t{font-size:22px;font-weight:800;line-height:1.2}
+.menu-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.menu-row:last-child{border-bottom:0}
+.listlink{display:flex;align-items:center;gap:12px;padding:14px 2px;border-bottom:1px solid var(--line);width:100%;text-align:left;font-weight:600}
+.listlink:last-child{border-bottom:0}
+.listlink .ico{width:34px;height:34px;border-radius:10px;background:var(--pri-soft);color:var(--pri);display:grid;place-items:center;flex:none}
+table.plan{width:100%;border-collapse:collapse;font-size:13px}
+table.plan th,table.plan td{padding:10px 6px;border-bottom:1px solid var(--line);text-align:center}
+table.plan td:first-child,table.plan th:first-child{text-align:left;color:var(--sub)}
+.tw{overflow-x:auto;margin:0 -2px}
+.dtable{width:100%;border-collapse:collapse;font-size:13px;white-space:nowrap}
+.dtable th{color:var(--sub);font-weight:600;text-align:left;padding:8px 8px;border-bottom:1px solid var(--line);font-size:12px}
+.dtable td{padding:10px 8px;border-bottom:1px solid var(--line)}
+.dtable tr:last-child td{border-bottom:0}
+.bar2{display:inline-block;width:90px;height:6px;background:var(--line);border-radius:3px;overflow:hidden;vertical-align:middle}
+.bar2 i{display:block;height:100%;border-radius:3px}
+.spec h4{margin:18px 0 6px;font-size:15px}
+.spec ul{margin:0;padding-left:18px;line-height:1.7;font-size:14px}
+.spec code{background:var(--bg);padding:1px 5px;border-radius:5px;font-size:12px}
+.typing span{display:inline-block;width:6px;height:6px;margin:0 2px;border-radius:50%;background:var(--sub);animation:bl 1s infinite}
+.typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
+@keyframes bl{50%{opacity:.25}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <h1 id="title"></h1>
+    <span id="planBadge" class="plan-badge" onclick="go('plan')"></span>
+    <button class="iconbtn" onclick="go('alert','inbox')" aria-label="알림함"><span id="bellIco"></span><span id="bellDot" class="dot" hidden></span></button>
+  </header>
+  <main id="main"></main>
+</div>
+<nav id="nav"></nav>
+<button id="fab" class="fab" onclick="go('ai')"><span id="fabIco"></span>AI 활용하기</button>
+
+<script>
+/* ===== 기본 정의 ===== */
+const TYPES={
+  place:{t:'플레이스',tg:'업체명',max:300,unit:'플레이스 URL 또는 MID'},
+  shop:{t:'쇼핑',tg:'상품명',max:400,unit:'스마트스토어/카탈로그 URL'},
+  blog:{t:'블로그',tg:'글 제목',max:100,unit:'블로그 글 URL'}};
+const DAYS=['일','월','화','수','목','금','토'];
+const IC={
+  home:'<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+  pin:'<path d="M12 22s7-7.5 7-13a7 7 0 0 0-14 0c0 5.5 7 13 7 13z"/><circle cx="12" cy="9" r="2.5"/>',
+  cart:'<circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.7 12.4a1 1 0 0 0 1 .8h9.6a1 1 0 0 0 1-.8L21 7H6"/>',
+  doc:'<path d="M6 2h9l5 5v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z"/><path d="M14 2v6h6M8 13h8M8 17h6"/>',
+  bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10 21a2 2 0 0 0 4 0"/>',
+  spark:'<path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/>',
+  menu:'<path d="M4 6h16M4 12h16M4 18h16"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  refresh:'<path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/>',
+  star:'<path d="M12 3l2.8 5.8 6.2.9-4.5 4.4 1 6.2L12 17.4 6.5 20.3l1-6.2L3 9.7l6.2-.9z"/>',
+  send:'<path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/>',
+  grid:'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
+  moon:'<path d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z"/>',
+  phone:'<rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/>',
+  file:'<path d="M4 4h16v16H4z"/><path d="M4 9h16M9 4v16"/>',
+  crown:'<path d="M3 7l4 4 5-7 5 7 4-4-2 12H5z"/>',
+  search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>',
+  help:'<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 4.9.7c0 1.7-2.4 2.3-2.4 3.8M12 17h.01"/>',
+  book:'<path d="M4 4a2 2 0 0 1 2-2h14v18H6a2 2 0 0 0-2 2z"/><path d="M4 22V4"/>',
+  share:'<circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="M8.2 10.8l7.6-4.4M8.2 13.2l7.6 4.4"/>'};
+const ic=(n,s=22)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${IC[n]}</svg>`;
+const $=s=>document.querySelector(s);
+const uid=()=>Math.random().toString(36).slice(2,9);
+const pad=n=>String(n).padStart(2,'0');
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtN=n=>Number(n).toLocaleString('ko-KR');
+const hash=s=>{let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))|0;return Math.abs(h)};
+
+/* ===== 데모 데이터 ===== */
+let sd=11;const rnd=()=>(sd=sd*16807%2147483647)/2147483647;
+function hist(end,max){ // end에서 거꾸로 30일 랜덤워크
+  const h=[end];let r=end??max;
+  for(let i=0;i<29;i++){r=Math.max(1,Math.min(max,Math.round(r+(rnd()-.45)*Math.max(2,r/5))));h.unshift(r)}
+  return h}
+function mkItem(type,keyword,name,mid,rank,group='기본'){
+  const v=hash(keyword);
+  return {id:uid(),type,keyword,name,mid:String(mid),group,fav:false,memo:'',volume:(v%60+2)*730,
+    reviews:v%3000+120,saves:v%9000+300,price:(v%90+9)*1000,history:hist(rank,TYPES[type].max),created:Date.now()}}
+function seed(){
+  sd=11;
+  const it=[
+    mkItem('place','강남 맛집','홍길동 숯불갈비',1938472610,4,'내 매장'),
+    mkItem('place','강남역 고기집','홍길동 숯불갈비',1938472610,2,'내 매장'),
+    mkItem('place','역삼 회식','홍길동 숯불갈비',1938472610,11,'내 매장'),
+    mkItem('place','신논현 파스타','라구앤코',1284759301,7,'광고주A'),
+    mkItem('place','강남 네일','네일하우스 강남점',1102938475,null,'광고주B'),
+    mkItem('shop','캠핑의자','하이어 경량 캠핑의자',8837261540,23,'내 스토어'),
+    mkItem('shop','접이식 테이블','하이어 폴딩테이블',8837261777,5,'내 스토어'),
+    mkItem('shop','무선 청소기','클린맥스 V8',8912003311,64,'광고주A'),
+    mkItem('blog','강남 맛집 추천','강남역 고기 맛집 BEST 5 솔직후기',223619870012,3,'체험단'),
+    mkItem('blog','제주 숙소','제주 감성숙소 내돈내산 후기',223610045571,15,'체험단'),
+    mkItem('blog','다이어트 도시락','한 달 도시락 정기배송 후기',223598123344,null,'체험단')];
+  it[0].fav=it[5].fav=it[8].fav=true;it[0].memo='점심 광고 진행중';
+  return {items:it,plan:'free',theme:'auto',fab:true,
+    menus:null,
+    widgets:{summary:true,quick:true,movers:true,next:true,fav:true},
+    ch:{push:false,kakao:'',sms:''},
+    schedules:[
+      {id:uid(),name:'아침 순위 브리핑',type:'all',ids:[],times:['09:00'],days:[1,2,3,4,5],cond:'always',th:10,ch:{push:true,kakao:true,sms:false},on:true},
+      {id:uid(),name:'내 매장 하락 감시',type:'place',ids:[],times:['12:00','15:00','18:00'],days:[0,1,2,3,4,5,6],cond:'drop',th:10,ch:{push:true,kakao:false,sms:true},on:true}],
+    inbox:[{id:uid(),ts:Date.now()-36e5*3,title:'[아침 순위 브리핑] 3건',body:'강남 맛집 | 홍길동 숯불갈비 | 4위 (▲1)\n강남역 고기집 | 홍길동 숯불갈비 | 2위 (-)\n캠핑의자 | 하이어 경량 캠핑의자 | 23위 (▼3)',ch:['앱','카톡'],read:false}],
+    chat:[],pending:null}}
+let S=seed(); // 데모 데이터: 새로고침하면 처음 상태로
+
+const cur=it=>it.history.at(-1), prv=it=>it.history.at(-2);
+const delta=it=>(cur(it)==null||prv(it)==null)?(cur(it)==null&&prv(it)!=null?-999:0):prv(it)-cur(it);
+const fmtRank=r=>r==null?'순위 밖':r+'위';
+const dHtml=d=>d===-999?'<span class="down">이탈</span>':d>0?`<span class="up">▲${d}</span>`:d<0?`<span class="down">▼${-d}</span>`:'<span class="same">-</span>';
+const dTxt=d=>d===-999?'(이탈)':d>0?`(▲${d})`:d<0?`(▼${-d})`:'(-)';
+
+/* ===== 가짜 조회 엔진 (실서비스는 서버에서 네이버 조회) ===== */
+const POOL={
+  place:['미담정','숯불대장','한우명가 본점','온기식당','소담채','청담돈','육풍','다래헌','봉피양','연남고깃집','소고기살롱','진미식당'],
+  shop:['코멧 경량 캠핑체어','헬리녹스 체어원','캠프타운 릴렉스','로티캠프 폴딩','노르디스크 체어','지프 캠핑의자','모비가든 체어','버팔로 체어'],
+  blog:['솔직후기','BEST 7 총정리','내돈내산 후기','웨이팅 꿀팁','현지인 추천','가성비 정리','데이트 코스','주차 정보']};
+function fakeRank(type,kw,name){const h=hash(type+kw+name);return h%10===0?null:h%Math.min(60,TYPES[type].max)+1}
+function topList(it,n=10){
+  const p=POOL[it.type],h=hash(it.keyword),r=cur(it),out=[];let j=0;
+  for(let i=1;i<=n;i++){
+    if(i===r){out.push({me:true,name:it.name,rank:i,meta:meta(it,it)});continue}
+    const nm=it.type==='blog'?`${it.keyword} ${p[(h+j)%p.length]}`:p[(h+j)%p.length];j++;
+    const o={keyword:it.keyword+i,type:it.type};out.push({name:nm,rank:i,meta:meta(it,{...mkMeta(o)})})}
+  return out}
+function mkMeta(o){const v=hash(o.keyword);return {reviews:v%4000+200,saves:v%12000+500,price:(v%90+9)*1000,keyword:o.keyword}}
+function meta(it,o){
+  if(it.type==='place')return `방문자리뷰 ${fmtN(o.reviews)} · 저장 ${fmtN(o.saves)}`;
+  if(it.type==='shop')return `${fmtN(o.price)}원 · 리뷰 ${fmtN(o.reviews)}`;
+  return `blog.naver.com · 공감 ${o.reviews%300}`}
+
+/* ===== 공통 UI ===== */
+let route='home',sub='';
+function go(r,s=''){const h='#/'+r+(s?'/'+s:'');if(location.hash===h){route=r;sub=s;render()}else location.hash=h}
+window.addEventListener('hashchange',()=>{const [r,s]=location.hash.slice(2).split('/');route=r||'home';sub=s||'';render()});
+function toast(m){document.querySelectorAll('.toast').forEach(e=>e.remove());const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.append(t);setTimeout(()=>t.remove(),2600)}
+function sheet(html,keep){const old=keep&&document.querySelector('.sheet');if(old){const st=old.scrollTop;old.innerHTML='<div class="grab"></div>'+html;old.scrollTop=st;return old}closeSheet();const bd=document.createElement('div');bd.className='bd';bd.onclick=closeSheet;
+  const sh=document.createElement('div');sh.className='sheet';sh.innerHTML='<div class="grab"></div>'+html;document.body.append(bd,sh);return sh}
+function closeSheet(){document.querySelectorAll('.bd,.sheet').forEach(e=>e.remove())}
+function applyTheme(){const dark=S.theme==='dark'||(S.theme==='auto'&&matchMedia('(prefers-color-scheme: dark)').matches);
+  document.documentElement.dataset.theme=dark?'dark':'light';document.querySelector('meta[name=theme-color]').content=dark?'#0e1118':'#3b5bfd'}
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',applyTheme);
+
+/* 무료 플랜: 조회 결과 전에 광고 → 닫으면 결과 표시 */
+function gate(fn){
+  if(S.plan!=='free')return fn();
+  const ads=[['🏕️ 가을 캠핑 대전','최대 60% 할인'],['☕ 신규 오픈 카페','첫 방문 아메리카노 무료'],['📈 플레이스 마케팅','상위노출 무료 진단']];
+  const a=ads[Math.floor(Math.random()*ads.length)];
+  const el=document.createElement('div');el.className='adwrap';
+  el.innerHTML=`<div class="adbox"><div class="adimg"><span class="adtag">AD · 광고</span><div>${a[0]}<div style="font-size:15px;font-weight:600;margin-top:8px;opacity:.9">${a[1]}</div></div></div>
+    <div class="in"><div class="small muted">무료 버전은 조회할 때 광고가 표시돼요</div><div class="bar"><i></i></div>
+    <button class="btn block" id="adx" disabled>5초 후 결과 보기</button>
+    <button class="btn block ghost" style="margin-top:8px" id="adpro">광고 없이 쓰기 (PRO)</button></div></div>`;
+  document.body.append(el);
+  const b=el.querySelector('#adx');let n=5;requestAnimationFrame(()=>el.querySelector('.bar i').style.width='100%');
+  el.querySelector('.bar i').style.transitionDuration='5s';
+  const t=setInterval(()=>{n--;if(n>0)b.textContent=n+'초 후 결과 보기';else{clearInterval(t);b.disabled=false;b.textContent='광고 닫고 결과 보기 ✕'}},1000);
+  b.onclick=()=>{el.remove();fn()};
+  el.querySelector('#adpro').onclick=()=>{clearInterval(t);el.remove();go('plan')}}
+
+function spark(h,w=84,ht=30){
+  const vals=h.map(v=>v??Math.max(...h.filter(x=>x!=null),1)+5),lo=Math.min(...vals),hi=Math.max(...vals);
+  const pts=vals.map((v,i)=>`${(i*(w/(vals.length-1))).toFixed(1)},${(hi===lo?ht/2:(v-lo)/(hi-lo)*(ht-4)+2).toFixed(1)}`).join(' ');
+  const d=vals.at(-2)-vals.at(-1),c=d>0?'var(--up)':d<0?'var(--down)':'var(--sub)';
+  return `<svg width="${w}" height="${ht}" viewBox="0 0 ${w} ${ht}"><polyline points="${pts}" fill="none" stroke="${c}" stroke-width="1.8" stroke-linejoin="round"/></svg>`}
+
+function chart(it){
+  const h=it.history,W=320,H=150,P=28,vals=h.map(v=>v??null),nn=vals.filter(v=>v!=null);
+  if(!nn.length)return '<div class="empty">최근 30일 순위 기록이 없어요</div>';
+  const lo=Math.min(...nn),hi=Math.max(...nn,lo+1);
+  const x=i=>P+i*((W-P-8)/(h.length-1)),y=v=>10+(v-lo)/(hi-lo)*(H-34);
+  let path='',pen=false;vals.forEach((v,i)=>{if(v==null){pen=false;return}path+=(pen?'L':'M')+x(i).toFixed(1)+','+y(v).toFixed(1);pen=true});
+  const dt=i=>{const d=new Date();d.setDate(d.getDate()-(h.length-1-i));return (d.getMonth()+1)+'/'+d.getDate()};
+  const last=vals.at(-1);
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block">
+    ${[lo,Math.round((lo+hi)/2),hi].map(v=>`<line x1="${P}" x2="${W-8}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${P-6}" y="${y(v)+4}" font-size="10" text-anchor="end" fill="var(--sub)">${v}위</text>`).join('')}
+    <path d="${path}" fill="none" stroke="var(--pri)" stroke-width="2.2" stroke-linejoin="round"/>
+    ${last!=null?`<circle cx="${x(h.length-1)}" cy="${y(last)}" r="4.5" fill="var(--pri)" stroke="var(--card)" stroke-width="2"/>`:''}
+    ${[0,14,29].map(i=>`<text x="${x(i)}" y="${H-4}" font-size="10" text-anchor="middle" fill="var(--sub)">${dt(i)}</text>`).join('')}</svg>`}
+
+function itemCard(it){
+  const r=cur(it);
+  return `<div class="item" onclick="openItem('${it.id}')">
+    <div class="rk">${r==null?'<span class="out">순위<br>밖</span>':`<b>${r}</b><small>위</small>`}</div>
+    <div class="grow"><div class="kw">${it.fav?'<span style="color:#f5b400">★</span> ':''}${esc(it.keyword)}</div>
+      <div class="nm">${esc(it.name)}</div>
+      <div class="row tiny muted" style="margin-top:5px;gap:6px;white-space:nowrap;overflow:hidden"><span class="tag ${it.type}">${TYPES[it.type].t}</span><span class="tag">${esc(it.group)}</span>월 ${fmtN(it.volume)}회${it.memo?' · 📝':''}</div></div>
+    <div class="rt">${spark(it.history)}<div style="margin-top:2px">${dHtml(delta(it))}</div></div></div>`}
+
+/* ===== 렌더링 ===== */
+function render(){
+  applyTheme();
+  const cur=ALL.find(x=>x.k===curKey()),key=curKey(),cg=curGroup(),mobile=innerWidth<900;
+  const titles={home:'홈',notes:'전달된 기획',more:'전체 메뉴',plan:'요금제',menuedit:'메뉴 · 홈 편집',spec:'기획서',channels:'알림 채널 연결'};
+  $('#title').innerHTML=route==='home'&&mobile?'<span class="logo">랭포미</span> <span class="tiny muted" style="font-weight:600">RankForMe</span>':(cur?cur.t:titles[route]||'');
+  $('#planBadge').textContent=S.plan==='free'?'FREE':S.plan.toUpperCase();$('#planBadge').className='plan-badge'+(S.plan!=='free'?' pro':'');
+  $('#bellIco').innerHTML=ic('bell');const un=S.inbox.filter(n=>!n.read).length;$('#bellDot').hidden=!un;$('#bellDot').textContent=un;
+  // 하단/사이드 메뉴: 모바일은 켜진 메뉴 앞 4개 + 더보기
+  const on=S.menus.filter(x=>x.on).map(x=>x.k),shown=mobile?on.slice(0,4):on;
+  const act=k=>k==='home'?route==='home':cg===k;
+  const btn=k=>{const g=TREE.find(t=>t.k===k);
+    if(mobile||!g||g.items.length===1)return `<button class="${act(k)?'on':''}" onclick="${g?`openGroup('${k}')`:"go('home')"}">${ic(MENUS[k][1])}${MENUS[k][0]}</button>`;
+    const open=NO[k]??act(k);
+    return `<button class="${act(k)?'on':''}" onclick="NO['${k}']=${!open};render()">${ic(MENUS[k][1])}<span class="grow">${g.g}</span><span class="car">${open?'▾':'▸'}</span></button>`+
+      (open?`<div class="subs">${g.items.map(it=>`<button class="sb ${key===it.k?'on':''}" onclick="openMenu('${it.k}')"><span class="grow">${it.t}</span>${it.go?'':'<i title="기획 중"></i>'}</button>`).join('')}</div>`:'')};
+  $('#nav').innerHTML=`<div class="brand" onclick="go('home')"><b>랭포미</b><span>RankForMe</span></div>`+shown.map(btn).join('')+
+    `<button class="${shown.some(act)?'':'on'}" onclick="go('more')">${ic('menu')}전체 메뉴</button>`;
+  $('#fabIco').innerHTML=ic('spark',20);$('#fab').style.display=S.fab&&route!=='ai'?'':'none';
+  const f={home:renderHome,place:()=>renderList('place'),shop:()=>renderList('shop'),blog:()=>renderList('blog'),alert:renderAlert,ai:renderAI,more:renderMore,plan:renderPlan,menuedit:renderMenuEdit,spec:renderSpec,channels:renderChannels,m:renderStub,notes:renderNotes,once:renderOnce}[route]||renderHome;
+  const g=TREE.find(t=>t.k===cg);
+  $('#main').innerHTML=(mobile&&g&&g.items.length>1?`<div class="chips subbar">${g.items.map(it=>`<button class="chip ${key===it.k?'on':''}" onclick="openMenu('${it.k}')">${it.t}</button>`).join('')}</div>`:'')+f();
+  if(mobile&&g&&g.items.length>1)$('.subbar .on')?.scrollIntoView({inline:'center',block:'nearest'});
+  if(route==='ai'){scrollChat();$('#aiInput')?.focus({preventScroll:true})}
+}
+matchMedia('(min-width:900px)').addEventListener('change',render);
+
+/* --- 홈 --- */
+let qType='place';
+function renderHome(){
+  const its=S.items,ups=its.filter(i=>delta(i)>0).length,downs=its.filter(i=>delta(i)<0).length,w=S.widgets;
+  const d=new Date();let h='';
+  if(w.summary)h+=`<div class="card"><h3>오늘 ${d.getMonth()+1}월 ${d.getDate()}일 순위 요약<span class="more">어제 대비</span></h3>
+    <div class="stats"><div><b>${its.length}</b><span>추적 중</span></div><div><b class="up">${ups}</b><span>상승</span></div><div><b class="down">${downs}</b><span>하락</span></div><div><b>${its.filter(i=>cur(i)!=null&&cur(i)<=10).length}</b><span>TOP10</span></div></div></div>`;
+  if(w.quick)h+=quickCard();
+  if(w.movers){const mv=[...its].filter(i=>delta(i)!==0).sort((a,b)=>Math.abs(delta(b))-Math.abs(delta(a))).slice(0,4);
+    h+=`<div class="card"><h3>변동 큰 키워드</h3>${mv.length?mv.map(itemCard).join(''):'<div class="muted small">오늘은 변동이 없어요</div>'}</div>`}
+  if(w.next){const n=nextFire();h+=`<div class="card" onclick="go('alert')" style="cursor:pointer"><h3>${ic('bell',18)} 다음 순위 알림<span class="more">관리 ›</span></h3>
+    ${n?`<div class="row"><div style="font-size:26px;font-weight:800">${n.time}</div><div class="grow small muted">${n.label} · ${esc(n.s.name)}<br>${chLabel(n.s).join(' · ')}로 발송</div></div>`:'<div class="muted small">예약된 알림이 없어요. 알림을 예약하면 정해진 시간에 순위를 보내드려요.</div>'}</div>`}
+  if(w.fav){const fv=its.filter(i=>i.fav);h+=`<div class="card"><h3><span style="color:#f5b400">★</span> 즐겨찾기</h3>${fv.length?fv.map(itemCard).join(''):'<div class="muted small">키워드 상세에서 ☆를 눌러 추가하세요</div>'}</div>`}
+  if(!Object.values(w).some(Boolean))h='<div class="empty">홈 위젯이 모두 꺼져 있어요.<br><button class="btn sub sm" style="margin-top:12px" onclick="go(\'menuedit\')">홈 편집</button></div>';
+  return h}
+const quickCard=()=>`<div class="card"><h3>${ic('refresh',18)} 바로 조회</h3>
+    <div class="seg" style="margin-bottom:10px">${Object.entries(TYPES).map(([k,v])=>`<button class="${qType===k?'on':''}" onclick="qType='${k}';render()">${v.t}</button>`).join('')}</div>
+    <input class="input" id="qKw" placeholder="검색 키워드 (예: 강남 맛집)" style="margin-bottom:8px">
+    <input class="input" id="qName" placeholder="${TYPES[qType].tg} 또는 ${TYPES[qType].unit}" style="margin-bottom:10px">
+    <button class="btn block" onclick="quickLookup()">순위 조회</button></div>`;
+function renderOnce(){return quickCard()+`<div class="small muted" style="padding:0 4px">등록하지 않고 지금 순위만 확인해요. 결과 화면에서 "추적 목록에 추가"를 누르면 매일 자동 기록돼요.</div>`}
+function quickLookup(){
+  const kw=$('#qKw').value.trim(),nm=$('#qName').value.trim();
+  if(!kw||!nm)return toast('키워드와 '+TYPES[qType].tg+'을 입력해주세요');
+  const u=parseUrl(nm),type=u?u.type:qType,name=u?u.name:nm,mid=u?u.mid:String(hash(nm)).slice(0,10);
+  const it=mkItem(type,kw,name,mid,fakeRank(type,kw,name));
+  gate(()=>showResult(it,true))}
+function showResult(it,temp){
+  const r=cur(it);
+  const sh=sheet(`<div class="row"><span class="tag ${it.type}">${TYPES[it.type].t}</span><span class="tiny muted">${new Date().toLocaleString('ko-KR')} 조회</span></div>
+    <h2>${esc(it.keyword)}</h2><div class="muted small">${esc(it.name)}</div>
+    <div class="card" style="margin:14px 0;text-align:center;background:var(--pri-soft);box-shadow:none">
+      <div style="font-size:44px;font-weight:900;color:var(--pri)">${r==null?'순위 밖':r+'<span style="font-size:20px">위</span>'}</div>
+      <div class="small muted">${r==null?`상위 ${TYPES[it.type].max}위 안에서 찾지 못했어요`:`월 검색량 ${fmtN(it.volume)}회 · ${Math.ceil(r/10)}페이지`}</div></div>
+    <h3 style="font-size:15px;margin:0 0 4px">상위 노출 현황</h3>
+    <div>${topList(it,10).map(x=>`<div class="list-row ${x.me?'me':''}"><span class="num">${x.rank}</span><div class="grow"><div style="font-weight:600">${esc(x.name)}${x.me?' <span class="tag" style="background:var(--pri);color:#fff">내 항목</span>':''}</div><div class="tiny muted">${x.meta}</div></div></div>`).join('')}
+    ${r>10?`<div class="list-row me"><span class="num">${r}</span><div class="grow"><b>${esc(it.name)}</b></div></div>`:''}</div>
+    ${temp?`<button class="btn block" style="margin-top:16px" id="trk">${ic('plus',18)} 추적 목록에 추가 (매일 자동 기록)</button>`:''}`);
+  if(temp)sh.querySelector('#trk').onclick=()=>{S.items.unshift(it);closeSheet();toast('추적을 시작했어요. 매일 자동으로 순위를 기록해요.');render()}}
+
+/* --- 플레이스/쇼핑/블로그 목록 --- */
+const LS={group:'전체',sort:'rank',q:''};
+function renderList(type){
+  let its=S.items.filter(i=>i.type===type);
+  const groups=['전체',...new Set(its.map(i=>i.group))];
+  if(LS.group!=='전체')its=its.filter(i=>i.group===LS.group);
+  if(LS.q)its=its.filter(i=>(i.keyword+i.name+i.memo).includes(LS.q));
+  const R=i=>cur(i)??9999;
+  its.sort({rank:(a,b)=>R(a)-R(b),delta:(a,b)=>Math.abs(delta(b))-Math.abs(delta(a)),volume:(a,b)=>b.volume-a.volume,new:(a,b)=>b.created-a.created}[LS.sort]);
+  return `<div class="row" style="margin-bottom:10px">
+      <input class="input grow" placeholder="키워드·${TYPES[type].tg}·메모 검색" value="${esc(LS.q)}" oninput="LS.q=this.value;clearTimeout(window._q);window._q=setTimeout(()=>{render();const e=document.querySelector('main input');e.focus();e.setSelectionRange(99,99)},300)">
+      <button class="btn" onclick="addForm('${type}')">${ic('plus',18)}</button></div>
+    <div class="chips" style="margin-bottom:10px">${groups.map(g=>`<button class="chip ${LS.group===g?'on':''}" onclick="LS.group='${esc(g)}';render()">${esc(g)}</button>`).join('')}</div>
+    <div class="row" style="margin-bottom:10px">
+      <select class="input" style="height:36px;width:auto;font-size:13px" onchange="LS.sort=this.value;render()">${[['rank','순위 높은순'],['delta','변동 큰순'],['volume','검색량순'],['new','최근 등록순']].map(([k,v])=>`<option value="${k}" ${LS.sort===k?'selected':''}>${v}</option>`).join('')}</select>
+      <span class="grow tiny muted">${its.length}개 · 매일 자동 기록</span>
+      <button class="btn sub sm" onclick="gate(()=>{recheck('${type}');})">${ic('refresh',16)} 전체 재조회</button></div>
+    ${its.length?its.map(itemCard).join(''):`<div class="empty">등록된 ${TYPES[type].t} 키워드가 없어요<br><br>
+      <button class="btn sm" onclick="addForm('${type}')">직접 등록</button> <button class="btn sub sm" onclick="go('ai')">AI로 등록</button></div>`}
+    <div class="row" style="margin-top:14px;gap:8px"><button class="btn ghost sm grow" onclick="exportCsv('${type}')">엑셀(CSV) 내보내기</button><button class="btn ghost sm grow" onclick="importCsv()">엑셀 일괄 등록</button></div>`}
+function recheck(type){
+  S.items.filter(i=>i.type===type).forEach(i=>{const r=cur(i);i.history[29]=r==null?(Math.random()<.3?TYPES[type].max-Math.floor(Math.random()*40):null):Math.max(1,r+Math.round((Math.random()-.5)*3))});
+  render();toast('최신 순위로 다시 조회했어요')}
+function addForm(type,pre={}){
+  const sh=sheet(`<h2>${TYPES[type].t} 키워드 등록</h2><div class="small muted">URL만 붙여넣으면 ${TYPES[type].tg}·MID를 자동으로 채워요</div>
+    <label class="lb">${TYPES[type].unit}</label><input class="input" id="fUrl" placeholder="https://..." value="${esc(pre.url||'')}">
+    <label class="lb">${TYPES[type].tg}</label><input class="input" id="fName" value="${esc(pre.name||'')}">
+    <label class="lb">검색 키워드 <span class="muted tiny">쉼표·줄바꿈으로 여러 개</span></label><textarea class="input" id="fKw" rows="3" placeholder="강남 맛집, 강남역 고기집">${esc(pre.kw||'')}</textarea>
+    <label class="lb">그룹</label><input class="input" id="fGroup" list="glist" value="기본"><datalist id="glist">${[...new Set(S.items.map(i=>i.group))].map(g=>`<option value="${esc(g)}">`).join('')}</datalist>
+    <button class="btn block" style="margin-top:18px" id="fSave">등록하고 순위 조회</button>`);
+  sh.querySelector('#fUrl').oninput=e=>{const u=parseUrl(e.target.value);if(u){sh.querySelector('#fName').value=u.name;toast(`${u.typeName} 확인: ${u.name} (MID ${u.mid})`)}};
+  sh.querySelector('#fSave').onclick=()=>{
+    const kws=sh.querySelector('#fKw').value.split(/[,\n]/).map(s=>s.trim()).filter(Boolean),name=sh.querySelector('#fName').value.trim();
+    if(!kws.length||!name)return toast('키워드와 '+TYPES[type].tg+'을 입력해주세요');
+    const u=parseUrl(sh.querySelector('#fUrl').value),g=sh.querySelector('#fGroup').value.trim()||'기본';
+    const add=kws.map(k=>mkItem(u?.type||type,k,name,u?.mid||String(hash(name)).slice(0,10),fakeRank(type,k,name),g));
+    closeSheet();gate(()=>{S.items.unshift(...add);render();toast(`${add.length}개 키워드 등록 완료\n`+add.map(i=>`${i.keyword} → ${fmtRank(cur(i))}`).join('\n'))})}}
+function openItem(id){
+  const it=S.items.find(i=>i.id===id);if(!it)return;
+  const r=cur(it),best=Math.min(...it.history.filter(v=>v!=null));
+  const sh=sheet(`<div class="row"><span class="tag ${it.type}">${TYPES[it.type].t}</span><span class="tag">${esc(it.group)}</span><span class="grow"></span>
+      <button class="iconbtn" id="dFav" style="color:${it.fav?'#f5b400':'var(--sub)'}">${ic('star')}</button><button class="iconbtn" id="dShare">${ic('share')}</button></div>
+    <h2>${esc(it.keyword)}</h2><div class="muted small">${esc(it.name)} · MID ${esc(it.mid)}</div>
+    <div class="stats" style="margin:14px 0"><div><b>${r??'-'}</b><span>현재</span></div><div><b>${dHtml(delta(it))}</b><span>어제 대비</span></div><div><b>${isFinite(best)?best:'-'}</b><span>30일 최고</span></div><div><b>${fmtN(Math.round(it.volume/1000))}k</b><span>월 검색량</span></div></div>
+    <div class="card" style="box-shadow:none;border:1px solid var(--line);padding:12px 8px 6px">${chart(it)}</div>
+    ${it.type==='place'?`<div class="small muted" style="margin-bottom:10px">내 업체 방문자리뷰 ${fmtN(it.reviews)} · 저장 ${fmtN(it.saves)} — 상위 업체와 비교해보세요</div>`:''}
+    <h3 style="font-size:15px;margin:6px 0 4px">경쟁 현황 (상위 5)</h3>
+    <div>${topList(it,5).map(x=>`<div class="list-row ${x.me?'me':''}"><span class="num">${x.rank}</span><div class="grow"><div style="font-weight:600">${esc(x.name)}</div><div class="tiny muted">${x.meta}</div></div></div>`).join('')}</div>
+    <label class="lb">메모</label><input class="input" id="dMemo" value="${esc(it.memo)}" placeholder="예) 10/30부터 리뷰 이벤트">
+    <div class="row" style="margin-top:14px;gap:8px">
+      <button class="btn grow" id="dRe">${ic('refresh',18)} 지금 재조회</button>
+      <button class="btn sub grow" id="dAl">${ic('bell',18)} 알림 설정</button></div>
+    <button class="btn ghost block" style="margin-top:8px;color:var(--up)" id="dDel">추적 중단</button>`);
+  sh.querySelector('#dMemo').onchange=e=>{it.memo=e.target.value;toast('메모 저장됨')};
+  sh.querySelector('#dFav').onclick=()=>{it.fav=!it.fav;render();openItem(id)};
+  sh.querySelector('#dShare').onclick=()=>{const t=`[랭포미] ${it.keyword} | ${it.name} | ${fmtRank(r)} ${dTxt(delta(it))}`;navigator.share?navigator.share({text:t}).catch(()=>{}):navigator.clipboard.writeText(t).then(()=>toast('복사했어요'))};
+  sh.querySelector('#dRe').onclick=()=>{closeSheet();gate(()=>showResult(it,false))};
+  sh.querySelector('#dAl').onclick=()=>{closeSheet();schedForm(null,{type:it.type,ids:[it.id],name:it.keyword+' 순위 알림'})};
+  sh.querySelector('#dDel').onclick=()=>{if(confirm('이 키워드 추적을 중단할까요?')){S.items=S.items.filter(i=>i!==it);closeSheet();render()}}}
+
+/* --- CSV --- */
+function exportCsv(type){
+  const rows=[['유형','키워드','대상','MID','그룹','현재순위','어제순위','월검색량','메모'],...S.items.filter(i=>!type||i.type===type).map(i=>[TYPES[i.type].t,i.keyword,i.name,i.mid,i.group,cur(i)??'순위밖',prv(i)??'순위밖',i.volume,i.memo])];
+  const csv='﻿'+rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download=`순위_${new Date().toISOString().slice(0,10)}.csv`;a.click()}
+function importCsv(){
+  const f=document.createElement('input');f.type='file';f.accept='.csv,.txt';
+  f.onchange=async()=>{const txt=await f.files[0].text(),map={'플레이스':'place','쇼핑':'shop','블로그':'blog',place:'place',shop:'shop',blog:'blog'};
+    const add=[];txt.replace(/^﻿/,'').split(/\r?\n/).forEach(l=>{const c=l.split(',').map(s=>s.replace(/^"|"$/g,'').trim());const t=map[c[0]];if(t&&c[1]&&c[2])add.push(mkItem(t,c[1],c[2],c[3]||String(hash(c[2])).slice(0,10),fakeRank(t,c[1],c[2]),c[4]||'기본'))});
+    if(!add.length)return toast('형식: 유형,키워드,대상,MID,그룹 (예: 플레이스,강남 맛집,홍길동식당,1234,내 매장)');
+    S.items.unshift(...add);render();toast(add.length+'개 일괄 등록 완료')};
+  f.click()}
+
+/* --- 알림 예약 --- */
+const COND={always:'매번 보내기',change:'순위가 바뀌었을 때만',drop:'순위가 떨어졌을 때만',out:'N위 밖으로 밀렸을 때만'};
+const chLabel=s=>[s.ch.push&&'앱 알림',s.ch.kakao&&'카카오톡',s.ch.sms&&'문자'].filter(Boolean);
+function targets(s){return S.items.filter(i=>s.ids.length?s.ids.includes(i.id):(s.type==='all'||i.type===s.type))}
+function passCond(s,it){const d=delta(it),r=cur(it);return s.cond==='always'||(s.cond==='change'&&d!==0)||(s.cond==='drop'&&d<0)||(s.cond==='out'&&(r==null||r>s.th))}
+const msgLine=it=>`${it.keyword} | ${it.name} | ${fmtRank(cur(it))} ${dTxt(delta(it))}`;
+function msgFor(s){const p=targets(s).filter(i=>passCond(s,i));return p.length?p.map(msgLine).join('\n'):null}
+function nextFire(){
+  const now=new Date();let best=null;
+  S.schedules.filter(s=>s.on).forEach(s=>{for(let a=0;a<8;a++){const d=new Date(now);d.setDate(d.getDate()+a);if(!s.days.includes(d.getDay()))continue;
+    s.times.forEach(t=>{const [h,m]=t.split(':');const x=new Date(d);x.setHours(+h,+m,0,0);if(x>now&&(!best||x<best.at))best={at:x,s,time:t,label:a===0?'오늘':a===1?'내일':DAYS[x.getDay()]+'요일'}})}});
+  return best}
+function fire(s,test){
+  const body=msgFor(s);
+  if(!body){if(test)toast('지금은 조건에 맞는 변동이 없어서 발송되지 않아요');return}
+  const n=body.split('\n').length,title=`[${s.name}] ${n}건`;
+  S.inbox.unshift({id:uid(),ts:Date.now(),title,body,ch:chLabel(s).map(c=>c.replace(' 알림','')),read:false});S.inbox=S.inbox.slice(0,100);
+  if(s.ch.push&&'Notification' in window&&Notification.permission==='granted'){
+    navigator.serviceWorker?.getRegistration().then(r=>r?r.showNotification(title,{body,icon:'icon-192.png'}):new Notification(title,{body}))}
+  toast(`🔔 ${title}\n${body.split('\n').slice(0,3).join('\n')}${n>3?'\n…':''}`);render()}
+function tick(){const d=new Date(),hm=pad(d.getHours())+':'+pad(d.getMinutes()),k=d.toDateString()+hm;
+  S.schedules.forEach(s=>{if(s.on&&s.days.includes(d.getDay())&&s.times.includes(hm)&&s.last!==k){s.last=k;fire(s)}})}
+setInterval(tick,15000);
+
+function renderAlert(){
+  const tab=sub==='inbox'?'inbox':'sched';
+  if(tab==='inbox'){S.inbox.forEach(n=>n.read=true);setTimeout(()=>{$('#bellDot').hidden=true},0)}
+  let h=`<div class="seg" style="margin-bottom:12px"><button class="${tab==='sched'?'on':''}" onclick="go('alert')">알림 예약</button><button class="${tab==='inbox'?'on':''}" onclick="go('alert','inbox')">받은 알림</button></div>`;
+  if(tab==='inbox')return h+(S.inbox.length?S.inbox.map(n=>`<div class="card"><div class="row"><b class="grow">${esc(n.title)}</b><span class="tiny muted">${new Date(n.ts).toLocaleString('ko-KR',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}</span></div>
+    <div class="small" style="white-space:pre-line;margin-top:8px;line-height:1.6">${esc(n.body)}</div><div class="row" style="margin-top:8px;gap:4px">${n.ch.map(c=>`<span class="tag">${c}</span>`).join('')}</div></div>`).join(''):'<div class="empty">받은 알림이 없어요</div>');
+  const chOk=S.ch.push||S.ch.kakao||S.ch.sms;
+  h+=`<div class="card" onclick="go('channels')" style="cursor:pointer"><h3>${ic('phone',18)} 받는 곳<span class="more">설정 ›</span></h3>
+    <div class="row" style="gap:6px;flex-wrap:wrap"><span class="tag" style="${S.ch.push?'background:var(--pri);color:#fff':''}">앱 알림 ${S.ch.push?'ON':'OFF'}</span><span class="tag" style="${S.ch.kakao?'background:var(--kakao);color:#111':''}">카카오톡 ${S.ch.kakao?'연결됨':'미연결'}</span><span class="tag" style="${S.ch.sms?'background:var(--ok);color:#fff':''}">문자 ${S.ch.sms?'연결됨':'미연결'}</span></div>
+    ${chOk?'':'<div class="small" style="color:var(--up);margin-top:8px">받는 곳을 하나 이상 연결해야 알림이 도착해요</div>'}</div>`;
+  h+=S.schedules.map(s=>`<div class="card"><div class="sched">
+      <div class="grow"><div class="t">${s.times.slice(0,3).join(' · ')}${s.times.length>3?` <span class="small muted">외 ${s.times.length-3}</span>`:''}</div>
+        <div style="font-weight:700;margin-top:4px">${esc(s.name)}</div>
+        <div class="small muted" style="margin-top:2px">${s.days.length===7?'매일':s.days.join()==='1,2,3,4,5'?'평일':s.days.map(d=>DAYS[d]).join('·')} · ${s.ids.length?s.ids.length+'개 키워드':(s.type==='all'?'전체':TYPES[s.type].t)} · ${s.cond==='out'?s.th+'위 밖일 때':COND[s.cond]}</div>
+        <div class="row" style="gap:4px;margin-top:6px">${chLabel(s).map(c=>`<span class="tag">${c}</span>`).join('')}</div></div>
+      <label class="switch"><input type="checkbox" ${s.on?'checked':''} onchange="togSched('${s.id}',this.checked)"><span></span></label></div>
+    <div class="row" style="margin-top:12px;gap:6px"><button class="btn ghost sm grow" onclick="schedForm('${s.id}')">편집</button><button class="btn sub sm grow" onclick="fire(S.schedules.find(x=>x.id==='${s.id}'),true)">지금 테스트 발송</button></div></div>`).join('');
+  return h+`<button class="btn block" onclick="schedForm()">${ic('plus',18)} 새 알림 예약</button>
+    <div class="tiny muted" style="margin-top:10px;text-align:center">예약 시간이 되면 서버가 순위를 다시 조회한 뒤 보내드려요 (프로토타입은 이 화면이 열려 있을 때만 동작)</div>`}
+function togSched(id,v){S.schedules.find(s=>s.id===id).on=v;toast(v?'알림이 켜졌어요':'알림이 꺼졌어요')}
+
+let D=null;
+function schedForm(id,pre){
+  const src=id?S.schedules.find(s=>s.id===id):null;
+  D=src?JSON.parse(JSON.stringify(src)):{id:uid(),name:'순위 알림',type:'all',ids:[],times:['09:00'],days:[0,1,2,3,4,5,6],cond:'always',th:10,ch:{push:true,kakao:!!S.ch.kakao,sms:false},on:true,...pre};
+  D._edit=!!src;closeSheet();drawSched()}
+function drawSched(){
+  const pool=S.items.filter(i=>D.type==='all'||i.type===D.type);
+  const sh=sheet(`<h2>${D._edit?'알림 편집':'새 알림 예약'}</h2>
+    <label class="lb">알림 이름</label><input class="input" value="${esc(D.name)}" oninput="D.name=this.value;prev()">
+    <label class="lb">대상</label><div class="seg">${[['all','전체'],...Object.entries(TYPES).map(([k,v])=>[k,v.t])].map(([k,v])=>`<button class="${D.type===k?'on':''}" onclick="D.type='${k}';D.ids=[];drawSched()">${v}</button>`).join('')}</div>
+    <div style="max-height:170px;overflow:auto;margin-top:8px;border:1px solid var(--line);border-radius:12px;padding:4px 12px">
+      <label class="menu-row" style="padding:9px 0"><input type="checkbox" ${!D.ids.length?'checked':''} onchange="D.ids=[];drawSched()"> <b class="small">${D.type==='all'?'전체':TYPES[D.type].t} 키워드 모두 (${pool.length}개)</b></label>
+      ${pool.map(i=>`<label class="menu-row" style="padding:9px 0"><input type="checkbox" ${D.ids.includes(i.id)?'checked':''} onchange="D.ids=this.checked?[...D.ids,'${i.id}']:D.ids.filter(x=>x!=='${i.id}');drawSched()"><span class="small grow">${esc(i.keyword)} <span class="muted">· ${esc(i.name)}</span></span></label>`).join('')}</div>
+    <label class="lb">보낼 시간</label>
+    <div class="chips" style="flex-wrap:wrap">${D.times.map(t=>`<span class="chip on">${t} <button onclick="D.times=D.times.filter(x=>x!=='${t}');drawSched()" style="color:inherit">✕</button></span>`).join('')}</div>
+    <div class="row" style="margin-top:8px"><input type="time" class="input grow" id="tIn" value="13:00"><button class="btn sub" onclick="addTime(document.getElementById('tIn').value)">추가</button></div>
+    <div class="chips" style="margin-top:8px">${[1,2,3,6].map(n=>`<button class="chip" onclick="D.times=[];for(let h=9;h<=21;h+=${n})D.times.push(String(h).padStart(2,'0')+':00');drawSched()">${n}시간마다 (9~21시)</button>`).join('')}</div>
+    <label class="lb">요일</label><div class="row" style="gap:5px">${DAYS.map((d,i)=>`<button class="chip ${D.days.includes(i)?'on':''}" style="flex:1;justify-content:center;padding:0" onclick="D.days=D.days.includes(${i})?D.days.filter(x=>x!==${i}):[...D.days,${i}].sort();drawSched()">${d}</button>`).join('')}</div>
+    <label class="lb">보내는 조건</label><select class="input" onchange="D.cond=this.value;drawSched()">${Object.entries(COND).map(([k,v])=>`<option value="${k}" ${D.cond===k?'selected':''}>${v}</option>`).join('')}</select>
+    ${D.cond==='out'?`<div class="row" style="margin-top:8px"><input type="number" class="input" style="width:100px" value="${D.th}" oninput="D.th=+this.value;prev()"><span class="small">위 밖으로 밀리면 알림</span></div>`:''}
+    <label class="lb">받는 곳</label>
+    ${[['push','앱 알림 (무료)'],['kakao','카카오톡 알림톡'],['sms','문자(SMS)']].map(([k,v])=>`<label class="menu-row" style="padding:10px 0"><span class="grow">${v}${k!=='push'&&!S.ch[k]?' <span class="tiny" style="color:var(--up)">· 미연결</span>':''}</span><span class="switch"><input type="checkbox" ${D.ch[k]?'checked':''} onchange="D.ch.${k}=this.checked;prev()"><span></span></span></label>`).join('')}
+    <label class="lb">미리보기</label><div id="pv"></div>
+    <div class="row" style="margin-top:18px;gap:8px">${D._edit?`<button class="btn ghost" style="color:var(--up)" onclick="S.schedules=S.schedules.filter(s=>s.id!==D.id);closeSheet();render()">삭제</button>`:''}<button class="btn grow" onclick="saveSched()">저장</button></div>`,true);
+  prev()}
+function addTime(t){if(t&&!D.times.includes(t)){D.times.push(t);D.times.sort()}drawSched()}
+function prev(){
+  const el=$('#pv');if(!el)return;
+  const body=msgFor(D)||'(지금 기준으론 조건에 맞는 변동이 없어 발송 안 됨)',t=D.times[0]||'09:00',title=`[${D.name}]`;
+  el.innerHTML=(D.ch.kakao?`<div class="kakao" style="margin-bottom:8px"><div class="bub"><div class="h">알림톡 도착</div><div class="b"><b>${esc(title)}</b> ${t}\n${esc(body)}\n\n▶ 랭포미에서 자세히 보기</div></div></div>`:'')+
+    (D.ch.sms?`<div class="sms" style="margin-bottom:8px">[Web발신]\n[랭포미] ${esc(D.name)} ${t}\n${esc(body)}</div>`:'')+
+    (D.ch.push?`<div class="card" style="box-shadow:none;border:1px solid var(--line);margin:0"><div class="row tiny muted"><img src="icon-192.png" width="16" height="16" style="border-radius:4px" onerror="this.remove()">랭포미 · 지금</div><div style="font-weight:700;margin-top:4px">${esc(title)}</div><div class="small" style="white-space:pre-line">${esc(body)}</div></div>`:'')||'<div class="small muted">받는 곳을 선택하세요</div>'}
+function saveSched(){
+  if(!D.times.length)return toast('보낼 시간을 하나 이상 추가하세요');
+  if(!D.days.length)return toast('요일을 하나 이상 선택하세요');
+  if(!D.ch.push&&!D.ch.kakao&&!D.ch.sms)return toast('받는 곳을 하나 이상 선택하세요');
+  const {_edit,...s}=D;const i=S.schedules.findIndex(x=>x.id===s.id);i>=0?S.schedules[i]=s:S.schedules.push(s);closeSheet();go('alert');render();
+  toast('알림이 예약됐어요')}
+
+/* --- 알림 채널 --- */
+function renderChannels(){
+  const perm='Notification' in window?Notification.permission:'unsupported';
+  return `<div class="card"><h3>앱 알림 (무료)</h3><div class="small muted">홈 화면에 설치하면 앱처럼 푸시 알림을 받아요. iPhone은 iOS 16.4 이상 + 홈 화면 추가가 필요해요.</div>
+      <button class="btn block ${S.ch.push?'sub':''}" style="margin-top:12px" onclick="reqPush()">${perm==='granted'&&S.ch.push?'✓ 알림 허용됨':perm==='denied'?'브라우저 설정에서 차단됨':'알림 허용하기'}</button></div>
+    <div class="card"><h3><span style="background:var(--kakao);color:#111;border-radius:6px;padding:0 6px">TALK</span> 카카오톡 알림톡</h3><div class="small muted">카카오 비즈 채널 알림톡으로 발송 (건당 과금, PRO 포함 수량 제공)</div>
+      ${S.ch.kakao?`<div class="row" style="margin-top:12px"><b class="grow">${esc(S.ch.kakao)}</b><button class="btn ghost sm" onclick="S.ch.kakao='';render()">해제</button></div>`:
+      `<div class="row" style="margin-top:12px"><input class="input grow" id="kPh" type="tel" inputmode="numeric" placeholder="010-0000-0000"><button class="btn" style="background:var(--kakao);color:#111" onclick="connCh('kakao','kPh')">연결</button></div>`}</div>
+    <div class="card"><h3>문자 (SMS/LMS)</h3><div class="small muted">카톡을 안 쓰는 분께. 여러 줄이면 LMS로 발송돼요.</div>
+      ${S.ch.sms?`<div class="row" style="margin-top:12px"><b class="grow">${esc(S.ch.sms)}</b><button class="btn ghost sm" onclick="S.ch.sms='';render()">해제</button></div>`:
+      `<div class="row" style="margin-top:12px"><input class="input grow" id="sPh" type="tel" inputmode="numeric" placeholder="010-0000-0000"><button class="btn" onclick="connCh('sms','sPh')">인증</button></div>`}</div>`}
+function connCh(k,inp){const v=$('#'+inp).value.replace(/[^0-9]/g,'');if(!/^01\d{8,9}$/.test(v))return toast('휴대폰 번호를 확인해주세요');
+  const code=prompt('인증번호 6자리를 입력하세요 (데모: 아무 숫자)');if(!code)return;S.ch[k]=v.replace(/(\d{3})(\d{3,4})(\d{4})/,'$1-$2-$3');render();toast('연결됐어요')}
+function reqPush(){if(!('Notification' in window))return toast('이 브라우저는 알림을 지원하지 않아요');
+  Notification.requestPermission().then(p=>{S.ch.push=p==='granted';render();toast(p==='granted'?'앱 알림이 켜졌어요':'알림이 허용되지 않았어요')})}
+
+/* --- AI 비서 (프로토타입: 규칙 기반 / 실서비스: LLM + 함수 호출) --- */
+const NAMES={place:['홍길동 숯불갈비','라구앤코','봄날 브런치','청담 스시오마카세','성수 베이커리'],shop:['하이어 경량 캠핑의자','하이어 폴딩테이블','데일리 텀블러 500ml'],blog:['내돈내산 후기 포스팅','방문 후기 포스팅']};
+function parseUrl(t){
+  let m;const pick=(type,mid)=>({type,typeName:TYPES[type].t,mid,name:NAMES[type][hash(mid)%NAMES[type].length]});
+  if(m=t.match(/(?:place\.naver\.com\/(?:\w+\/)?|map\.naver\.com\/\S*?place\/)(\d{5,})/))return pick('place',m[1]);
+  if(m=t.match(/(?:smartstore|brand)\.naver\.com\/[\w-]+\/products\/(\d+)|shopping\.naver\.com\/\S*?catalog\/(\d+)/))return pick('shop',m[1]||m[2]);
+  if(m=t.match(/blog\.naver\.com\/([\w-]+)\/(\d+)/))return pick('blog',m[2]);
+  if(/^\d{7,}$/.test(t.trim()))return pick('place',t.trim());
+  return null}
+const SUGG=['강남 맛집 몇 위야?','어제보다 떨어진 키워드 알려줘','오늘 순위 요약해줘','평일 오전 9시에 카톡으로 플레이스 순위 보내줘','강남 키워드 추천해줘','https://m.place.naver.com/restaurant/1938472610 역삼 맛집, 선릉 회식 등록해줘'];
+function renderAI(){
+  if(!S.chat.length)S.chat.push({me:false,h:`안녕하세요! 순위 비서예요 🤖\n\n• <b>URL만 붙여넣으면</b> 업체·상품·블로그를 찾아 순위 추적을 등록해요\n• "강남 맛집 몇 위야?" 처럼 물어보면 바로 답해요\n• "매일 9시에 카톡으로 보내줘" 하면 알림도 예약해요`});
+  return `<div class="chat" id="chat">${S.chat.map(m=>`<div class="msg ${m.me?'me':'bot'}">${m.h}</div>`).join('')}</div>
+    <div class="composer"><div class="in"><div class="chips" style="margin-bottom:8px">${SUGG.map(s=>`<button class="chip" onclick="aiSend(this.dataset.t)" data-t="${esc(s)}">${esc(s.length>24?s.slice(0,22)+'…':s)}</button>`).join('')}</div>
+    <form class="row" onsubmit="event.preventDefault();aiSend($('#aiInput').value)"><input class="input grow" id="aiInput" placeholder="URL 붙여넣기 또는 질문하기" autocomplete="off"><button class="btn" style="width:46px;padding:0">${ic('send',20)}</button></form></div></div>`}
+function scrollChat(){requestAnimationFrame(()=>scrollTo(0,document.body.scrollHeight))}
+function aiSend(t){
+  t=(t||'').trim();if(!t)return;
+  S.chat.push({me:true,h:esc(t)});render();
+  const c=$('#chat');const ty=document.createElement('div');ty.className='msg bot typing';ty.innerHTML='<span></span><span></span><span></span>';c.append(ty);scrollChat();
+  setTimeout(()=>{S.chat.push({me:false,h:aiReply(t)});S.chat=S.chat.slice(-60);if(route==='ai')render()},550)}
+const STOP=new Set(['등록','등록해줘','등록해주세요','추가','추가해줘','해줘','키워드','키워드로','로','으로','추적','추적해줘','부탁해','부탁해요','이걸','이거']);
+let RECO=[];
+function aiReply(t){
+  const u=parseUrl(t),q=[...t.matchAll(/['"“”‘’]([^'"“”‘’]+)['"“”‘’]/g)].map(m=>m[1].trim());
+  if(u){
+    const rest=t.replace(/https?:\/\/\S+/g,'').split(/\s+/).filter(w=>w&&!STOP.has(w)).join(' ');
+    const kws=q.length?q:rest.split(/[,\n]/).map(s=>s.trim()).filter(s=>s.length>1);
+    if(!kws.length){S.pending=u;return `${u.typeName} <b>${esc(u.name)}</b> (MID ${u.mid})을 찾았어요.\n어떤 키워드로 순위를 추적할까요? 쉼표로 여러 개 입력할 수 있어요.`}
+    return register(u,kws)}
+  if(S.pending&&!/[?？]|몇|알려|요약|추천/.test(t)){const p=S.pending;S.pending=null;return register(p,(q.length?q:t.split(/[,\n]/)).map(s=>s.trim()).filter(Boolean))}
+  const sq=t.replace(/\s/g,''),hit=S.items.filter(i=>sq.includes(i.keyword.replace(/\s/g,''))||sq.includes(i.name.replace(/\s/g,'')));
+  if(/알림|보내줘|알려줘/.test(t)&&/(\d{1,2})\s*시|시간\s*마다/.test(t))return makeSchedule(t,hit);
+  if(/추천/.test(t))return recommend(t,hit);
+  if(hit.length)return hit.map(i=>`<b>${esc(i.keyword)}</b> · ${esc(i.name)}\n→ <b>${fmtRank(cur(i))}</b> ${dHtml(delta(i))}  (월 검색 ${fmtN(i.volume)})`).join('\n\n')+`\n\n<button class="btn sub sm" onclick="openItem('${hit[0].id}')">상세 · 그래프 보기</button>`;
+  if(/떨어|하락|내려/.test(t)){const d=S.items.filter(i=>delta(i)<0);return d.length?`어제보다 떨어진 키워드 ${d.length}개예요.\n\n`+d.map(i=>`• ${esc(i.keyword)} (${esc(i.name)}) ${fmtRank(cur(i))} ${dHtml(delta(i))}`).join('\n')+`\n\n하락할 때 바로 알림을 받아볼까요? "떨어지면 12시, 18시에 알려줘"라고 말해보세요.`:'떨어진 키워드가 없어요 👍'}
+  if(/오른|상승|올라/.test(t)){const d=S.items.filter(i=>delta(i)>0);return d.length?`어제보다 오른 키워드 ${d.length}개예요 🎉\n\n`+d.map(i=>`• ${esc(i.keyword)} ${fmtRank(cur(i))} ${dHtml(delta(i))}`).join('\n'):'오른 키워드가 없어요'}
+  if(/1페이지|상위|10위|top/i.test(t)){const d=S.items.filter(i=>cur(i)!=null&&cur(i)<=10);return `10위 안 키워드 ${d.length}개:\n`+d.map(i=>`• ${esc(i.keyword)} ${cur(i)}위`).join('\n')}
+  if(/요약|현황|어때|정리|브리핑/.test(t)){const it=S.items,b=k=>it.filter(i=>i.type===k);
+    return `📊 오늘 순위 요약\n\n`+Object.entries(TYPES).map(([k,v])=>{const a=b(k);return `<b>${v.t}</b> ${a.length}개 · 상승 ${a.filter(i=>delta(i)>0).length} · 하락 ${a.filter(i=>delta(i)<0).length} · 순위 밖 ${a.filter(i=>cur(i)==null).length}`}).join('\n')+
+    `\n\n가장 많이 오른 키워드: ${(()=>{const x=[...it].sort((a,b)=>delta(b)-delta(a))[0];return x&&delta(x)>0?`${esc(x.keyword)} ${dHtml(delta(x))}`:'없음'})()}`}
+  if(/등록|추가/.test(t))return '등록할 <b>플레이스·스마트스토어·블로그 URL</b>을 키워드와 함께 보내주세요.\n예) https://m.place.naver.com/restaurant/1234567 강남 맛집, 역삼 맛집';
+  if(/광고|무료|요금|가격|pro|결제/i.test(t))return `무료는 조회할 때 5초 광고 후 결과를 보여드려요. PRO(월 9,900원)는 광고 없이 카톡·문자 알림까지 쓸 수 있어요.\n<button class="btn sub sm" onclick="go('plan')">요금제 보기</button>`;
+  if(/엑셀|csv|일괄|대량/i.test(t))return '각 목록 화면 아래 <b>엑셀 일괄 등록</b>에서 CSV(유형,키워드,대상,MID,그룹)를 올리면 한 번에 등록돼요.';
+  return `제가 할 수 있는 일이에요:\n• URL 붙여넣고 등록 — "링크 + 키워드"\n• 순위 질문 — "캠핑의자 몇 위야?"\n• 변동 확인 — "떨어진 키워드 알려줘"\n• 알림 예약 — "평일 9시, 18시에 카톡으로 보내줘"\n• 키워드 추천 — "강남 키워드 추천해줘"`}
+function register(u,kws){
+  const add=kws.map(k=>mkItem(u.type,k,u.name,u.mid,fakeRank(u.type,k,u.name)));S.items.unshift(...add);
+  return `✅ ${u.typeName} <b>${esc(u.name)}</b> 등록 완료\n`+add.map(i=>`• ${esc(i.keyword)}`).join('\n')+`\n\n오늘부터 매일 자동으로 순위를 기록해요.\n<button class="btn sm" onclick="gate(()=>showResult(S.items.find(i=>i.id==='${add[0].id}'),false))">지금 순위 확인하기</button>`}
+function makeSchedule(t,hit){
+  let times=[];const ev=t.match(/(\d+)\s*시간\s*마다/);
+  if(ev)for(let h=9;h<=21;h+=+ev[1])times.push(pad(h)+':00');
+  else for(const m of t.matchAll(/(오전|오후|저녁|밤)?\s*(\d{1,2})\s*시\s*(?:(\d{1,2})\s*분|(반))?/g)){let h=+m[2];if(/오후|저녁|밤/.test(m[1]||'')&&h<12)h+=12;if(h<24)times.push(pad(h)+':'+(m[3]?pad(m[3]):m[4]?'30':'00'))}
+  times=[...new Set(times)].sort();
+  const days=/평일/.test(t)?[1,2,3,4,5]:/주말/.test(t)?[0,6]:[0,1,2,3,4,5,6];
+  const th=t.match(/(\d+)\s*위\s*(밖|아래|이하|밑)/);
+  const cond=th?'out':/떨어|하락/.test(t)?'drop':/변동|바뀌|변하/.test(t)?'change':'always';
+  const type=/플레이스/.test(t)?'place':/쇼핑|스토어/.test(t)?'shop':/블로그/.test(t)?'blog':'all';
+  const ch={push:true,kakao:/카톡|카카오/.test(t),sms:/문자|sms/i.test(t)};
+  const s={id:uid(),name:hit.length?hit[0].keyword+' 알림':(type==='all'?'순위':TYPES[type].t)+' 알림',type:hit.length?'all':type,ids:hit.map(i=>i.id),times,days,cond,th:th?+th[1]:10,ch,on:true};
+  S.schedules.push(s);
+  const miss=['kakao','sms'].filter(k=>ch[k]&&!S.ch[k]);
+  return `⏰ 알림을 예약했어요\n\n• 시간: ${times.join(', ')} (${days.length===7?'매일':days.length===5?'평일':'주말'})\n• 대상: ${hit.length?hit.map(i=>esc(i.keyword)).join(', '):(type==='all'?'전체 키워드':TYPES[type].t)}\n• 조건: ${cond==='out'?s.th+'위 밖으로 밀리면':COND[cond]}\n• 받는 곳: ${chLabel(s).join(', ')}\n\n미리보기:\n<span class="small muted">${esc(msgFor(s)||'(현재는 조건에 맞는 변동 없음)').split('\n').slice(0,3).join('\n')}</span>`+
+    (miss.length?`\n\n⚠️ ${miss.map(k=>k==='kakao'?'카카오톡':'문자').join('·')} 번호가 아직 연결되지 않았어요.\n<button class="btn sm" onclick="go('channels')">받는 곳 연결하기</button>`:`\n<button class="btn sub sm" onclick="go('alert')">알림 예약 보기</button>`)}
+function recommend(t,hit){
+  const base=hit[0]||S.items.find(i=>i.type==='place'),word=(t.match(/([가-힣]+?)(?:\s*(?:키워드|지역))?\s*(?:관련\s*)?추천/)||[])[1];
+  const region=(word&&!/키워드|추천/.test(word)?word:null)||(base?base.keyword.split(' ')[0]:'강남');
+  const suf=['맛집','데이트','회식','점심','술집','가볼만한곳','브런치','고기집'];
+  RECO=suf.map(s=>({kw:region+' '+s,vol:(hash(region+s)%80+3)*610,comp:['낮음','보통','높음'][hash(s+region)%3]})).sort((a,b)=>b.vol-a.vol).slice(0,6);
+  return `🔎 <b>${esc(region)}</b> 연관 키워드 추천 (월 검색량순)\n\n`+RECO.map((r,i)=>`${i+1}. ${esc(r.kw)} · ${fmtN(r.vol)}회 · 경쟁 ${r.comp}`).join('\n')+
+    (base?`\n\n<b>${esc(base.name)}</b>로 추적할 키워드를 눌러보세요:\n`+RECO.map((r,i)=>`<button class="chip" style="margin:3px 2px 0 0" onclick="addReco(${i},'${base.id}',this)">+ ${esc(r.kw)}</button>`).join(''):'')}
+function addReco(i,bid,el){const b=S.items.find(x=>x.id===bid),r=RECO[i];if(!b||!r)return;
+  S.items.unshift(mkItem(b.type,r.kw,b.name,b.mid,fakeRank(b.type,r.kw,b.name),b.group));el.disabled=true;el.textContent='✓ '+r.kw;toast(r.kw+' 추적 시작')}
+
+/* --- 전체 메뉴 트리 (참고: 애드로그·애드랭크·셀러닷컴) ---
+   go: 이미 만든 화면, 없으면 기획 중 페이지(m/키)로 이동 */
+const TREE=[
+  {k:'quick',g:'바로 조회',n:'바로 조회',i:'refresh',items:[
+    {k:'once',t:'바로 조회',d:'플레이스·쇼핑·블로그 순위를 등록 없이 바로 확인',go:"go('once')",src:'애드로그(1회 순위 조회)'}]},
+  {k:'place',g:'플레이스',n:'플레이스',i:'pin',items:[
+    {k:'place',t:'플레이스 순위 체크',go:"go('place')",src:'애드로그, 셀러닷컴'},
+    {k:'p_compare',t:'순위 비교분석',d:'같은 키워드 상위 업체와 리뷰·저장 수·사진 수 비교',src:'애드로그, 셀러닷컴'},
+    {k:'p_trend',t:'추세·이력 분석',d:'기간별 순위 흐름, 순위 변동 시점과 변경 이력',src:'애드로그, 셀러닷컴'},
+    {k:'p_hidden',t:'히든·상위 키워드 찾기',d:'내 업체가 노출되는 숨은 키워드와 상위권 키워드 발굴',src:'애드로그'},
+    {k:'p_save',t:'저장 수 체크',d:'업체 저장(찜) 수 매일 기록',src:'애드로그'},
+    {k:'p_stats',t:'유입·플레이스 통계',d:'스마트플레이스 유입 통계를 한눈에',src:'애드로그, 셀러닷컴'},
+    {k:'p_report',t:'종합 분석 리포트',d:'업체 상태 종합 진단과 개선 포인트 리포트',src:'애드로그'},
+    {k:'p_stay',t:'숙소 실시간예약 순위',d:'펜션·숙소 실시간 예약 탭 순위',src:'애드로그'},
+    {k:'p_feedback',t:'AI 플레이스 피드백',d:'AI가 업체 정보·리뷰를 보고 개선점 제안',src:'셀러닷컴, 애드로그(AI 인사이트)'}]},
+  {k:'shop',g:'쇼핑',n:'쇼핑',i:'cart',items:[
+    {k:'shop',t:'N 가격비교 순위 체크',go:"go('shop')",src:'애드로그, 셀러닷컴'},
+    {k:'s_store',t:'스마트스토어 순위 체크',d:'N+ 스토어 단독 상품 순위',src:'애드로그'},
+    {k:'s_compare',t:'가격비교 비교분석',d:'상위 상품과 가격·리뷰·판매처 비교',src:'셀러닷컴'},
+    {k:'s_keyword',t:'쇼핑 키워드 분석',d:'쇼핑 키워드 검색량·경쟁 상품 수',src:'애드로그'},
+    {k:'s_market',t:'오픈마켓 순위 체크',d:'쿠팡, 11번가, SSG, 오늘의집, 무신사, 컬리, 카카오선물하기·톡딜',src:'애드로그'}]},
+  {k:'blog',g:'블로그·콘텐츠',n:'블로그',i:'doc',items:[
+    {k:'blog',t:'블로그 순위 체크',go:"go('blog')",src:'애드로그'},
+    {k:'b_level',t:'블로그 지수·계정 분석',d:'블로그 등급, 최근 글 노출 상태, 계정 정보',src:'애드로그'},
+    {k:'b_check',t:'블로그 글 검사',d:'글 누락·노출 여부 상시 체크',src:'애드로그, 셀러닷컴(247 블로그 체크)'},
+    {k:'b_bulk',t:'블로그 키워드 대량 분석',d:'키워드 여러 개를 한 번에 노출·경쟁도 분석',src:'애드로그'},
+    {k:'b_etc',t:'인플루언서·클립·지식인·카페 순위',d:'블로그 외 콘텐츠 탭 순위 체크',src:'애드로그'},
+    {k:'b_block',t:'스마트블록·인기글 노출',d:'스마트블록, 인기글 영역 노출 확인',src:'애드로그'}]},
+  {k:'kw',g:'검색·키워드',n:'키워드',i:'search',items:[
+    {k:'k_volume',t:'키워드 검색량 조회',d:'월간 PC·모바일 검색량, 경쟁도',src:'애드로그, 셀러닷컴'},
+    {k:'k_related',t:'연관검색어·자동완성',d:'연관검색어·자동완성 조회 및 노출 체크',src:'애드로그'},
+    {k:'k_ai',t:'AI 키워드 생성',d:'업종·지역을 넣으면 AI가 공략 키워드 추천',src:'셀러닷컴'},
+    {k:'k_total',t:'통합검색 노출 모니터링',d:'통합검색 첫 화면 노출 영역 추적',src:'애드랭크, 애드로그'},
+    {k:'k_power',t:'파워링크 순위·입찰가',d:'파워링크 노출 순위와 입찰가 분석',src:'애드랭크, 애드로그'},
+    {k:'k_web',t:'웹사이트 순위 체크',d:'웹사이트 영역 순위',src:'애드로그'},
+    {k:'k_daum',t:'다음·카카오 순위',d:'다음 플레이스, 통합웹, 카카오 트렌드랭킹',src:'애드로그'}]},
+  {k:'alert',g:'알림·AI',n:'알림·AI',i:'bell',items:[
+    {k:'alert',t:'알림 예약',go:"go('alert')",src:'애드로그(문자알림)'},
+    {k:'inbox',t:'받은 알림',go:"go('alert','inbox')"},
+    {k:'channels',t:'알림 받는 곳 (앱·카톡·문자)',go:"go('channels')"},
+    {k:'ai',t:'AI 비서',go:"go('ai')"}]},
+  {k:'manage',g:'관리',n:'관리',i:'grid',items:[
+    {k:'m_project',t:'프로젝트·그룹 관리',d:'광고주·매장별로 키워드 묶어서 관리',src:'셀러닷컴, 애드로그'},
+    {k:'m_trash',t:'삭제한 키워드',d:'지운 키워드 복구, 기록 보관',src:'애드로그'},
+    {k:'m_csv',t:'엑셀 일괄 등록',go:'importCsv()',src:'애드로그, 셀러닷컴'},
+    {k:'m_export',t:'엑셀 내보내기',go:'exportCsv()'}]},
+  {k:'tool',g:'도구',n:'도구',i:'file',items:[
+    {k:'t_resize',t:'이미지 대량 리사이징',d:'플레이스·블로그용 사진 크기 일괄 변환',src:'애드로그'},
+    {k:'t_count',t:'글자 수 세기',d:'공백 포함·제외 글자 수',src:'애드로그'},
+    {k:'t_combine',t:'키워드 조합기',d:'지역×업종 키워드 조합 생성',src:'애드로그'}]},
+  {k:'help',g:'고객센터·내 정보',n:'고객센터',i:'help',items:[
+    {k:'c_notice',t:'공지사항·네이버 공지 모음',d:'서비스 공지 + 스마트플레이스·블로그·통합검색 공지',src:'애드로그, 애드랭크'},
+    {k:'c_faq',t:'자주 묻는 질문',d:'',src:'애드랭크'},
+    {k:'c_ask',t:'1:1 문의 (카톡 채널)',d:'카카오톡 채널 상담 연결',src:'세 곳 공통'},
+    {k:'plan',t:'요금제·결제',go:"go('plan')",src:'애드랭크, 셀러닷컴(상점)'},
+    {k:'c_point',t:'포인트·충전',d:'조회권·문자 발송용 포인트',src:'애드로그, 셀러닷컴'},
+    {k:'c_my',t:'내 정보·추천인 코드',d:'계정, 추천인 코드, 가입 내역',src:'애드로그'}]}];
+const ALL=TREE.flatMap(g=>g.items.map(it=>({...it,g:g.g,gk:g.k})));
+const MENUS={home:['홈','home'],...Object.fromEntries(TREE.map(g=>[g.k,[g.n,g.i]]))};
+const NO={}; // PC 사이드바 그룹 펼침 상태
+const curKey=()=>route==='m'?sub:route==='alert'&&sub==='inbox'?'inbox':route;
+const curGroup=()=>ALL.find(x=>x.k===curKey())?.gk;
+function openMenu(k){const it=ALL.find(x=>x.k===k);if(!it)return;it.go?Function(it.go)():go('m',k)}
+function openGroup(k){if(curGroup()!==k)openMenu(TREE.find(g=>g.k===k).items[0].k)}
+let MQ='';
+function renderMore(){
+  const L=(i,t,fn,right='')=>`<button class="listlink" onclick="${fn}"><span class="ico">${ic(i,18)}</span><span class="grow">${t}</span>${right}<span class="muted">›</span></button>`;
+  const q=MQ.trim(),groups=TREE.map(g=>({...g,items:g.items.filter(it=>!q||(it.t+(it.d||'')).includes(q))})).filter(g=>g.items.length);
+  return `<div class="card" style="background:linear-gradient(135deg,#3b5bfd,#8b5cf6);color:#fff;cursor:pointer" onclick="go('plan')">
+      <div class="small" style="opacity:.85">현재 요금제</div><div style="font-size:22px;font-weight:800;margin:4px 0">${S.plan==='free'?'무료 (광고 포함)':S.plan.toUpperCase()}</div>
+      <div class="small" style="opacity:.9">${S.plan==='free'?'PRO로 광고 없이 카톡·문자 알림까지 →':'광고 없이 이용 중이에요'}</div></div>
+    <input class="input" style="margin-bottom:12px;background:var(--card)" placeholder="메뉴 검색 (예: 저장, 쿠팡, 검색량)" value="${esc(MQ)}" oninput="MQ=this.value;clearTimeout(window._mq);window._mq=setTimeout(()=>{render();const e=document.querySelector('main input');e.focus();e.setSelectionRange(99,99)},250)">
+    ${groups.map(g=>`<details class="card grp" ${q||curGroup()===g.k?'open':''}><summary><h3>${ic(g.i,18)} ${g.g}<span class="more">${g.items.length}</span></h3></summary>${g.items.map(it=>`<button class="listlink" onclick="${it.go||`go('m','${it.k}')`}">
+      <span class="grow">${it.t}${it.d?`<div class="tiny muted" style="font-weight:500;margin-top:2px">${it.d}</div>`:''}</span>
+      ${it.go?'':`<span class="tag">기획 중</span>`}<span class="muted">›</span></button>`).join('')}</details>`).join('')||'<div class="empty">찾는 메뉴가 없어요</div>'}
+    <div class="card"><h3>설정</h3>
+      ${L('grid','메뉴 · 홈 화면 편집',"go('menuedit')")}
+      ${L('moon','화면 테마',"cycleTheme()",`<span class="small muted">${{auto:'시스템',light:'라이트',dark:'다크'}[S.theme]}</span>`)}
+      ${L('phone','홈 화면에 앱 설치',"installApp()",`<span class="small muted">${matchMedia('(display-mode: standalone)').matches?'설치됨':''}</span>`)}
+      ${L('book','기획서 (구상 단계 메모)',"go('spec')")}
+      ${L('doc','전달된 기획 모아보기',"go('notes')")}
+      ${L('refresh','데모 데이터 처음으로',"location.reload()")}</div>`}
+/* --- 기획 중 메뉴의 예시 화면 (가짜 데이터) --- */
+const T=(cols,rows)=>`<div class="tw"><table class="dtable"><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</table></div>`;
+const K=a=>`<div class="stats" style="margin-bottom:12px">${a.map(([l,v,c=''])=>`<div><b class="${c}">${v}</b><span>${l}</span></div>`).join('')}</div>`;
+const BAR=(p,c='var(--pri)')=>`<span class="bar2"><i style="width:${p}%;background:${c}"></i></span>`;
+const U=n=>`<span class="up">▲${n}</span>`,Dn=n=>`<span class="down">▼${n}</span>`,ME=s=>`<b style="color:var(--pri)">${s}</b>`;
+const DEMO={
+  p_compare:()=>`<div class="small muted" style="margin-bottom:8px">키워드 <b>강남역 고기집</b> 상위 5곳 비교</div>`+T(['순위','업체','방문자리뷰','블로그리뷰','저장','사진'],[
+    [1,'숯불대장','3,412','1,208','12,940','842'],[2,ME('홍길동 숯불갈비'),ME('2,115'),ME('640'),ME('8,301'),ME('415')],[3,'한우명가 본점','4,870','2,011','15,220','1,130'],[4,'온기식당','1,902','522','6,114','288'],[5,'육풍','2,640','931','9,870','506']])+
+    `<div class="small" style="margin-top:10px">내 업체는 1위보다 <b>방문자리뷰 1,297개</b>, <b>사진 427장</b> 적어요.</div>`,
+  p_trend:()=>K([['30일 평균','3.8위'],['최고','1위','up'],['최저','9위','down'],['TOP3 유지','21일']])+T(['날짜','순위','변동','메모'],[
+    ['10/29','2위',U(1),'리뷰 이벤트 시작'],['10/28','3위',Dn(2),''],['10/27','1위',U(1),'사진 20장 추가'],['10/26','2위','-',''],['10/25','2위',U(4),'영업시간 수정']]),
+  p_hidden:()=>`<div class="small muted" style="margin-bottom:8px"><b>홍길동 숯불갈비</b>가 노출되는 숨은 키워드</div>`+T(['키워드','순위','월 검색량','경쟁'],[
+    ['강남 갈비 맛집','3위','6,820','보통'],['역삼 소갈비','1위','1,240','낮음'],['강남 단체 회식 장소','5위','3,310','보통'],['신논현 숯불구이','2위','980','낮음'],['강남역 데이트 고기','8위','4,560','높음']]),
+  p_save:()=>K([['오늘 저장','8,301'],['어제 대비','+42','up'],['7일 증가','+268','up'],['30일 증가','+1,104','up']])+T(['날짜','저장 수','증감'],[
+    ['10/29','8,301',U(42)],['10/28','8,259',U(37)],['10/27','8,222',U(51)],['10/26','8,171',U(29)]]),
+  p_stats:()=>K([['이번 주 유입','4,812'],['지난주 대비','+12%','up'],['길찾기','634'],['전화','118']])+T(['유입 경로','비중',''],[
+    ['플레이스 검색','46%',BAR(46)],['지도 검색','28%',BAR(28)],['블로그 리뷰','14%',BAR(14)],['외부(SNS 등)','12%',BAR(12)]]),
+  p_report:()=>K([['종합 점수','78점'],['정보 완성도','92%'],['리뷰 활성도','보통'],['사진','415장']])+
+    `<div class="small" style="line-height:1.8"><b>개선 포인트</b><br>1. 최근 30일 사진 업로드 0건 → 주 1회 이상 권장<br>2. 리뷰 답글 응답률 38% → 70% 이상 권장<br>3. 메뉴 가격 미등록 4개</div>`,
+  p_stay:()=>`<div class="small muted" style="margin-bottom:8px">키워드 <b>가평 펜션</b> 실시간 예약 탭 · 11/1(토) 1박</div>`+T(['순위','숙소','가격','예약 가능'],[
+    [1,'가평 리버뷰','189,000원','O'],[2,ME('하이어 스테이'),ME('165,000원'),ME('O')],[3,'숲속의 아침','210,000원','마감'],[4,'청평 노을펜션','149,000원','O']]),
+  p_feedback:()=>`<div class="msg bot" style="max-width:100%">홍길동 숯불갈비 플레이스를 확인했어요.\n\n• 대표 사진이 실내 사진이에요. 고기 굽는 사진으로 바꾸면 클릭률이 오를 가능성이 높아요.\n• 소개글에 "강남역 회식" 키워드가 없어요. 실제 유입 상위 키워드라 넣는 걸 추천해요.\n• 최근 리뷰 3건에 "주차" 불만이 있어요. 주차 안내를 정보란에 추가해보세요.</div>`,
+  s_store:()=>T(['키워드','상품','순위','변동'],[
+    ['경량 캠핑의자','하이어 경량 캠핑의자','12위',U(3)],['캠핑 체어','하이어 경량 캠핑의자','38위',Dn(5)],['폴딩테이블','하이어 폴딩테이블','7위','-']]),
+  s_compare:()=>`<div class="small muted" style="margin-bottom:8px">키워드 <b>캠핑의자</b> 가격비교 상위</div>`+T(['순위','상품','최저가','리뷰','판매처'],[
+    [1,'헬리녹스 체어원','139,000원','12,840','42'],[2,'코멧 경량 캠핑체어','39,900원','8,201','18'],[3,'캠프타운 릴렉스','52,000원','5,410','11'],['…','…','','',''],[23,ME('하이어 경량 캠핑의자'),ME('29,900원'),ME('1,204'),ME('3')]]),
+  s_keyword:()=>T(['키워드','월 검색량','상품 수','경쟁 강도'],[
+    ['캠핑의자','74,100','182,340','매우 높음'],['경량 캠핑의자','12,300','21,870','높음'],['릴렉스 체어','8,450','9,120','보통'],['캠핑의자 추천','5,980','4,402','낮음']]),
+  s_market:()=>T(['마켓','키워드','상품','순위'],[
+    ['쿠팡','캠핑의자','하이어 경량 캠핑의자','17위'],['11번가','캠핑의자','하이어 경량 캠핑의자','9위'],['SSG','캠핑의자','하이어 경량 캠핑의자','31위'],['오늘의집','캠핑의자','하이어 경량 캠핑의자','순위 밖'],['카카오선물하기','텀블러','데일리 텀블러 500ml','4위']]),
+  b_level:()=>K([['블로그 지수','준최적화 3'],['최근 글 노출률','82%'],['일 방문자','1,240'],['이웃','3,102']])+T(['최근 글','작성일','노출'],[
+    ['강남역 고기 맛집 BEST 5','10/28','O'],['제주 감성숙소 후기','10/25','O'],['다이어트 도시락 비교','10/21','누락']]),
+  b_check:()=>T(['글','키워드','상태','확인 시각'],[
+    ['강남역 고기 맛집 BEST 5','강남 맛집 추천','<span class="up">노출 3위</span>','09:00'],['제주 감성숙소 후기','제주 숙소','<span class="up">노출 15위</span>','09:00'],['다이어트 도시락 비교','다이어트 도시락','<span class="down">누락</span>','09:00']])+
+    `<div class="small muted" style="margin-top:8px">누락되면 알림 예약으로 바로 알려드려요.</div>`,
+  b_bulk:()=>T(['키워드','월 검색량','블로그 글 수','상위 블로그 평균 지수','추천'],[
+    ['강남 맛집','68,200','1,203,440','최적화 2','어려움'],['역삼 점심','8,910','84,120','준최 4','<span class="up">추천</span>'],['선릉 회식','5,220','31,800','준최 3','<span class="up">추천</span>']]),
+  b_etc:()=>T(['영역','키워드','콘텐츠','순위'],[
+    ['인플루언서','제주 숙소','제주 감성숙소 리뷰','4위'],['클립','강남 맛집','고기 굽는 영상','11위'],['지식인','캠핑의자 추천','답변: 경량 의자 고르는 법','2위'],['카페','가평 펜션','캠핑 카페 후기글','6위']]),
+  b_block:()=>T(['키워드','스마트블록 주제','내 글 노출','위치'],[
+    ['강남 맛집','강남역 고기 맛집','O','2번째'],['강남 맛집','회식하기 좋은 곳','X','-'],['제주 숙소','제주 감성 숙소','O','5번째']]),
+  k_volume:()=>T(['키워드','PC','모바일','합계','경쟁'],[
+    ['강남 맛집','9,840','58,360','68,200','높음'],['강남역 고기집','1,120','8,370','9,490','중간'],['역삼 회식','2,030','9,650','11,680','중간'],['캠핑의자','8,900','65,200','74,100','높음']]),
+  k_related:()=>`<div class="small muted" style="margin-bottom:6px">키워드 <b>강남 맛집</b></div><b class="small">연관검색어</b><div class="chips" style="flex-wrap:wrap;margin:6px 0 12px">${['강남역 맛집','강남 데이트','강남 고기집','신논현 맛집','강남 회식','강남 파스타'].map(x=>`<span class="chip">${x}</span>`).join('')}</div><b class="small">자동완성</b><div class="chips" style="flex-wrap:wrap;margin-top:6px">${['강남 맛집 추천','강남 맛집 데이트','강남 맛집 점심','강남 맛집 가성비'].map(x=>`<span class="chip">${x}</span>`).join('')}</div>`,
+  k_ai:()=>`<div class="small muted" style="margin-bottom:8px">업종 <b>고기집</b> · 지역 <b>강남역</b> 입력 결과</div>`+T(['추천 키워드','월 검색량','경쟁','이유'],[
+    ['강남역 고기집','9,490','중간','핵심 지역+업종'],['강남역 회식 장소','4,120','낮음','단체석 강점'],['강남 갈비 맛집','6,820','보통','대표 메뉴'],['강남역 룸식당','2,540','낮음','룸 보유 시']]),
+  k_total:()=>T(['키워드','노출 영역','내 콘텐츠','위치'],[
+    ['강남역 고기집','플레이스','홍길동 숯불갈비','2위'],['강남역 고기집','블로그','강남역 고기 맛집 BEST 5','4번째'],['강남역 고기집','파워링크','홍길동 숯불갈비','3번째'],['강남역 고기집','이미지','-','미노출']]),
+  k_power:()=>T(['키워드','현재 순위','1위 입찰가','3위 입찰가','추천 입찰가'],[
+    ['강남 고기집','3위','3,200원','1,850원','2,100원'],['강남역 회식','1위','2,480원','1,290원','유지'],['역삼 소갈비','5위','910원','620원','700원']]),
+  k_web:()=>T(['키워드','사이트','순위'],[['캠핑의자 브랜드','hi-camp.co.kr','4위'],['하이어 캠핑','hi-camp.co.kr','1위']]),
+  k_daum:()=>T(['서비스','키워드','대상','순위'],[
+    ['다음 플레이스','강남 맛집','홍길동 숯불갈비','6위'],['다음 통합웹','강남 맛집 추천','강남역 고기 맛집 BEST 5','3위'],['카카오 트렌드','강남역','홍길동 숯불갈비','12위']]),
+  m_project:()=>T(['프로젝트','키워드','평균 순위','알림'],[
+    ['내 매장 (홍길동 숯불갈비)','3개','5.7위','ON'],['광고주A (라구앤코)','2개','35위','ON'],['광고주B (네일하우스)','1개','순위 밖','OFF'],['체험단 블로그','3개','9위','ON']]),
+  m_trash:()=>T(['키워드','대상','삭제일',''],[
+    ['압구정 파스타','라구앤코','10/20','<button class="btn sub sm">복구</button>'],['청담 네일','네일하우스','10/12','<button class="btn sub sm">복구</button>']]),
+  t_resize:()=>`<div class="empty" style="border:2px dashed var(--line);border-radius:14px;padding:30px">사진을 여기에 끌어다 놓거나 눌러서 선택<br><span class="small">플레이스 권장 1000×1000 · 블로그 권장 가로 966px</span></div>`,
+  t_count:()=>`<textarea class="input" rows="5" placeholder="글을 붙여넣으면 바로 세어드려요" oninput="const v=this.value;this.nextElementSibling.innerHTML='공백 포함 <b>'+v.length+'</b>자 · 공백 제외 <b>'+v.replace(/\\s/g,'').length+'</b>자 · '+new Blob([v]).size+' byte'">강남역 고기 맛집 BEST 5 솔직후기</textarea><div class="small" style="margin-top:8px">공백 포함 <b>21</b>자 · 공백 제외 <b>17</b>자</div>`,
+  t_combine:()=>`<div class="row" style="align-items:flex-start"><textarea class="input" rows="4" id="cA">강남\n역삼\n선릉</textarea><textarea class="input" rows="4" id="cB">맛집\n회식\n고기집</textarea></div>
+    <button class="btn sub block" style="margin-top:8px" onclick="const a=$('#cA').value.split('\\n').filter(Boolean),b=$('#cB').value.split('\\n').filter(Boolean);$('#cR').textContent=a.flatMap(x=>b.map(y=>x+' '+y)).join(', ')">조합하기</button><div id="cR" class="small" style="margin-top:8px;line-height:1.7">강남 맛집, 강남 회식, 강남 고기집, 역삼 맛집, 역삼 회식, 역삼 고기집, 선릉 맛집, 선릉 회식, 선릉 고기집</div>`,
+  c_notice:()=>T(['구분','제목','날짜'],[
+    ['랭포미','알림 예약에 "N위 밖" 조건이 추가됐어요','10/28'],['스마트플레이스','업체정보 관리 영업 전화를 주의하세요','10/27'],['블로그','블로그·카페 리뷰 수 집계 방식 개선','10/24'],['통합검색','네이버 사칭 사이트 주의 안내','10/20']]),
+  c_faq:()=>['순위가 네이버 앱에서 본 것과 달라요','알림이 안 와요','무료 버전 광고를 끌 수 있나요?','키워드는 몇 개까지 등록되나요?'].map(q=>`<details class="menu-row" style="display:block"><summary style="font-weight:600;cursor:pointer">${q}</summary><div class="small muted" style="margin-top:6px">답변 내용을 여기에 작성해요.</div></details>`).join(''),
+  c_ask:()=>`<div class="kakao"><div class="bub"><div class="h">랭포미 상담</div><div class="b">안녕하세요, 랭포미입니다.\n평일 10:00~18:00 상담 가능해요.\n궁금한 점을 남겨주세요.</div></div></div><button class="btn block" style="margin-top:10px;background:var(--kakao);color:#111">카카오톡 채널로 문의하기</button>`,
+  c_point:()=>K([['보유 포인트','12,400P'],['이번 달 사용','3,600P'],['문자 1건','20P'],['알림톡 1건','10P']])+T(['날짜','내용','포인트'],[
+    ['10/29','알림톡 발송 18건','-180P'],['10/28','포인트 충전','+10,000P'],['10/27','문자 발송 5건','-100P']]),
+  c_my:()=>T(['항목','내용'],[['아이디','rankforme_user'],['요금제','무료'],['가입일','2026-10-01'],['내 추천 코드','RFM7Q2'],['추천으로 가입','3명']])};
+/* --- 기획 전달하기: 메뉴별 기획을 여러 사람이 남기고 모두가 보는 공용 게시판 ---
+   Firebase RTDB rfm/notes/{메뉴키}/{push id} = {a:이름, t:내용, ts}. 규칙: 누구나 읽기·새 글만(수정·삭제 불가), 이름 30자·내용 3000자 */
+const NOTE_DB='https://higherad-b9d62-default-rtdb.asia-southeast1.firebasedatabase.app';
+const NOTE_MAX=3000;
+async function noteFetch(path,opt){
+  const r=await fetch(`${NOTE_DB}/rfm/notes${path?'/'+path:''}.json`,opt);
+  if(!r.ok)throw new Error('HTTP '+r.status);return r.json()}
+const noteRows=o=>Object.entries(o||{}).map(([id,v])=>({id,...v})).sort((a,b)=>b.ts-a.ts);
+const noteHtml=n=>`<div class="list-row" style="display:block"><div class="row"><b class="grow small">${esc(n.a)}</b><span class="tiny muted">${new Date(n.ts).toLocaleString('ko-KR',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}</span></div>
+  <div class="small" style="white-space:pre-line;margin-top:6px;line-height:1.6">${esc(n.t)}</div></div>`;
+async function loadNotes(k){
+  const el=$('#nList');if(!el)return;
+  try{const rows=noteRows(await noteFetch(k));if(route!=='m'||sub!==k)return;
+    $('#nCount').textContent=rows.length?rows.length+'건':'';
+    el.innerHTML=rows.length?rows.map(noteHtml).join(''):'<div class="small muted">아직 전달된 기획이 없어요. 첫 의견을 남겨주세요.</div>'}
+  catch(e){el.innerHTML='<div class="small" style="color:var(--up)">기획을 불러오지 못했어요. 새로고침해 주세요.</div>'}}
+async function sendNote(k){
+  const a=$('#nAuthor').value.trim(),t=$('#nBody').value.trim(),btn=$('#nSend');
+  if(!a)return toast('이름을 입력해주세요');
+  if(!t)return toast('기획 내용을 입력해주세요');
+  if(t.length>NOTE_MAX)return toast(`내용은 ${fmtN(NOTE_MAX)}자까지 저장돼요`);
+  S.author=a;btn.disabled=true;
+  try{await noteFetch(k,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({a:a.slice(0,30),t,ts:Date.now()})});
+    $('#nBody').value='';toast('저장했어요. 모두에게 보여요.');loadNotes(k)}
+  catch(e){toast('저장하지 못했어요. 잠시 후 다시 눌러주세요.')}
+  btn.disabled=false}
+/* 기획 중 메뉴: 개요 + 예시 화면 + 기획 전달하기 */
+function renderStub(){
+  const it=ALL.find(x=>x.k===sub);if(!it)return '<div class="empty">없는 메뉴예요</div>';
+  setTimeout(()=>loadNotes(it.k));
+  return `<div class="card"><div class="row"><span class="tag">${it.g}</span><span class="tag" style="background:var(--pri-soft);color:var(--pri)">기획 중</span></div>
+      <h2 style="margin:10px 0 6px;font-size:21px">${it.t}</h2><div class="muted">${it.d||'설명을 아래에 적어주세요.'}</div>
+      ${it.src?`<div class="small muted" style="margin-top:10px">참고: ${it.src}</div>`:''}</div>
+    ${DEMO[it.k]?`<div class="card"><h3>예시 화면<span class="more">예시 데이터</span></h3>${DEMO[it.k]()}</div>`:''}
+    <div class="card"><h3>기획 전달하기</h3>
+      <input class="input" id="nAuthor" maxlength="30" placeholder="이름 (예: 김대리)" value="${esc(S.author||'')}" style="margin-bottom:8px">
+      <textarea class="input" id="nBody" rows="7" maxlength="${NOTE_MAX}" placeholder="이 메뉴에 들어갔으면 하는 기능, 화면 구성, 참고 사이트 등을 자유롭게 적어주세요."></textarea>
+      <button class="btn block" id="nSend" style="margin-top:10px" onclick="sendNote('${it.k}')">저장</button>
+      <div class="tiny muted" style="margin-top:6px">저장하면 접속한 모든 사람이 볼 수 있어요. 저장한 글은 수정·삭제할 수 없어요.</div></div>
+    <div class="card"><h3>전달된 기획<span class="more" id="nCount"></span></h3><div id="nList"><div class="small muted">불러오는 중</div></div></div>
+    <button class="btn ghost block" onclick="go('more')">전체 메뉴로</button>`}
+/* 전달된 기획 모아보기 (작업용) */
+function renderNotes(){
+  setTimeout(async()=>{const el=$('#allNotes');
+    try{const all=await noteFetch('');if(route!=='notes')return;
+      const html=TREE.map(g=>{const rows=g.items.map(it=>({it,rows:noteRows(all?.[it.k])})).filter(x=>x.rows.length);
+        return rows.length?`<div class="card"><h3>${ic(g.i,18)} ${g.g}</h3>${rows.map(x=>`<div style="margin-bottom:10px"><button class="listlink" style="border:0;padding:6px 0" onclick="go('m','${x.it.k}')"><span class="grow">${x.it.t}</span><span class="tag">${x.rows.length}건</span><span class="muted">›</span></button>${x.rows.map(noteHtml).join('')}</div>`).join('')}</div>`:''}).join('');
+      el.innerHTML=html||'<div class="empty">아직 전달된 기획이 없어요</div>'}
+    catch(e){el.innerHTML='<div class="empty" style="color:var(--up)">기획을 불러오지 못했어요. 새로고침해 주세요.</div>'}});
+  return `<div class="row" style="margin-bottom:12px"><span class="grow small muted">메뉴별로 전달된 기획을 모두 모아 보여줘요</span><button class="btn sub sm" onclick="copyNotes()">전체 복사</button></div><div id="allNotes"><div class="small muted">불러오는 중</div></div>`}
+async function copyNotes(){
+  try{const all=await noteFetch('')||{};
+    const txt=TREE.map(g=>{const rows=g.items.filter(it=>all[it.k]).map(it=>`### ${it.t}\n`+noteRows(all[it.k]).map(n=>`- (${n.a}, ${new Date(n.ts).toLocaleDateString('ko-KR')}) ${n.t.replace(/\n/g,'\n  ')}`).join('\n'));return rows.length?`## ${g.g}\n${rows.join('\n\n')}`:''}).filter(Boolean).join('\n\n');
+    if(!txt)return toast('아직 전달된 기획이 없어요');
+    await navigator.clipboard.writeText('# 랭포미 메뉴별 전달된 기획\n\n'+txt);toast('전달된 기획을 모두 복사했어요')}
+  catch(e){toast('복사하지 못했어요')}}
+function cycleTheme(){S.theme={auto:'light',light:'dark',dark:'auto'}[S.theme];render()}
+function renderMenuEdit(){
+  const n=S.menus.filter(x=>x.on).length;
+  return `<div class="card"><h3>하단 메뉴</h3><div class="small muted" style="margin-bottom:6px">켜고 끄고 순서를 바꿀 수 있어요. 모바일 하단엔 위에서부터 4개 + 더보기가 보여요.</div>
+    ${S.menus.map((m,i)=>`<div class="menu-row"><span class="ico" style="color:var(--pri)">${ic(MENUS[m.k][1],20)}</span><span class="grow" style="font-weight:600">${MENUS[m.k][0]}${m.on&&S.menus.filter(x=>x.on).indexOf(m)<4?' <span class="tag">하단</span>':''}</span>
+      <button class="iconbtn" ${i?'':'disabled style="opacity:.25"'} onclick="mvMenu(${i},-1)">▲</button><button class="iconbtn" ${i<S.menus.length-1?'':'disabled style="opacity:.25"'} onclick="mvMenu(${i},1)">▼</button>
+      <label class="switch"><input type="checkbox" ${m.on?'checked':''} ${m.on&&n<=1?'disabled':''} onchange="S.menus[${i}].on=this.checked;render()"><span></span></label></div>`).join('')}</div>
+    <div class="card"><h3>홈 화면 위젯</h3>
+    ${[['summary','오늘 순위 요약'],['quick','바로 조회'],['movers','변동 큰 키워드'],['next','다음 순위 알림'],['fav','즐겨찾기']].map(([k,v])=>`<div class="menu-row"><span class="grow" style="font-weight:600">${v}</span><label class="switch"><input type="checkbox" ${S.widgets[k]?'checked':''} onchange="S.widgets.${k}=this.checked"><span></span></label></div>`).join('')}
+    <div class="menu-row"><span class="grow" style="font-weight:600">AI 플로팅 버튼</span><label class="switch"><input type="checkbox" ${S.fab?'checked':''} onchange="S.fab=this.checked;render()"><span></span></label></div></div>`}
+function mvMenu(i,d){const a=S.menus;[a[i],a[i+d]]=[a[i+d],a[i]];render()}
+function renderPlan(){
+  const P=[['free','무료','0원'],['pro','PRO','9,900원'],['biz','BIZ (대행사)','29,000원']];
+  const rows=[['추적 키워드','20개','300개','무제한'],['매일 자동 기록','O','O','O'],['조회 시 광고','있음','없음','없음'],['알림 예약','2개','무제한','무제한'],['앱 푸시 알림','O','O','O'],['카톡·문자 알림','-','월 300건','월 3,000건'],['AI 비서 질문','일 10회','무제한','무제한'],['순위 기록 보관','30일','1년','무제한'],['엑셀 일괄 등록','-','O','O'],['광고주별 리포트 공유','-','-','O']];
+  return `<div class="card"><table class="plan"><tr><th></th>${P.map(p=>`<th>${p[1]}<div class="tiny muted">${p[2]}/월</div></th>`).join('')}</tr>
+    ${rows.map(r=>`<tr>${r.map((c,i)=>`<td>${c}</td>`).join('')}</tr>`).join('')}</table></div>
+    ${P.map(p=>`<button class="btn block ${S.plan===p[0]?'ghost':''}" style="margin-bottom:8px" ${S.plan===p[0]?'disabled':''} onclick="S.plan='${p[0]}';render();toast('${p[1]} 요금제로 변경 (데모)')">${S.plan===p[0]?'현재 이용 중: ':''}${p[1]} ${S.plan===p[0]?'':'로 변경'}</button>`).join('')}
+    <div class="tiny muted" style="text-align:center">데모에서는 결제 없이 전환돼요. 무료로 바꾸면 조회 시 광고가 다시 나와요.</div>`}
+
+function renderSpec(){
+  return `<div class="card spec"><h3>랭포미 기획 요약 (구상 단계)</h3>
+  <h4>1. 타깃 · 핵심 가치</h4><ul><li>자영업자·스토어 셀러·블로거·마케팅 대행사</li><li>"PC 켜지 않고 폰에서 3초 만에 내 순위 확인" + "안 봐도 정해진 시간에 알려줌"</li></ul>
+  <h4>2. 조회 대상</h4><ul><li><b>플레이스</b>: 키워드 + 업체(MID) → 순위(최대 300위), 리뷰·저장 수, 상위 업체 비교</li><li><b>쇼핑</b>: 키워드 + 상품(스마트스토어/카탈로그 MID) → 순위, 가격·리뷰</li><li><b>블로그</b>: 키워드 + 글 URL → VIEW/블로그 탭 노출 순위</li></ul>
+  <h4>3. 핵심 기능</h4><ul><li>바로 조회 / 추적 등록(매일 자동 기록, 30일 그래프)</li><li>AI 비서: URL·자연어로 자동 등록, 순위 질의응답, 알림 예약, 키워드 추천</li><li>알림 예약: 시간(여러 개)·요일·조건(매번/변동/하락/N위 밖) × 앱 푸시·카톡 알림톡·문자</li><li>메뉴·홈 위젯 커스텀, 즐겨찾기, 그룹, 메모, 엑셀 입출력, 공유</li><li>무료: 조회 시 5초 광고 → 닫으면 결과 / 유료: 광고 제거 + 카톡·문자</li></ul>
+  <h4>4. 앱처럼 쓰기 (PWA)</h4><ul><li>홈 화면 설치, 전체화면, 오프라인 캐시, 웹 푸시(안드로이드·iOS 16.4+)</li><li>추후 필요 시 TWA로 감싸서 플레이스토어 등록 가능 (코드 재사용)</li></ul>
+  <h4>5. 실서비스 구조 (안)</h4><ul><li>조회 엔진: 서버에서 네이버 검색 결과 수집 → 키워드+MID 매칭 (애드로그 방식: 키워드·MID 단건 조회 → <code>{rank, 월 검색량}</code>)</li><li>스케줄러: 매일 정해진 시각 전체 키워드 기록 + 사용자 알림 시각 직전 재조회 후 발송</li><li>알림: 웹푸시(VAPID), 카카오 알림톡(비즈채널·템플릿 심사), 문자(SMS/LMS 대행사 API)</li><li>AI: LLM 함수 호출(등록·조회·알림예약 함수) + 사용자 데이터 기반 답변</li><li>DB: 사용자·키워드·일별 순위·알림 예약·발송 이력</li></ul>
+  <h4>6. 확인 필요</h4><ul><li>네이버 수집 방식·차단 대응, 조회 단가(키워드 수 × 일 횟수)</li><li>알림톡 템플릿 문구 심사, 문자 발송 단가 → 요금제 포함 수량</li><li>광고 네트워크(애드센스/애드핏 등) 정책: 결과 가리는 전면 광고 허용 여부</li></ul></div>`}
+
+/* --- PWA --- */
+let deferred=null;
+addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e});
+function installApp(){
+  if(deferred){deferred.prompt();deferred=null;return}
+  if(matchMedia('(display-mode: standalone)').matches)return toast('이미 앱으로 실행 중이에요');
+  sheet(`<h2>홈 화면에 설치하기</h2><div class="spec"><h4>안드로이드 (크롬/삼성인터넷)</h4><ul><li>주소창 메뉴(⋮) → <b>앱 설치</b> 또는 <b>홈 화면에 추가</b></li></ul>
+    <h4>아이폰 (사파리)</h4><ul><li>하단 공유 버튼(□↑) → <b>홈 화면에 추가</b></li><li>설치 후 열어야 푸시 알림을 받을 수 있어요 (iOS 16.4+)</li></ul></div>
+    <button class="btn block" style="margin-top:16px" onclick="closeSheet()">확인</button>`)}
+if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
+
+S.menus=Object.keys(MENUS).map(k=>({k,on:true}));
+{const [r,s]=location.hash.slice(2).split('/');route=r||'home';sub=s||''}
+render();
+</script>
+</body>
+</html>
