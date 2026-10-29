@@ -349,7 +349,7 @@ function render(){
     if(mobile||!g||g.items.length===1)return `<button class="${act(k)?'on':''}" onclick="${g?`openGroup('${k}')`:"go('home')"}">${ic(MENUS[k][1])}${MENUS[k][0]}</button>`;
     const open=NO[k]??act(k);
     return `<button class="${act(k)?'on':''}" onclick="NO['${k}']=${!open};render()">${ic(MENUS[k][1])}<span class="grow">${g.g}</span><span class="car">${open?'▾':'▸'}</span></button>`+
-      (open?`<div class="subs">${g.items.map(it=>`<button class="sb ${key===it.k?'on':''}" onclick="openMenu('${it.k}')"><span class="grow">${it.t}</span>${it.go?'':'<i title="기획 중"></i>'}</button>`).join('')}</div>`:'')};
+      (open?`<div class="subs">${g.items.map(it=>`<button class="sb ${key===it.k?'on':''}" onclick="openMenu('${it.k}')"><span class="grow">${it.t}</span></button>`).join('')}</div>`:'')};
   $('#nav').innerHTML=`<div class="brand" onclick="go('home')"><b>랭포미</b><span>RankForMe</span></div>`+shown.map(btn).join('')+
     `<button class="${shown.some(act)?'':'on'}" onclick="go('more')">${ic('menu')}전체 메뉴</button>`;
   $('#fabIco').innerHTML=ic('spark',20);$('#fab').style.display=S.fab&&route!=='ai'?'':'none';
@@ -721,7 +721,7 @@ function renderMore(){
     <input class="input" style="margin-bottom:12px;background:var(--card)" placeholder="메뉴 검색 (예: 저장, 쿠팡, 검색량)" value="${esc(MQ)}" oninput="MQ=this.value;clearTimeout(window._mq);window._mq=setTimeout(()=>{render();const e=document.querySelector('main input');e.focus();e.setSelectionRange(99,99)},250)">
     ${groups.map(g=>`<details class="card grp" ${q||curGroup()===g.k?'open':''}><summary><h3>${ic(g.i,18)} ${g.g}<span class="more">${g.items.length}</span></h3></summary>${g.items.map(it=>`<button class="listlink" onclick="${it.go||`go('m','${it.k}')`}">
       <span class="grow">${it.t}${it.d?`<div class="tiny muted" style="font-weight:500;margin-top:2px">${it.d}</div>`:''}</span>
-      ${it.go?'':`<span class="tag">기획 중</span>`}<span class="muted">›</span></button>`).join('')}</details>`).join('')||'<div class="empty">찾는 메뉴가 없어요</div>'}
+      <span class="tag">기획 중</span><span class="muted">›</span></button>`).join('')}</details>`).join('')||'<div class="empty">찾는 메뉴가 없어요</div>'}
     <div class="card"><h3>설정</h3>
       ${L('grid','메뉴 · 홈 화면 편집',"go('menuedit')")}
       ${L('moon','화면 테마',"cycleTheme()",`<span class="small muted">${{auto:'시스템',light:'라이트',dark:'다크'}[S.theme]}</span>`)}
@@ -809,7 +809,7 @@ const noteHtml=n=>`<div class="list-row" style="display:block"><div class="row">
   <div class="small" style="white-space:pre-line;margin-top:6px;line-height:1.6">${esc(n.t)}</div></div>`;
 async function loadNotes(k){
   const el=$('#nList');if(!el)return;
-  try{const rows=noteRows(await noteFetch(k));if(route!=='m'||sub!==k)return;
+  try{const rows=noteRows(await noteFetch(k));if(!$('#nList'))return;
     $('#nCount').textContent=rows.length?rows.length+'건':'';
     el.innerHTML=rows.length?rows.map(noteHtml).join(''):'<div class="small muted">아직 전달된 기획이 없어요. 첫 의견을 남겨주세요.</div>'}
   catch(e){el.innerHTML='<div class="small" style="color:var(--up)">기획을 불러오지 못했어요. 새로고침해 주세요.</div>'}}
@@ -824,22 +824,27 @@ async function sendNote(k){
   catch(e){toast('저장하지 못했어요. 잠시 후 다시 눌러주세요.')}
   btn.disabled=false}
 /* 메뉴 화면 공통 헤더: 그룹·상태 태그, 제목, 설명, 참고 사이트 */
-const pageHead=it=>`<div class="card"><div class="row"><span class="tag">${it.g}</span><span class="tag" style="background:var(--pri-soft);color:var(--pri)">${it.go?'이용 가능':'기획 중'}</span></div>
+/* 아직 전체가 구상 단계라 모든 메뉴를 '기획 중'으로 표시 */
+const pageHead=it=>`<div class="card"><div class="row"><span class="tag">${it.g}</span><span class="tag" style="background:var(--pri-soft);color:var(--pri)">기획 중</span><span class="grow"></span><button class="btn sub sm" onclick="noteSheet('${it.k}')">${ic('doc',16)} 기획 전달</button></div>
       <h2 style="margin:10px 0 6px;font-size:21px">${it.t}</h2><div class="muted">${it.d||''}</div>
       ${it.src?`<div class="small muted" style="margin-top:10px">참고: ${it.src}</div>`:''}</div>`;
-/* 기획 중 메뉴: 개요 + 예시 화면 + 기획 전달하기 */
+/* 기획 중 메뉴: 개요 + 예시 화면 */
 function renderStub(){
   const it=ALL.find(x=>x.k===sub);if(!it)return '<div class="empty">없는 메뉴예요</div>';
-  setTimeout(()=>loadNotes(it.k));
   return `${pageHead(it)}
     ${DEMO[it.k]?`<div class="card"><h3>예시 화면<span class="more">예시 데이터</span></h3>${DEMO[it.k]()}</div>`:''}
-    <div class="card"><h3>기획 전달하기</h3>
+    <button class="btn ghost block" onclick="go('more')">전체 메뉴로</button>`}
+/* 기획 전달 팝업: 모든 메뉴 헤더의 "기획 전달" 버튼 */
+function noteSheet(k){
+  const it=ALL.find(x=>x.k===k);
+  sheet(`<h2>기획 전달하기</h2><div class="small muted">${it.g} &gt; ${it.t}</div>
+    <div style="margin-top:14px">
       <input class="input" id="nAuthor" maxlength="30" placeholder="이름 (예: 김대리)" value="${esc(S.author||'')}" style="margin-bottom:8px">
       <textarea class="input" id="nBody" rows="7" maxlength="${NOTE_MAX}" placeholder="이 메뉴에 들어갔으면 하는 기능, 화면 구성, 참고 사이트 등을 자유롭게 적어주세요."></textarea>
-      <button class="btn block" id="nSend" style="margin-top:10px" onclick="sendNote('${it.k}')">저장</button>
+      <button class="btn block" id="nSend" style="margin-top:10px" onclick="sendNote('${k}')">저장</button>
       <div class="tiny muted" style="margin-top:6px">저장하면 접속한 모든 사람이 볼 수 있어요. 저장한 글은 수정·삭제할 수 없어요.</div></div>
-    <div class="card"><h3>전달된 기획<span class="more" id="nCount"></span></h3><div id="nList"><div class="small muted">불러오는 중</div></div></div>
-    <button class="btn ghost block" onclick="go('more')">전체 메뉴로</button>`}
+    <h3 style="font-size:15px;margin:22px 0 4px;display:flex">전달된 기획<span class="muted small" style="margin-left:auto;font-weight:500" id="nCount"></span></h3><div id="nList"><div class="small muted">불러오는 중</div></div></div>`);
+  loadNotes(k)}
 /* 전달된 기획 모아보기 (작업용) */
 function renderNotes(){
   setTimeout(async()=>{const el=$('#allNotes');
