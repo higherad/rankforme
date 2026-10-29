@@ -29,6 +29,7 @@ header.top h1{font-size:20px;margin:0;flex:1;font-weight:800}
 .plan-badge.pro{background:linear-gradient(90deg,#3b5bfd,#a74bff);color:#fff}
 .iconbtn{position:relative;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:var(--text)}
 .iconbtn:active{background:var(--line)}
+.dot[hidden]{display:none}
 .dot{position:absolute;top:5px;right:4px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--up);color:#fff;font-size:10px;font-weight:800;display:grid;place-items:center}
 main{max-width:760px;margin:0 auto;padding:4px 16px calc(96px + env(safe-area-inset-bottom))}
 nav#nav{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
@@ -337,8 +338,8 @@ function itemCard(it){
 function render(){
   applyTheme();
   const cur=ALL.find(x=>x.k===curKey()),key=curKey(),cg=curGroup(),mobile=innerWidth<900;
-  const titles={home:'홈',notes:'전달된 기획',more:'전체 메뉴',plan:'요금제',menuedit:'메뉴 · 홈 편집',spec:'기획서',channels:'알림 채널 연결'};
-  $('#title').innerHTML=route==='home'&&mobile?'<span class="logo">랭포미</span> <span class="tiny muted" style="font-weight:600">RankForMe</span>':(cur?cur.t:titles[route]||'');
+  const titles={home:'',notes:'전달된 기획',more:'전체 메뉴',plan:'요금제',menuedit:'메뉴 · 홈 편집',spec:'기획서',channels:'알림 채널 연결'};
+  $('#title').innerHTML=route==='home'&&mobile?'<span class="logo">랭포미</span> <span class="tiny muted" style="font-weight:600">RankForMe</span>':(cur?'':titles[route]||''); // 메뉴 화면은 활성 메뉴 표시로 충분해 제목 생략
   $('#planBadge').textContent=S.plan==='free'?'FREE':S.plan.toUpperCase();$('#planBadge').className='plan-badge'+(S.plan!=='free'?' pro':'');
   $('#bellIco').innerHTML=ic('bell');const un=S.inbox.filter(n=>!n.read).length;$('#bellDot').hidden=!un;$('#bellDot').textContent=un;
   // 하단/사이드 메뉴: 모바일은 켜진 메뉴 앞 4개 + 더보기
@@ -354,7 +355,7 @@ function render(){
   $('#fabIco').innerHTML=ic('spark',20);$('#fab').style.display=S.fab&&route!=='ai'?'':'none';
   const f={home:renderHome,place:()=>renderList('place'),shop:()=>renderList('shop'),blog:()=>renderList('blog'),alert:renderAlert,ai:renderAI,more:renderMore,plan:renderPlan,menuedit:renderMenuEdit,spec:renderSpec,channels:renderChannels,m:renderStub,notes:renderNotes,once:renderOnce}[route]||renderHome;
   const g=TREE.find(t=>t.k===cg);
-  $('#main').innerHTML=(mobile&&g&&g.items.length>1?`<div class="chips subbar">${g.items.map(it=>`<button class="chip ${key===it.k?'on':''}" onclick="openMenu('${it.k}')">${it.t}</button>`).join('')}</div>`:'')+f();
+  $('#main').innerHTML=(mobile&&g&&g.items.length>1?`<div class="chips subbar">${g.items.map(it=>`<button class="chip ${key===it.k?'on':''}" onclick="openMenu('${it.k}')">${it.t}</button>`).join('')}</div>`:'')+(cur&&route!=='m'?pageHead(cur):'')+f();
   if(mobile&&g&&g.items.length>1)$('.subbar .on')?.scrollIntoView({inline:'center',block:'nearest'});
   if(route==='ai'){scrollChat();$('#aiInput')?.focus({preventScroll:true})}
 }
@@ -500,7 +501,7 @@ setInterval(tick,15000);
 function renderAlert(){
   const tab=sub==='inbox'?'inbox':'sched';
   if(tab==='inbox'){S.inbox.forEach(n=>n.read=true);setTimeout(()=>{$('#bellDot').hidden=true},0)}
-  let h=`<div class="seg" style="margin-bottom:12px"><button class="${tab==='sched'?'on':''}" onclick="go('alert')">알림 예약</button><button class="${tab==='inbox'?'on':''}" onclick="go('alert','inbox')">받은 알림</button></div>`;
+  let h=''; // 알림 예약·받은 알림 전환은 하위 메뉴로
   if(tab==='inbox')return h+(S.inbox.length?S.inbox.map(n=>`<div class="card"><div class="row"><b class="grow">${esc(n.title)}</b><span class="tiny muted">${new Date(n.ts).toLocaleString('ko-KR',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}</span></div>
     <div class="small" style="white-space:pre-line;margin-top:8px;line-height:1.6">${esc(n.body)}</div><div class="row" style="margin-top:8px;gap:4px">${n.ch.map(c=>`<span class="tag">${c}</span>`).join('')}</div></div>`).join(''):'<div class="empty">받은 알림이 없어요</div>');
   const chOk=S.ch.push||S.ch.kakao||S.ch.sms;
@@ -652,7 +653,7 @@ const TREE=[
   {k:'quick',g:'바로 조회',n:'바로 조회',i:'refresh',items:[
     {k:'once',t:'바로 조회',d:'플레이스·쇼핑·블로그 순위를 등록 없이 바로 확인',go:"go('once')",src:'애드로그(1회 순위 조회)'}]},
   {k:'place',g:'플레이스',n:'플레이스',i:'pin',items:[
-    {k:'place',t:'플레이스 순위 체크',go:"go('place')",src:'애드로그, 셀러닷컴'},
+    {k:'place',t:'플레이스 순위 체크',d:'등록한 키워드의 플레이스 순위를 매일 자동으로 기록',go:"go('place')",src:'애드로그, 셀러닷컴'},
     {k:'p_compare',t:'순위 비교분석',d:'같은 키워드 상위 업체와 리뷰·저장 수·사진 수 비교',src:'애드로그, 셀러닷컴'},
     {k:'p_trend',t:'추세·이력 분석',d:'기간별 순위 흐름, 순위 변동 시점과 변경 이력',src:'애드로그, 셀러닷컴'},
     {k:'p_hidden',t:'히든·상위 키워드 찾기',d:'내 업체가 노출되는 숨은 키워드와 상위권 키워드 발굴',src:'애드로그'},
@@ -662,13 +663,13 @@ const TREE=[
     {k:'p_stay',t:'숙소 실시간예약 순위',d:'펜션·숙소 실시간 예약 탭 순위',src:'애드로그'},
     {k:'p_feedback',t:'AI 플레이스 피드백',d:'AI가 업체 정보·리뷰를 보고 개선점 제안',src:'셀러닷컴, 애드로그(AI 인사이트)'}]},
   {k:'shop',g:'쇼핑',n:'쇼핑',i:'cart',items:[
-    {k:'shop',t:'N 가격비교 순위 체크',go:"go('shop')",src:'애드로그, 셀러닷컴'},
+    {k:'shop',t:'N 가격비교 순위 체크',d:'가격비교·스토어 상품 순위를 매일 자동으로 기록',go:"go('shop')",src:'애드로그, 셀러닷컴'},
     {k:'s_store',t:'스마트스토어 순위 체크',d:'N+ 스토어 단독 상품 순위',src:'애드로그'},
     {k:'s_compare',t:'가격비교 비교분석',d:'상위 상품과 가격·리뷰·판매처 비교',src:'셀러닷컴'},
     {k:'s_keyword',t:'쇼핑 키워드 분석',d:'쇼핑 키워드 검색량·경쟁 상품 수',src:'애드로그'},
     {k:'s_market',t:'오픈마켓 순위 체크',d:'쿠팡, 11번가, SSG, 오늘의집, 무신사, 컬리, 카카오선물하기·톡딜',src:'애드로그'}]},
   {k:'blog',g:'블로그·콘텐츠',n:'블로그',i:'doc',items:[
-    {k:'blog',t:'블로그 순위 체크',go:"go('blog')",src:'애드로그'},
+    {k:'blog',t:'블로그 순위 체크',d:'블로그 글의 키워드별 노출 순위를 매일 자동으로 기록',go:"go('blog')",src:'애드로그'},
     {k:'b_level',t:'블로그 지수·계정 분석',d:'블로그 등급, 최근 글 노출 상태, 계정 정보',src:'애드로그'},
     {k:'b_check',t:'블로그 글 검사',d:'글 누락·노출 여부 상시 체크',src:'애드로그, 셀러닷컴(247 블로그 체크)'},
     {k:'b_bulk',t:'블로그 키워드 대량 분석',d:'키워드 여러 개를 한 번에 노출·경쟁도 분석',src:'애드로그'},
@@ -683,10 +684,10 @@ const TREE=[
     {k:'k_web',t:'웹사이트 순위 체크',d:'웹사이트 영역 순위',src:'애드로그'},
     {k:'k_daum',t:'다음·카카오 순위',d:'다음 플레이스, 통합웹, 카카오 트렌드랭킹',src:'애드로그'}]},
   {k:'alert',g:'알림·AI',n:'알림·AI',i:'bell',items:[
-    {k:'alert',t:'알림 예약',go:"go('alert')",src:'애드로그(문자알림)'},
-    {k:'inbox',t:'받은 알림',go:"go('alert','inbox')"},
-    {k:'channels',t:'알림 받는 곳 (앱·카톡·문자)',go:"go('channels')"},
-    {k:'ai',t:'AI 비서',go:"go('ai')"}]},
+    {k:'alert',t:'알림 예약',d:'정해진 시간에 순위를 앱·카톡·문자로 받기',go:"go('alert')",src:'애드로그(문자알림)'},
+    {k:'inbox',t:'받은 알림',d:'보내진 순위 알림 모아보기',go:"go('alert','inbox')"},
+    {k:'channels',t:'알림 받는 곳 (앱·카톡·문자)',d:'알림 받을 앱·카카오톡·문자 번호 연결',go:"go('channels')"},
+    {k:'ai',t:'AI 비서',d:'URL 등록, 순위 질문, 알림 예약을 대화로',go:"go('ai')"}]},
   {k:'manage',g:'관리',n:'관리',i:'grid',items:[
     {k:'m_project',t:'프로젝트·그룹 관리',d:'광고주·매장별로 키워드 묶어서 관리',src:'셀러닷컴, 애드로그'},
     {k:'m_trash',t:'삭제한 키워드',d:'지운 키워드 복구, 기록 보관',src:'애드로그'},
@@ -700,7 +701,7 @@ const TREE=[
     {k:'c_notice',t:'공지사항·네이버 공지 모음',d:'서비스 공지 + 스마트플레이스·블로그·통합검색 공지',src:'애드로그, 애드랭크'},
     {k:'c_faq',t:'자주 묻는 질문',d:'',src:'애드랭크'},
     {k:'c_ask',t:'1:1 문의 (카톡 채널)',d:'카카오톡 채널 상담 연결',src:'세 곳 공통'},
-    {k:'plan',t:'요금제·결제',go:"go('plan')",src:'애드랭크, 셀러닷컴(상점)'},
+    {k:'plan',t:'요금제·결제',d:'무료·PRO·BIZ 요금제 비교와 변경',go:"go('plan')",src:'애드랭크, 셀러닷컴(상점)'},
     {k:'c_point',t:'포인트·충전',d:'조회권·문자 발송용 포인트',src:'애드로그, 셀러닷컴'},
     {k:'c_my',t:'내 정보·추천인 코드',d:'계정, 추천인 코드, 가입 내역',src:'애드로그'}]}];
 const ALL=TREE.flatMap(g=>g.items.map(it=>({...it,g:g.g,gk:g.k})));
@@ -822,13 +823,15 @@ async function sendNote(k){
     $('#nBody').value='';toast('저장했어요. 모두에게 보여요.');loadNotes(k)}
   catch(e){toast('저장하지 못했어요. 잠시 후 다시 눌러주세요.')}
   btn.disabled=false}
+/* 메뉴 화면 공통 헤더: 그룹·상태 태그, 제목, 설명, 참고 사이트 */
+const pageHead=it=>`<div class="card"><div class="row"><span class="tag">${it.g}</span><span class="tag" style="background:var(--pri-soft);color:var(--pri)">${it.go?'이용 가능':'기획 중'}</span></div>
+      <h2 style="margin:10px 0 6px;font-size:21px">${it.t}</h2><div class="muted">${it.d||''}</div>
+      ${it.src?`<div class="small muted" style="margin-top:10px">참고: ${it.src}</div>`:''}</div>`;
 /* 기획 중 메뉴: 개요 + 예시 화면 + 기획 전달하기 */
 function renderStub(){
   const it=ALL.find(x=>x.k===sub);if(!it)return '<div class="empty">없는 메뉴예요</div>';
   setTimeout(()=>loadNotes(it.k));
-  return `<div class="card"><div class="row"><span class="tag">${it.g}</span><span class="tag" style="background:var(--pri-soft);color:var(--pri)">기획 중</span></div>
-      <h2 style="margin:10px 0 6px;font-size:21px">${it.t}</h2><div class="muted">${it.d||'설명을 아래에 적어주세요.'}</div>
-      ${it.src?`<div class="small muted" style="margin-top:10px">참고: ${it.src}</div>`:''}</div>
+  return `${pageHead(it)}
     ${DEMO[it.k]?`<div class="card"><h3>예시 화면<span class="more">예시 데이터</span></h3>${DEMO[it.k]()}</div>`:''}
     <div class="card"><h3>기획 전달하기</h3>
       <input class="input" id="nAuthor" maxlength="30" placeholder="이름 (예: 김대리)" value="${esc(S.author||'')}" style="margin-bottom:8px">
