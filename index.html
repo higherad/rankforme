@@ -1151,7 +1151,7 @@ async function sendNote(k){
 const pageHead=it=>`<div class="card"><div class="row"><span class="tag">${it.g}</span><span class="tag" style="background:var(--pri-soft);color:var(--pri)">기획 중</span><span class="grow"></span><button class="btn sub sm" onclick="noteSheet('${it.k}')">${ic('doc',16)} 기획 전달</button></div>
       <h2 style="margin:10px 0 6px;font-size:21px">${it.t}</h2><div class="muted">${it.d||''}</div>
       ${it.src?`<div class="small muted" style="margin-top:10px">참고: ${it.src}</div>`:''}${howHtml(it.k)}</div>`;
-/* ===== 메뉴 기능 틀 (계획: memory/menu-feature-plan.md) =====
+/* ===== 메뉴 기능 틀 (계획: memory/menus.md) =====
    분석형(B): 입력 폼 → 실행(무료면 광고 후) → 결과 → 후속(추적 등록·엑셀)
    CFG[메뉴키] = {guide:[사용 방법], form:[입력 필드], btn, limit(일 사용 한도), run(입력)→결과, view(결과, 입력, 키)→HTML}
    결과·사용 횟수는 메모리에만(새로고침하면 초기화) */
@@ -1735,18 +1735,42 @@ function multiChart(series,cols){const W=320,H=150,P=26,all=series.flatMap(s=>s.
     ${series.map((s,k)=>`<polyline points="${s.h.map((v,i)=>v==null?'':`${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ')}" fill="none" stroke="${cols[k]}" stroke-width="${s.me?2.6:1.6}"/>`).join('')}</svg>`}
 
 /* 리뷰 모니터링 */
-let RVF='전체';
+let RVF='전체',RVROWS=[];const RVR={}; // RVR: 리뷰 번호 → 등록한 답글
 const NEG=['불친절','위생','비싸','늦','별로','실망','냄새','기다'];
 MANAGE.p_review=()=>{const mine=[...new Set(S.items.filter(i=>i.type==='place'&&!i.menu).map(i=>i.name))],r=rng('rvw'+mine.join());
   const T1=['고기 질이 정말 좋아요. 또 올게요','직원분들이 친절해요','회식 장소로 딱이에요','가격 대비 양이 많아요','웨이팅이 길어서 실망했어요','직원이 좀 불친절했어요','주차가 편해요','테이블 위생이 별로였어요','분위기 좋고 데이트하기 좋아요','음식이 늦게 나왔어요'];
-  const rows=Array.from({length:14},(_,i)=>{const t=pick(r,T1);return {pl:pick(r,mine),who:pick(r,['맛집러','kim**','하루','먹보','lee**','여행자']),t,src:r()<.7?'방문자':'블로그',star:NEG.some(n=>t.includes(n))?Math.floor(r()*2)+2:Math.floor(r()*2)+4,neg:NEG.some(n=>t.includes(n)),d:fmtD(daysAgo(Math.floor(i/2)))}});
+  const rows=Array.from({length:14},(_,i)=>{const t=pick(r,T1);return {pl:pick(r,mine),who:pick(r,['맛집러','kim**','하루','먹보','lee**','여행자']),t,src:r()<.7?'방문자':'블로그',star:NEG.some(n=>t.includes(n))?Math.floor(r()*2)+2:Math.floor(r()*2)+4,neg:NEG.some(n=>t.includes(n)),d:fmtD(daysAgo(Math.floor(i/2))),id:i}});RVROWS=rows;
   const f=RVF==='부정만'?rows.filter(x=>x.neg):rows;
-  return `${K([['새 리뷰(7일)',rows.length+'개'],['부정 리뷰',rows.filter(x=>x.neg).length+'개'],['평균 별점',(rows.reduce((s,x)=>s+x.star,0)/rows.length).toFixed(1)],['답글 대기',Math.floor(rows.length/3)+'개']])}
+  return `${K([['새 리뷰(7일)',rows.length+'개'],['부정 리뷰',rows.filter(x=>x.neg).length+'개'],['평균 별점',(rows.reduce((s,x)=>s+x.star,0)/rows.length).toFixed(1)],['답글 대기',rows.filter(x=>!RVR[x.id]).length+'개']])}
   <div class="card"><div class="row" style="margin-bottom:10px"><div class="chips grow">${['전체','부정만'].map(l=>`<button class="chip ${RVF===l?'on':''}" onclick="RVF='${l}';render()">${l}</button>`).join('')}</div>
     <label class="row small" style="gap:6px">새 리뷰 알림 <span class="switch"><input type="checkbox" checked onchange="toast(this.checked?'새 리뷰가 오면 알려드려요':'리뷰 알림을 껐어요')"><span></span></span></label></div>
     ${f.map(x=>`<div class="list-row" style="display:block"><div class="row small"><b class="grow">${esc(x.pl)}</b><span class="tag">${x.src}</span><span class="tiny muted">${x.d}</span></div>
       <div class="small" style="margin-top:4px">${'★'.repeat(x.star)}<span class="muted">${'★'.repeat(5-x.star)}</span> · ${x.who}</div>
-      <div class="small" style="margin-top:4px">${NEG.reduce((t,n)=>t.replace(n,`<b class="up">${n}</b>`),esc(x.t))}</div></div>`).join('')}</div>`};
+      <div class="small" style="margin-top:4px">${NEG.reduce((t,n)=>t.replace(n,`<b class="up">${n}</b>`),esc(x.t))}</div>
+      ${RVR[x.id]?`<div class="small" style="margin-top:8px;padding:8px 10px;border-radius:10px;background:var(--pri-soft);white-space:pre-line"><b>사장님 답글</b> ${esc(RVR[x.id])}</div>`
+        :`<div class="row" style="justify-content:flex-end;margin-top:6px"><button class="btn sub sm" onclick="replySheet(${x.id})">${ic('spark',14)} AI 답글 초안</button></div>`}</div>`).join('')}</div>`};
+/* 리뷰 답글 AI 초안: 리뷰 내용(부정 단어·칭찬 포인트)과 말투로 답글을 써 줌 — 예시는 규칙 기반, 실서비스는 LLM */
+const RV_TONE={정중:['소중한 리뷰 남겨주셔서 진심으로 감사드립니다.','다음 방문 때도 만족하실 수 있도록 최선을 다하겠습니다.'],친근:['리뷰 남겨주셔서 정말 고마워요!','다음에 또 놀러 와 주세요 :)'],간결:['리뷰 감사합니다.','또 뵙겠습니다.']};
+const RV_FIX=[[/웨이팅|기다/,'오래 기다리게 해드려 죄송합니다. 예약·대기 안내를 개선해 기다리는 시간을 줄이겠습니다'],[/불친절/,'응대가 불편하셨다니 죄송합니다. 직원 응대 교육을 다시 꼼꼼히 진행하겠습니다'],
+  [/위생/,'위생 때문에 불편하셨다니 죄송합니다. 테이블과 매장 점검을 매일 더 철저히 하겠습니다'],[/늦/,'음식이 늦게 나와 죄송합니다. 더 빨리 나갈 수 있도록 주방 동선을 점검하겠습니다'],
+  [/비싸/,'가격 대비 아쉬우셨다니 죄송합니다. 만족하실 수 있도록 구성을 다시 살펴보겠습니다'],[/냄새/,'불편을 드려 죄송합니다. 환기와 청소를 더 신경 쓰겠습니다'],
+  [/./,'기대에 못 미쳐 죄송합니다. 말씀해 주신 부분을 꼭 확인해 개선하겠습니다']];
+function replyDraft(x,tone,v=0){const [hi,bye]=RV_TONE[tone],fix=x.neg&&RV_FIX.find(([re])=>re.test(x.t))[1];
+  const mid=fix?[fix+'.',`말씀해 주신 내용은 직원들과 바로 공유했습니다. ${fix}.`][v%2]
+    :[`"${x.t}"라는 말씀에 저희 직원들 모두 힘이 났습니다.`,`좋게 봐주셔서 감사해요. 앞으로도 ${x.pl}의 맛과 서비스를 지켜가겠습니다.`][v%2];
+  return tone==='간결'?`${hi} ${fix?fix+'.':'좋게 봐주셔서 감사합니다.'} ${bye}`:`안녕하세요, ${x.pl}입니다. ${hi}
+${mid}
+${bye}`}
+let RVT={tone:'정중',v:0};
+function replySheet(id,keep){const x=RVROWS.find(r=>r.id===id);if(!keep)RVT.v=0;
+  sheet(`<h2>AI 답글 초안</h2><div class="small muted">${esc(x.pl)} · ${x.who} · ${'★'.repeat(x.star)}</div>
+    <div class="small" style="margin:10px 0;padding:10px 12px;border-radius:10px;background:var(--bg)">${esc(x.t)}</div>
+    <label class="lb">말투</label><div class="seg">${Object.keys(RV_TONE).map(t=>`<button class="${RVT.tone===t?'on':''}" onclick="RVT.tone='${t}';replySheet(${id},1)">${t}</button>`).join('')}</div>
+    <label class="lb">답글 <span class="tiny muted">${x.neg?'부정 리뷰 — 사과와 개선 약속 위주':'칭찬 리뷰 — 감사와 재방문 권유 위주'}</span></label>
+    <textarea class="input" id="rvTxt" rows="6">${esc(replyDraft(x,RVT.tone,RVT.v))}</textarea>
+    <div class="row" style="gap:8px;margin-top:12px"><button class="btn ghost grow" onclick="RVT.v++;replySheet(${id},1)">${ic('refresh',14)} 다시 쓰기</button><button class="btn sub grow" onclick="navigator.clipboard.writeText($('#rvTxt').value).then(()=>toast('답글을 복사했어요'))">복사</button>
+      <button class="btn grow" onclick="const t=$('#rvTxt').value.trim();if(!t)return toast('답글을 입력해주세요');RVR[${id}]=t;closeSheet();render();toast('답글을 등록했어요 (예시)')">답글 등록</button></div>
+    <div class="tiny muted" style="margin-top:8px">초안은 고쳐서 등록할 수 있어요. 실서비스에선 스마트플레이스 리뷰 답글로 바로 올라가요.</div>`,keep)}
 
 /* 정보 변경 감지 */
 MANAGE.p_change=()=>{const r=rng('chg'),names=[...new Set(S.items.filter(i=>i.type==='place'&&!i.menu).map(i=>i.name)),'숯불대장','한우명가 본점'];
@@ -1755,7 +1779,7 @@ MANAGE.p_change=()=>{const r=rng('chg'),names=[...new Set(S.items.filter(i=>i.ty
   return `<div class="card"><h3>최근 변경 내역 <span class="more">내 업체 + 경쟁 업체</span></h3>${T(['날짜','업체','항목','바뀐 내용'],rows.map(x=>[x.d,x.mine?ME(esc(x.n)):esc(x.n)+' <span class="tag">경쟁</span>',x.k,x.t]))}
     <div class="tiny muted" style="margin-top:8px">경쟁 업체가 사진·가격·소개글을 바꾸면 알림 예약으로 바로 알려드릴 수 있어요.</div></div>`};
 Object.assign(LOGIC,{p_rival:['내 키워드에 경쟁 업체를 묶어 두면, 매일 같은 검색 결과에서 경쟁 업체 위치·리뷰·저장도 함께 기록해요.','한 그래프에 겹쳐 그려 누가 오르고 내리는지 비교해요.'],
-  p_review:['내 업체의 방문자·블로그 리뷰를 매일 읽어 새로 달린 리뷰만 골라요.','불친절·위생·늦음 같은 부정 단어가 있으면 부정 리뷰로 표시하고 알림을 보내요.'],
+  p_review:['내 업체의 방문자·블로그 리뷰를 매일 읽어 새로 달린 리뷰만 골라요.','불친절·위생·늦음 같은 부정 단어가 있으면 부정 리뷰로 표시하고 알림을 보내요.','AI 답글 초안은 리뷰 내용·별점·부정 단어와 고른 말투(정중·친근·간결)를 LLM에 넘겨 답글을 쓰고, 사장님이 고친 뒤 등록하면 스마트플레이스 답글로 올려요.'],
   p_change:['내 업체와 경쟁 업체의 상세 정보(영업시간·사진·메뉴·가격·편의시설·소개글)를 매일 저장해 어제와 다른 부분만 변경 내역으로 남겨요.']});
 
 /* 카카오톡 챗봇 조회 */
