@@ -162,6 +162,7 @@ table.plan td:first-child,table.plan th:first-child{text-align:left;color:var(--
 .bar2 i{display:block;height:100%;border-radius:3px}
 .mt{display:inline-flex;gap:8px;flex-wrap:nowrap}
 .toolframe{width:100%;min-height:600px;border:0;border-radius:18px;background:var(--card);display:block}
+[data-theme=dark] .toolframe{filter:invert(.9) hue-rotate(180deg)}
 .notice-board{overflow:hidden}
 .nb-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 18px 12px;border-bottom:1px solid var(--line)}
 .nb-title-wrap{display:flex;align-items:center;gap:8px;min-width:0}.nbic{color:var(--pri);display:grid}
@@ -1248,7 +1249,7 @@ Object.assign(CFG,{
     run:v=>{const n=parseInt(v.n.replace(/\D/g,'')),rows=genPlaces(v.kw,n),days=[30,25,20,15,10,7,5,3,1,0];
       return {days,rows:rows.map(x=>{const r=rng('tr'+x.name);return {...x,hist:days.map((d,i)=>i===days.length-1?x.rank:Math.max(1,x.rank+Math.round((r()-.5)*Math.min(20,d+4))))}})}},
     view:(res,v,k)=>`<div class="card"><h3>${esc(v.kw)} 순위 추세 <span class="more">${v.n}</span></h3>
-      ${T(['업체',...res.days.map(d=>d?d+'일전':'오늘'),''],res.rows.map(x=>[x.me?ME(esc(x.name)):esc(x.name),...x.hist.map(r=>`<span class="heat" style="--h:${Math.max(.08,1-r/30)}">${r}</span>`),
+      ${T(['업체',...res.days.map(d=>d?d+'일전':'오늘'),''],res.rows.map(x=>[x.me?ME(esc(x.name)):esc(x.name),...x.hist.map(r=>`<span class="heat" style="--h:${Math.max(.08,1-r/30)}${r<=12?';color:#fff':''}">${r}</span>`),
         `<button class="btn ghost sm" style="height:28px" onclick="trackAdd('place','${esc(v.kw)}','${esc(x.name)}')">추적</button>`]))}
       <div class="row" style="margin-top:12px">${xlsxBtn(k)}</div></div>`,
     csv:(res)=>[['업체',...res.days.map(d=>d?d+'일전':'오늘')],...res.rows.map(x=>[x.name,...x.hist])]},
@@ -1289,7 +1290,8 @@ Object.assign(CFG,{
     run:(v,st)=>{const r=rng('rel'+v.kw),base=v.kw.split(' ')[0];const list=SFX.map(s=>`${base} ${s}`).filter(x=>x!==v.kw).sort(()=>r()-.5).slice(0,8);
       const hist=[{kw:v.kw,n:list.length,at:fmtD(new Date())},...(st.res?.hist||[]).filter(h=>h.kw!==v.kw)].slice(0,20);return {kw:v.kw,list,hist}},
     view:(res,v,k)=>`<div class="card"><h3>${esc(res.kw)} 연관검색어</h3><div class="chips" style="flex-wrap:wrap">${res.list.map(x=>`<label class="chip"><input type="checkbox" class="sel" data-kw="${esc(x)}"> ${esc(x)}</label>`).join('')}</div>
-      <div class="row" style="margin-top:12px"><button class="btn sub sm" onclick="toast('체크한 연관검색어를 매일 노출 체크 목록에 넣었어요 (예시)')">선택 항목 매일 노출 체크</button></div></div>
+      <div class="row" style="margin-top:12px"><button class="btn sub sm" onclick="relWatch(this)">선택 항목 매일 노출 체크</button></div></div>
+      ${MG.relW.length?`<div class="card"><h3>매일 노출 체크 <span class="more">${MG.relW.length}개</span></h3>${T(['연관검색어','검색어','최근 7일','등록일',''],MG.relW.map((w,i)=>{const r=rng('rw'+w.rel);return [esc(w.rel),esc(w.kw),Array.from({length:7},()=>r()<.8?'●':'<span class="muted">○</span>').join(' '),w.at,`<a class="lnk" onclick="MG.relW.splice(${i},1);render()">해제</a>`]}))}<div class="tiny muted" style="margin-top:8px">● 노출 ○ 미노출 · 매일 09시 확인 (예시)</div></div>`:''}
       <div class="card"><h3>조회 내역</h3>${T(['검색어','추출 수','조회일'],res.hist.map(h=>[esc(h.kw),h.n+'개',h.at]))}</div>`},
 
   k_ai:{guide:['업종과 지역을 넣으면 AI가 공략하기 좋은 키워드를 검색량·경쟁도와 함께 추천해요.','마음에 드는 키워드를 체크해 한 번에 순위 추적에 등록할 수 있어요.'],
@@ -1314,7 +1316,7 @@ Object.assign(CFG,{
       <h3 style="margin-top:14px">유입 채널</h3>${T(['채널','비중',''],res.ch.map(([c,p])=>[c,p+'%',BAR(p)]))}</div>`}
 });
 /* ===== 관리·고객센터 메뉴 (E형) — 예시 데이터, 상태는 메모리에만 ===== */
-const MG={proj:null,point:12400,uses:[['10/29','알림톡 발송 18건',-180],['10/28','포인트 충전',10000],['10/27','문자 발송 5건',-200]],asks:[],ad:true,
+const MG={proj:null,point:12400,uses:[['10/29','알림톡 발송 18건',-180],['10/28','포인트 충전',10000],['10/27','문자 발송 5건',-200]],asks:[{type:'알림',t:'카카오톡 알림이 어제부터 안 와요',at:'2026-10-27',ans:'알림톡 수신 번호가 바뀌어 발송이 멈췄어요. 설정 → 알림 받는 곳에서 번호를 다시 인증하면 바로 받으실 수 있어요.'}],relW:[],ad:true,
   me:{name:'김랭포',email:'rank@example.com',company:'하이어 마케팅',biz:'대행사'}};
 const TRASH=[];
 function projSeed(){if(MG.proj)return;MG.proj=S.items.filter(i=>i.type==='place'&&!i.menu).slice(0,3).map((it,n)=>({id:it.id,goal:[5,3,10][n],start:fmtD(daysAgo([12,27,3][n])),days:30}))}
@@ -1373,7 +1375,8 @@ const MANAGE={
       <label class="lb">내용</label><textarea class="input" id="askBody" rows="5" placeholder="문의 내용을 적어주세요"></textarea>
       <button class="btn block" style="margin-top:12px" onclick="const t=$('#askBody').value.trim();if(!t)return toast('문의 내용을 적어주세요');MG.asks.unshift({type:$('#askType').value,t,at:fmtD(new Date())});render();toast('문의를 남겼어요. 평일 하루 안에 답변드려요')">문의 남기기</button>
       <button class="btn block" style="margin-top:8px;background:var(--kakao);color:#111" onclick="toast('예시 화면이에요. 실서비스에선 카카오톡 채널 상담으로 연결돼요')">카카오톡 채널로 상담하기</button></div>
-    <div class="card"><h3>내 문의 <span class="more">${MG.asks.length}건</span></h3>${MG.asks.length?T(['유형','내용','등록일','상태'],MG.asks.map(a=>[a.type,esc(a.t.slice(0,30)),a.at,'<span class="tag">답변 대기</span>'])):'<div class="muted small">남긴 문의가 없어요</div>'}</div>`};
+    <div class="card"><h3>내 문의 <span class="more">${MG.asks.length}건</span></h3>${MG.asks.length?MG.asks.map(a=>`<details class="faq menu-row" style="display:block"><summary style="cursor:pointer"><span class="tag">${a.ans?'답변 완료':'답변 대기'}</span> <b>${a.type}</b> ${esc(a.t.slice(0,30))} <span class="tiny muted">${a.at}</span></summary>
+      <div class="small" style="margin-top:8px;line-height:1.6;white-space:pre-wrap">${esc(a.t)}</div>${a.ans?`<div class="small" style="margin-top:8px;padding:10px;border-radius:10px;background:var(--pri-soft);line-height:1.6"><b>답변</b> ${esc(a.ans)}</div>`:'<div class="tiny muted" style="margin-top:8px">평일 하루 안에 답변드려요</div>'}</details>`).join(''):'<div class="muted small">남긴 문의가 없어요</div>'}</div>`};
 /* ===== 메뉴별 "사용 방법 · 작동 방식" — 이 파일은 기획 문서이므로 실서비스에서 데이터가 어떻게 처리되는지 적어 둠 ===== */
 const GUIDE={
   once:['유형(플레이스·쇼핑·블로그)을 고르고 키워드와 대상(이름 또는 URL)을 넣어 조회해요.','결과에서 "추적 목록에 추가"를 누르면 매일 자동 기록돼요.'],
@@ -1473,6 +1476,8 @@ const _blView=CFG.b_level.view;
 CFG.b_level.view=(res,v,k)=>_blView(res,v,k).replace('<div class="card"><h3>최근 글 노출</h3>',`<div class="card"><button class="btn sub block" onclick="blogTrack('${esc(res.info.id)}')">${ic('plus',16)} 이 블로그 매일 추적</button></div><div class="card"><h3>최근 글 노출</h3>`)+
   (MG.blogs.length?`<div class="card"><h3>매일 추적 중인 블로그 <span class="more">${MG.blogs.length}개</span></h3>${T(['블로그ID','지수','방문자(어제→오늘)','이웃','최근 글 노출률','등록일',''],MG.blogs.map((b,i)=>{const r=rng('bt'+b.id),y=Math.floor(r()*3000+100),t=y+Math.round((r()-.4)*300);
     return [esc(b.id),b.grade,`${fmtN(y)} → <b>${fmtN(t)}</b>`,fmtN(b.nb),Math.floor(r()*40+60)+'%',b.at,`<button class="btn ghost sm" style="height:28px" onclick="MG.blogs.splice(${i},1);render()">해제</button>`]}))}</div>`:'');
+function relWatch(b){const kw=AN.k_related.res.kw;const a=[...b.closest('.card').querySelectorAll('.sel:checked')].map(e=>e.dataset.kw).filter(x=>!MG.relW.some(w=>w.rel===x));
+  if(!a.length)return toast('새로 넣을 연관검색어를 체크해주세요');MG.relW.unshift(...a.map(rel=>({rel,kw,at:fmtD(new Date())})));render();toast(a.length+'개를 매일 노출 체크해요')}
 function blogTrack(id){if(MG.blogs.some(b=>b.id===id))return toast('이미 매일 추적 중이에요');const i=AN.b_level.res.hist.find(h=>h.id===id);MG.blogs.unshift({id,grade:i.grade,nb:i.nb,at:fmtD(new Date())});render();toast('매일 추적을 시작했어요')}
 LOGIC.b_level=[...LOGIC.b_level,'매일 추적: 등록한 블로그는 매일 같은 시각에 다시 읽어 방문자·이웃·지수 변화와 최근 글 노출률을 기록해요.'];
 
