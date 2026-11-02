@@ -2077,7 +2077,7 @@ function todoCard(){const h=new Date().getHours(),hi=h<11?'좋은 아침이에�
     ${TODO_OFF?'':`<div class="row" style="margin-top:10px;padding:10px 12px;background:var(--pri-soft);border-radius:12px"><span class="grow small"><b>처음이세요?</b> 예시 화면으로 기능을 하나씩 둘러보세요</span><button class="btn sm" onclick="tour()">둘러보기</button><button class="iconbtn" onclick="TODO_OFF=true;render()">✕</button></div>`}</div>`}
 // 바로가기 편집: 내 등급에서 쓸 수 있는 것만 후보, 켜고 끄기(등급별 개수 SC_MAX)
 function scEdit(keep){const sel=S.shortcuts,cand=scAll().filter(scOk);
-  sheet(`<h2>바로가기 편집</h2><div class="small muted" style="margin-bottom:8px">홈에 보일 바로가기를 켜고 꺼요. 켠 순서대로 보여요.<br><b>${planNm(S.plan)}는 ${SC_MAX[S.plan]}개까지</b> (무료 1 · PRO 4 · BIZ 8)${S.plan==='biz'?'':' · 지금 등급에서 쓸 수 있는 메뉴만 나와요'}</div>
+  sheet(`<div class="row" style="margin-bottom:8px"><h2 class="grow" style="margin:0">바로가기 편집</h2><b style="color:var(--pri)">${scOn().length}/${SC_MAX[S.plan]}</b></div>
     ${cand.map((k,i,a)=>{const g=(ALL.find(x=>x.k===k)||{}).g,pg=i&&(ALL.find(x=>x.k===a[i-1])||{}).g;return (g!==pg?`<div class="sech">${esc(g)}</div>`:'')+scRow(k)}).join('')}
     <button class="btn block" style="margin-top:14px" onclick="closeSheet();render()">완료</button>`,keep)}
 const scRow=k=>`<div class="menu-row" style="padding:8px 0"><span class="grow small" style="font-weight:600">${scLabel(k)}</span><label class="switch"><input type="checkbox" ${scOn().includes(k)?'checked':''} onchange="scToggle('${k}',this.checked)"><span></span></label></div>`;
