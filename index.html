@@ -36,9 +36,10 @@ main{max-width:760px;margin:0 auto;padding:4px 16px calc(96px + env(safe-area-in
 nav#nav{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
 nav#nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 0 8px;font-size:11px;color:var(--sub);font-weight:600}
 nav#nav button.on{color:var(--pri)}
-nav#nav .brand,nav#nav .subs,nav#nav .car{display:none}
 .subtabs{position:sticky;top:calc(60px + env(safe-area-inset-top));z-index:15;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;margin:0 -16px 14px;padding:0 10px;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .subtabs::-webkit-scrollbar{display:none}
+.subtabs .sth{flex:none;align-self:center;width:1px;height:16px;margin:0 6px;background:var(--line)}
+.sech{font-size:11.5px;font-weight:700;color:var(--pri);padding:12px 0 2px}
 .subtabs button{flex:none;padding:12px 10px 10px;font-size:14.5px;font-weight:600;color:var(--sub);border-bottom:2.5px solid transparent;white-space:nowrap}
 .subtabs button.on{color:var(--text);font-weight:800;border-bottom-color:var(--pri)}
 details.grp summary{list-style:none;cursor:pointer}
@@ -70,8 +71,7 @@ details.grp[open] summary h3:after{content:"▾"}
 .input,select.input,textarea.input{width:100%;height:46px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:var(--bg);outline:none}
 textarea.input{height:auto;padding:12px 14px;resize:vertical}
 .input:focus{border-color:var(--pri)}
-label.lb{display:block;font-size:13px;font-weight:700;margin:14px 0 6px}
-.seg{display:flex;background:var(--line);border-radius:12px;padding:3px;gap:3px}
+label.lb{display:block;font-size:13px;font-weight:700;margin:14px 0 6px}.seg{display:flex;background:var(--line);border-radius:12px;padding:3px;gap:3px}
 .seg button{flex:1;height:36px;border-radius:9px;font-size:14px;font-weight:600;color:var(--sub)}
 .seg button.on{background:var(--card);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.1)}
 .chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
@@ -205,6 +205,7 @@ table.plan td:not(:first-child),table.plan th .tiny{white-space:nowrap}table.pla
 .lg{display:inline-block;width:10px;height:10px;border-radius:3px;vertical-align:-1px}.lg.on{background:color-mix(in srgb,var(--ok) 40%,transparent)}.lg.off{background:color-mix(in srgb,var(--up) 30%,transparent)}
 .mchk{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px}.mchk label{display:flex;align-items:center;gap:6px;font-size:13.5px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;cursor:pointer}
 .mchk.one{grid-template-columns:1fr 1fr}
+.glrow{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) 64px 50px 50px;gap:6px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px}.glrow.gh{font-size:12px;color:var(--sub);font-weight:600;padding-top:0}.glrow .ell{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.glrow>:nth-child(3){text-align:center;margin-right:6px}.glrow .btn{padding:0;width:100%} /* 그룹 목록: 위치 | 그룹명 | 키워드 | 변경 | 삭제 */
 .mvbar{width:66px;flex:none;text-align:right}.mvbar .bar2{width:60px}
 .bars{display:flex;align-items:flex-end;gap:4px;height:120px;margin-top:8px}.bars div{flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center}
 .bars span{width:100%;background:var(--pri);border-radius:4px 4px 0 0;opacity:.85}.bars i{font-style:normal;font-size:10px;color:var(--sub);margin-top:3px}
@@ -214,7 +215,7 @@ table.plan td:not(:first-child),table.plan th .tiny{white-space:nowrap}table.pla
 .nbadge{position:absolute;top:4px;left:calc(50% + 6px);min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:var(--up);color:#fff;font-size:10px;font-weight:800;display:grid;place-items:center}
 .sk{height:14px;border-radius:7px;margin:10px 0;background:linear-gradient(90deg,var(--line),var(--bg),var(--line));background-size:200% 100%;animation:skm 1s linear infinite}
 @keyframes skm{to{background-position:-200% 0}}
-.cmbgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}@media(max-width:600px){.cmbgrid{grid-template-columns:1fr}}
+.cmbgrid{display:grid;grid-template-columns:repeat(4,minmax(140px,1fr));gap:8px;overflow-x:auto;scrollbar-width:none}.cmbgrid::-webkit-scrollbar{display:none}.cmbgrid .card{margin:0;padding:10px 12px}
 .cmbout{max-height:420px;overflow:auto}
 .dropbar{display:flex;align-items:center;gap:8px;padding:10px 12px;margin-bottom:10px;border-radius:12px;background:color-mix(in srgb,var(--up) 8%,var(--card));border:1px solid color-mix(in srgb,var(--up) 25%,transparent)}
 .mdiv{font-size:11.5px;color:var(--pri);font-weight:700;text-align:center;padding:6px 0;border-top:2px dashed var(--pri);border-bottom:1px solid var(--line);background:var(--pri-soft)}
@@ -277,7 +278,7 @@ const IC={
   phone:'<rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/>',
   file:'<path d="M4 4h16v16H4z"/><path d="M4 9h16M9 4v16"/>',
   crown:'<path d="M3 7l4 4 5-7 5 7 4-4-2 12H5z"/>',
-  search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>',
+  search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>',globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/>',
   help:'<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 0 1 4.9.7c0 1.7-2.4 2.3-2.4 3.8M12 17h.01"/>',
   gear:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
   book:'<path d="M4 4a2 2 0 0 1 2-2h14v18H6a2 2 0 0 0-2 2z"/><path d="M4 22V4"/>',
@@ -450,9 +451,9 @@ function itemCard(it){
 /* ===== 렌더링 ===== */
 function render(){
   applyTheme();
-  const cur=ALL.find(x=>x.k===curKey()),key=curKey(),cg=curGroup(),mobile=true,wide=innerWidth>=900; // 메뉴는 PC·모바일 모두 하단 탭
-  const titles={home:'',mytrack:'내 추적 목록',notes:'전달된 기획',more:'설정',plan:'요금제',menuedit:'메뉴 · 홈 편집',spec:'기획서',channels:'알림 채널 연결'};
-  const setScr=['more','menuedit','notes','channels','plan','mytrack','spec'].includes(route)||!!TREE.find(t=>t.k===cg)?.set; // 설정 화면들은 로고 대신 제목
+  const cur=ALL.find(x=>x.k===curKey()),key=curKey(),cg=curGroup(),wide=innerWidth>=900; // 메뉴는 PC·모바일 모두 하단 탭
+  const titles={home:'',mytrack:'내 추적 목록',notes:'전달된 기획',more:'설정',plan:'요금제',menuedit:'메뉴 · 홈 편집',spec:'기획서'};
+  const setScr=['more','menuedit','notes','plan','mytrack','spec'].includes(route)||!!TREE.find(t=>t.k===cg)?.set; // 설정 화면들은 로고 대신 제목
   $('#title').innerHTML=!setScr?'<span class="row" style="gap:8px;cursor:pointer" onclick="go(&quot;home&quot;)"><img src="icon-192.png" alt="" width="30" height="30" style="border-radius:8px"><span class="logo">랭포미</span><span class="tiny muted" style="font-weight:600;align-self:flex-end;padding-bottom:3px">RankForMe</span></span>':(cur?'':titles[route]||''); // 메뉴 화면은 활성 메뉴 표시로 충분해 제목 생략
   $('#planBadge').textContent=S.plan==='free'?'FREE':S.plan.toUpperCase();$('#planBadge').className='plan-badge'+(S.plan!=='free'?' pro':'');
   $('#bellIco').innerHTML=ic('bell');const un=S.inbox.filter(n=>!n.read).length;$('#bellDot').hidden=!un;$('#bellDot').textContent=un;
@@ -461,20 +462,17 @@ function render(){
   const act=k=>k==='home'?route==='home':cg===k;
   const btn=k=>{const g=TREE.find(t=>t.k===k);
     const dn=g?S.items.filter(i=>canSee(i)&&delta(i)<0&&g.items.some(x=>x.k===(i.menu||i.type))).length:0;
-    if(mobile||!g||vis(g).length===1)return `<button class="${act(k)?'on':''}" title="${g?g.g:'홈'}" onclick="${g?`openGroup('${k}')`:"go('home')"}" style="position:relative">${dn?`<span class="nbadge" title="어제보다 순위가 떨어진 추적 키워드 ${dn}개">${dn}</span>`:''}${ic(MENUS[k][1])}<span class="lbl">${mobile?MENUS[k][0]:g?g.g:'홈'}</span></button>`;
-    const open=NO[k]??act(k);
-    return `<button class="${act(k)?'on':''}" onclick="NO['${k}']=${!open};render()">${ic(MENUS[k][1])}<span class="grow lbl">${g.g}</span><span class="car">${open?'▾':'▸'}</span></button>`+
-      (open?`<div class="subs">${g.items.map(it=>`<button class="sb ${key===it.k?'on':''}" onclick="openMenu('${it.k}')"><span class="grow">${it.t}</span></button>`).join('')}</div>`:'')};
-  $('#nav').innerHTML=`<div class="brand"><img src="icon-192.png" alt="" onclick="go('home')"><div class="bt" onclick="go('home')"><b>랭포미</b><span>RankForMe</span></div></div>`+shown.map(btn).join('')+
-    `<button class="${['more','menuedit','channels','plan','notes'].includes(route)||TREE.find(t=>t.k===cg)?.set?'on':''}" title="설정" onclick="go('more')">${ic('gear')}<span class="lbl">설정</span></button>`;
+    return `<button class="${act(k)?'on':''}" title="${g?g.g:'홈'}" onclick="${g?`openGroup('${k}')`:"go('home')"}" style="position:relative">${dn?`<span class="nbadge" title="어제보다 순위가 떨어진 추적 키워드 ${dn}개">${dn}</span>`:''}${ic(MENUS[k][1])}<span class="lbl">${MENUS[k][0]}</span></button>`};
+  $('#nav').innerHTML=shown.map(btn).join('')+
+    `<button class="${['more','menuedit','plan','notes'].includes(route)||TREE.find(t=>t.k===cg)?.set?'on':''}" title="설정" onclick="go('more')">${ic('gear')}<span class="lbl">설정</span></button>`;
   if(route==='ai'&&$('#aiBox'))aiPanel(); // AI 비서 메뉴로 오면 위젯은 닫음(같은 대화)
   if(!$('#aiBox'))$('#fabIco').innerHTML=ic('spark',20);$('#menuIco').innerHTML=ic('menu');$('#fab').style.display=S.fab&&route!=='ai'?'':'none';
-  const f={home:renderHome,place:()=>renderList('place'),shop:()=>renderList('shop'),blog:()=>renderList('blog'),alert:renderAlert,ai:renderAI,more:renderMore,plan:renderPlan,menuedit:renderMenuEdit,spec:renderSpec,channels:renderChannels,m:renderStub,notes:renderNotes,mytrack:renderMyTrack,once:renderOnce}[route]||renderHome;
+  const f={home:renderHome,place:()=>renderList('place'),shop:()=>renderList('shop'),blog:()=>renderList('blog'),alert:renderAlert,ai:renderAI,more:renderMore,plan:renderPlan,menuedit:renderMenuEdit,spec:renderSpec,m:renderStub,notes:renderNotes,mytrack:renderMyTrack,once:renderOnce}[route]||renderHome;
   const g=TREE.find(t=>t.k===cg);
-  const inSet=['menuedit','notes','channels','plan','mytrack','spec'].includes(route)||!!g?.set;
+  const inSet=['menuedit','notes','plan','mytrack','spec'].includes(route)||!!g?.set;
   document.body.classList.toggle('viewonly',VIEW!=null&&TEAM[VIEW].role==='보기');
-  $('#main').innerHTML=(VIEW!=null?`<div class="dropbar" style="background:var(--pri-soft);border-color:var(--pri)"><span class="grow small"><b>${esc(TEAM[VIEW].n)}</b> 계정으로 보는 중 · ${TEAM[VIEW].role} · ${TEAM[VIEW].groups.includes('전체')?'전체 그룹':TEAM[VIEW].groups.map(esc).join(', ')}</span><button class="btn sm" onclick="VIEW=null;render()">원래대로</button></div>`:'')+(inSet?`<button class="btn ghost sm" style="margin-bottom:10px" onclick="go('more')">← 설정</button>`:'')+(mobile&&g&&vis(g).length>1&&!g.set?`<div class="subtabs">${vis(g).map(it=>`<button class="${key===it.k?'on':''}" onclick="openMenu('${it.k}')">${it.t}${lockTag(it.k)}</button>`).join('')}</div>`:'')+(cur&&route!=='m'?pageHead(cur):'')+f();
-  if(mobile&&g&&vis(g).length>1)$('.subtabs .on')?.scrollIntoView({inline:'center',block:'nearest'});
+  $('#main').innerHTML=(VIEW!=null?`<div class="dropbar" style="background:var(--pri-soft);border-color:var(--pri)"><span class="grow small"><b>${esc(TEAM[VIEW].n)}</b> 계정으로 보는 중 · ${TEAM[VIEW].role} · ${TEAM[VIEW].groups.includes('전체')?'전체 그룹':TEAM[VIEW].groups.map(esc).join(', ')}</span><button class="btn sm" onclick="VIEW=null;render()">원래대로</button></div>`:'')+(inSet?`<button class="btn ghost sm" style="margin-bottom:10px" onclick="go('more')">← 설정</button>`:'')+(g&&vis(g).length>1&&!g.set?`<div class="subtabs">${vis(g).map((it,i,a)=>(i&&secH(a,i)?`<i class="sth" title="${secH(a,i)}"></i>`:'')+`<button class="${key===it.k?'on':''}" onclick="openMenu('${it.k}')">${it.t}${lockTag(it.k)}</button>`).join('')}</div>`:'')+(cur&&route!=='m'?pageHead(cur):'')+f();
+  if(g&&vis(g).length>1)$('.subtabs .on')?.scrollIntoView({inline:'center',block:'nearest'});
   if(route==='ai'){scrollChat();$('#aiInput')?.focus({preventScroll:true})}
 }
 matchMedia('(min-width:900px)').addEventListener('change',render);
@@ -522,7 +520,7 @@ function volSheet(kw,type){const v=volData(kw,type);
     ${S.plan==='free'?`<div style="position:relative;margin-top:12px;min-height:260px"><div class="card lockpop"><b>🔒 어제·오늘 순위 비교표는 PRO부터 보여요</b><div class="small muted" style="margin:4px 0 10px">어떤 업체가 오르고 내렸는지, 새로 들어오고 밀려난 곳을 한눈에 볼 수 있어요.</div><button class="btn sm" onclick="closeSheet();go('plan')">요금제 보기</button></div><div aria-hidden="true" style="filter:blur(3px);opacity:.55;pointer-events:none;user-select:none;max-height:420px;overflow:hidden">`:'<div>'}
     ${T(['오늘','어제','변동',type==='place'?'업체':type==='shop'?'상품':'글','정보'],v.rows.map(x=>[`<b>${x.rank}</b>`,x.prev??'-',x.prev==null?'<span class="tag" style="background:rgba(59,91,253,.12);color:var(--pri)">NEW</span>':dlt(x.rank,x.prev),esc(x.name),`<span class="tiny muted">${esc(x.meta)}</span>`]))}
     ${v.out.length?`<h3 style="font-size:15px;margin:14px 0 4px">20위 밖으로 밀려난 곳</h3>${T(['어제','이름'],v.out.map(x=>[x.prev+'위',esc(x.name)]))}`:''}</div>${S.plan==='free'?'</div>':''}
-    ${S.plan==='free'?'':`<button class="btn sub block" style="margin-top:14px" onclick="AN.${type==='shop'?'s_compare':'p_compare'}={v:{kw:'${esc(kw)}',base:'1일전',n:'상위 20개'},res:null};closeSheet();go('m','${type==='shop'?'s_compare':'p_compare'}')">${type==='shop'?'가격비교 비교분석':'순위 비교분석'}에서 자세히 보기</button>`}`)}
+    ${S.plan==='free'?'':`<button class="btn sub block" style="margin-top:14px" onclick="AN.${type==='shop'?'s_compare':'p_compare'}={v:{kw:'${esc(kw)}',base:'1일전',n:'상위 20개'},res:null};closeSheet();go('m','${type==='shop'?'s_compare':'p_compare'}')">${type==='shop'?'가격비교 비교분석':'키워드 순위 변동'}에서 자세히 보기</button>`}`)}
 /* --- 홈 --- */
 let qType='place';
 function renderHome(){
@@ -541,7 +539,7 @@ function renderHome(){
   h=S.wOrder.map(k=>P[k]||'').join('');
   if(!Object.values(w).some(Boolean))h='<div class="empty">홈 위젯이 모두 꺼져 있어요.<br><button class="btn sub sm" style="margin-top:12px" onclick="go(\'menuedit\')">홈 편집</button></div>';
   return h}
-const quickCard=()=>`<div class="card"><h3>${ic('refresh',18)} 바로 조회</h3>
+const quickCard=()=>`<div class="card"><h3>${ic('refresh',18)} N 바로 조회</h3>
     <div class="seg" style="margin-bottom:10px">${Object.entries(TYPES).map(([k,v])=>`<button class="${qType===k?'on':''}" onclick="qType='${k}';render()">${v.t}</button>`).join('')}</div>
     <input class="input" id="qKw" placeholder="검색 키워드 (예: 강남 맛집)" style="margin-bottom:8px">
     <input class="input" id="qName" placeholder="${TYPES[qType].tg} 또는 ${TYPES[qType].unit}" style="margin-bottom:8px">
@@ -601,11 +599,11 @@ function renderList(type,k=type){
     ${its.length&&LS.view==='리스트'?rankList(its,type,k)
      :its.length&&LS.view==='표'?T(['키워드','대상','순위','변동','그룹','월검색'],its.map(i=>[`<a class="lnk" onclick="openItem('${i.id}')">${esc(i.keyword)}</a>`,esc(i.name),adFree(i)?fmtRank(cur(i)):'🔒',adFree(i)?dHtml(delta(i)):'-',esc(i.group),fmtN(i.volume)]))
      :its.length&&LS.view==='차트'?`<div class="card">${multiChart(its.filter(adFree).slice(0,6).map((i,n)=>({name:i.keyword,h:i.history,me:!n})),['var(--pri)','#e5383b','#03a65a','#ff7a00','#7b61ff','#0ea5e9'])}<div class="row tiny" style="gap:10px;flex-wrap:wrap;margin-top:6px">${its.filter(adFree).slice(0,6).map((i,n)=>`<span><i class="lg" style="background:${['var(--pri)','#e5383b','#03a65a','#ff7a00','#7b61ff','#0ea5e9'][n]}"></i> ${esc(i.keyword)}</span>`).join('')}</div></div>`
-    :its.length?its.map(k==='p_save'?saveCard:itemCard).join(''):`<div class="empty"><div style="font-size:40px">🔎</div><b>아직 등록된 키워드가 없어요</b><div class="small" style="margin:6px 0 12px">① + 버튼 → ② 키워드와 URL 붙여넣기 → ③ 매일 자동 기록</div>
+    :its.length?its.map(itemCard).join(''):`<div class="empty"><div style="font-size:40px">🔎</div><b>아직 등록된 키워드가 없어요</b><div class="small" style="margin:6px 0 12px">① + 버튼 → ② 키워드와 URL 붙여넣기 → ③ 매일 자동 기록</div>
       <button class="btn sm" onclick="addForm('${type}','${k}')">직접 등록</button> <button class="btn sub sm" onclick="aiPanel()">AI로 등록</button></div>`}`}
 /* 리스트 보기: 키워드 한 줄 × 날짜 가로, 전날보다 좋아지면 빨강·나빠지면 파랑 칸 */
 const RL_METRIC={place:[['rank','순위'],['rv','방문자리뷰'],['bl','블로그리뷰'],['sv','저장']],shop:[['rank','순위'],['rv','리뷰']],blog:[['rank','순위'],['cm','댓글'],['like','공감']]};
-function rlSeries(it,m){const g=it.grow||[];if(m==='sv'&&it.menu==='p_save')return saveSeries(it);
+function rlSeries(it,m){const g=it.grow||[];
   return mSeries(m+it.id,it[m],{rv:g[0],bl:g[1],sv:g[2],cm:g[0]||1,like:g[1]||1}[m]||1)}
 function rankList(its,type,k){
   const ms=RL_METRIC[type],m=ms.some(x=>x[0]===LS.metric)?LS.metric:'rank',n=LS.days,idx=Array.from({length:n},(_,j)=>29-j);
@@ -650,7 +648,7 @@ const incTag=(a,b)=>b==null?'':a>b?` <span class="up tiny">(${fmtN(a-b)}▲)</sp
 const rankTag=(r,p)=>r==null||p==null?'':r<p?` <span class="up tiny">(${p-r}▲)</span>`:r>p?` <span class="down tiny">(${r-p}▼)</span>`:' <span class="same tiny">(-)</span>';
 function dailyTable(it){
   const h=it.history,g=it.grow||[],rows=[],cell=(v,p)=>fmtN(v)+incTag(v,p),rk=i=>fmtRank(h[i])+rankTag(h[i],h[i-1]);
-  if(it.type==='place'){const rv=mSeries('rv'+it.id,it.rv,g[0]),bl=mSeries('bl'+it.id,it.bl,g[1]),sv=it.menu==='p_save'?saveSeries(it):mSeries('sv'+it.id,it.sv,g[2]);
+  if(it.type==='place'){const rv=mSeries('rv'+it.id,it.rv,g[0]),bl=mSeries('bl'+it.id,it.bl,g[1]),sv=mSeries('sv'+it.id,it.sv,g[2]);
     for(let i=29;i>=23;i--)rows.push([dayLabel(i),rk(i),cell(rv[i],rv[i-1]),cell(bl[i],bl[i-1]),cell(sv[i],sv[i-1])]);
     return T(['날짜','순위','방문자리뷰','블로그리뷰','저장'],rows)}
   if(it.type==='shop'){const rv=mSeries('rv'+it.id,it.rv,g[0]);
@@ -673,7 +671,7 @@ function openItem(id,seen){
       <button class="iconbtn" id="dFav" style="color:${it.fav?'#f5b400':'var(--sub)'}">${ic('star')}</button><button class="iconbtn" id="dShare">${ic('share')}</button></div>
     <h2>${esc(it.keyword)}</h2><div class="muted small">${esc(it.name)}</div>
     <div class="stats" style="margin:14px 0">${st.map(([v,l])=>`<div><b>${v}</b><span>${l}</span></div>`).join('')}</div>
-    <div class="card" style="box-shadow:none;border:1px solid var(--line);padding:12px 8px 6px">${chart(it)}</div>${it.menu==='p_save'?saveDetail(it):''}
+    <div class="card" style="box-shadow:none;border:1px solid var(--line);padding:12px 8px 6px">${chart(it)}</div>
     <div style="margin:4px 0 12px">${infoRows(it).map(([k,v])=>`<div class="row small" style="padding:6px 0;border-bottom:1px solid var(--line)"><span class="muted" style="width:110px;flex:none">${k}</span><span class="grow">${v}</span></div>`).join('')}</div>
     <h3 style="font-size:15px;margin:14px 0 4px">최근 7일 기록</h3>${dailyTable(it)}
     <h3 style="font-size:15px;margin:14px 0 4px">경쟁 현황 (상위 5)</h3>
@@ -749,7 +747,7 @@ function bulkSubmit(){
   const ok=BK.rows.filter(r=>r.ok),tc=TRK[BK.k];
   gate(()=>{ok.forEach(r=>{const it=mkItem(BK.type,r.kw,r.name,(parseUrl(r.url)||{}).mid||String(hash(r.name)).slice(0,10),fakeRank(BK.type,r.kw,r.name),r.group,tc?{menu:BK.k,...(tc.x||{})}:{});it.memo=r.memo;S.items.unshift(it)});
     closeSheet();render();toast(`${ok.length}건을 일괄 등록했어요`)})}
-/* --- 알림 예약 --- */
+/* --- 알림 설정: 예약 | 기록 --- */
 const COND={goal:'목표 순위를 벗어났을 때만',always:'매번 보내기',change:'순위가 바뀌었을 때만',drop:'순위가 떨어졌을 때만',out:'N위 밖으로 밀렸을 때만'};
 const chLabel=s=>[s.ch.push&&'앱 알림',s.ch.kakao&&'카카오톡',s.ch.sms&&'문자'].filter(Boolean);
 function targets(s){return S.items.filter(i=>s.ids.length?s.ids.includes(i.id):(s.type==='all'||i.type===s.type))}
@@ -777,11 +775,11 @@ setInterval(tick,15000);
 function renderAlert(){
   const tab=sub==='inbox'?'inbox':'sched';
   if(tab==='inbox'){S.inbox.forEach(n=>n.read=true);setTimeout(()=>{$('#bellDot').hidden=true},0)}
-  let h=''; // 알림 예약·받은 알림 전환은 하위 메뉴로
+  let h=`<div class="seg" style="margin-bottom:12px">${[['예약',"go('alert')"],['기록',"go('alert','inbox')"]].map(([t,js])=>`<button class="${(tab==='inbox')===(t==='기록')?'on':''}" onclick="${js}">${t}</button>`).join('')}</div>`; // 알림 설정 안 탭: 예약 | 기록
   if(tab==='inbox')return h+(S.inbox.length?S.inbox.map(n=>`<div class="card"><div class="row"><b class="grow">${esc(n.title)}</b><span class="tiny muted">${new Date(n.ts).toLocaleString('ko-KR',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}</span></div>
-    <div class="small" style="white-space:pre-line;margin-top:8px;line-height:1.6">${esc(n.body)}</div><div class="row" style="margin-top:8px;gap:4px">${n.ch.map(c=>`<span class="tag">${c}</span>`).join('')}</div></div>`).join(''):'<div class="empty">받은 알림이 없어요</div>');
+    <div class="small" style="white-space:pre-line;margin-top:8px;line-height:1.6">${esc(n.body)}</div><div class="row" style="margin-top:8px;gap:4px">${n.ch.map(c=>`<span class="tag">${c}</span>`).join('')}</div></div>`).join(''):'<div class="empty">알림 기록이 없어요</div>');
   const chOk=S.ch.push||S.ch.kakao||S.ch.sms;
-  h+=`<div class="card" onclick="go('channels')" style="cursor:pointer"><h3>${ic('phone',18)} 받는 곳<span class="more">설정 ›</span></h3>
+  h+=`<div class="card" onclick="chSheet()" style="cursor:pointer"><h3>${ic('phone',18)} 받는 곳<span class="more">설정 ›</span></h3>
     <div class="row" style="gap:6px;flex-wrap:wrap"><span class="tag" style="${S.ch.push?'background:var(--pri);color:#fff':''}">앱 알림 ${S.ch.push?'ON':'OFF'}</span><span class="tag" style="${S.ch.kakao?'background:var(--kakao);color:#111':''}">카카오톡 ${S.ch.kakao?'연결됨':'미연결'}</span><span class="tag" style="${S.ch.sms?'background:var(--ok);color:#fff':''}">문자 ${S.ch.sms?'연결됨':'미연결'}</span></div>
     ${chOk?'':'<div class="small" style="color:var(--up);margin-top:8px">받는 곳을 하나 이상 연결해야 알림이 도착해요</div>'}</div>`;
   h+=S.schedules.map(s=>`<div class="card"><div class="sched">
@@ -815,7 +813,7 @@ function drawSched(){
     <div class="chips" style="margin-top:8px">${[1,2,3,6].map(n=>`<button class="chip" onclick="D.times=[];for(let h=9;h<=21;h+=${n})D.times.push(String(h).padStart(2,'0')+':00');drawSched()">${n}시간마다 (9~21시)</button>`).join('')}</div>
     <label class="lb">요일</label><div class="row" style="gap:5px">${DAYS.map((d,i)=>`<button class="chip ${D.days.includes(i)?'on':''}" style="flex:1;justify-content:center;padding:0" onclick="D.days=D.days.includes(${i})?D.days.filter(x=>x!==${i}):[...D.days,${i}].sort();drawSched()">${d}</button>`).join('')}</div>
     <label class="lb">보내는 조건</label><select class="input" onchange="D.cond=this.value;drawSched()">${Object.entries(COND).map(([k,v])=>`<option value="${k}" ${D.cond===k?'selected':''}>${v}</option>`).join('')}</select>
-    ${D.cond==='out'?`<div class="row" style="margin-top:8px"><input type="number" class="input" style="width:100px" value="${D.th}" oninput="D.th=+this.value;prev()"><span class="small">위 밖으로 밀리면 알림</span></div>`:''}
+    ${D.cond==='out'?`<div class="row" style="margin-top:8px"><input class="input" inputmode="numeric" style="width:100px" value="${D.th}" oninput="this.value=this.value.replace(/[^0-9]/g,'');D.th=+this.value;prev()"><span class="small">위 밖으로 밀리면 알림</span></div>`:''}
     <label class="lb">받는 곳</label>
     ${[['push','앱 알림 (무료)'],['kakao','카카오톡 알림톡'],['sms','문자(SMS)']].map(([k,v])=>`<label class="menu-row" style="padding:10px 0"><span class="grow">${v}${k!=='push'&&!S.ch[k]?' <span class="tiny" style="color:var(--up)">· 미연결</span>':''}</span><span class="switch"><input type="checkbox" ${D.ch[k]?'checked':''} onchange="D.ch.${k}=this.checked;prev()"><span></span></span></label>`).join('')}
     <label class="lb">미리보기</label><div id="pv"></div>
@@ -836,20 +834,23 @@ function saveSched(){
   toast('알림이 예약됐어요')}
 
 /* --- 알림 채널 --- */
-function renderChannels(){
+/* 받는 곳(앱·카톡·문자): 알림 설정 > 예약 탭의 받는 곳 카드 등에서 팝업으로 엶 */
+function chSheet(keep){sheet(`<h2>받는 곳</h2><div class="small muted" style="margin-bottom:10px">알림을 받을 곳을 연결해요. 알림 예약마다 이 중에서 골라 보내요.</div>${chBody()}`,keep)}
+const chRefresh=()=>{render();if($('.sheet'))chSheet(1)}; // 연결·해제 후 화면과 팝업 같이 갱신
+function chBody(){
   const perm='Notification' in window?Notification.permission:'unsupported';
   return `<div class="card"><h3>앱 알림 (무료)</h3><div class="small muted">홈 화면에 설치하면 앱처럼 푸시 알림을 받아요. iPhone은 iOS 16.4 이상 + 홈 화면 추가가 필요해요.</div>
       <button class="btn block ${S.ch.push?'sub':''}" style="margin-top:12px" onclick="reqPush()">${perm==='granted'&&S.ch.push?'✓ 알림 허용됨':perm==='denied'?'브라우저 설정에서 차단됨':'알림 허용하기'}</button></div>
     <div class="card"><h3><span style="background:var(--kakao);color:#111;border-radius:6px;padding:0 6px">TALK</span> 카카오톡 알림톡</h3><div class="small muted">카카오 비즈 채널 알림톡으로 발송 (건당 과금, PRO 포함 수량 제공)</div>
-      ${S.ch.kakao?`<div class="row" style="margin-top:12px"><b class="grow">${esc(S.ch.kakao)}</b><button class="btn ghost sm" onclick="S.ch.kakao='';render()">해제</button></div>`:
+      ${S.ch.kakao?`<div class="row" style="margin-top:12px"><b class="grow">${esc(S.ch.kakao)}</b><button class="btn ghost sm" onclick="S.ch.kakao='';chRefresh()">해제</button></div>`:
       `<div class="row" style="margin-top:12px"><input class="input grow" id="kPh" type="tel" inputmode="numeric" placeholder="010-0000-0000"><button class="btn" style="background:var(--kakao);color:#111" onclick="connCh('kakao','kPh')">연결</button></div>`}</div>
     <div class="card"><h3>문자 (SMS/LMS)</h3><div class="small muted">카톡을 안 쓰는 분께. 여러 줄이면 LMS로 발송돼요.</div>
-      ${S.ch.sms?`<div class="row" style="margin-top:12px"><b class="grow">${esc(S.ch.sms)}</b><button class="btn ghost sm" onclick="S.ch.sms='';render()">해제</button></div>`:
+      ${S.ch.sms?`<div class="row" style="margin-top:12px"><b class="grow">${esc(S.ch.sms)}</b><button class="btn ghost sm" onclick="S.ch.sms='';chRefresh()">해제</button></div>`:
       `<div class="row" style="margin-top:12px"><input class="input grow" id="sPh" type="tel" inputmode="numeric" placeholder="010-0000-0000"><button class="btn" onclick="connCh('sms','sPh')">인증</button></div>`}</div>`}
 function connCh(k,inp){const v=$('#'+inp).value.replace(/[^0-9]/g,'');if(!/^01\d{8,9}$/.test(v))return toast('휴대폰 번호를 확인해주세요');
-  const code=prompt('인증번호 6자리를 입력하세요 (데모: 아무 숫자)');if(!code)return;S.ch[k]=v.replace(/(\d{3})(\d{3,4})(\d{4})/,'$1-$2-$3');render();toast('연결됐어요')}
+  const code=prompt('인증번호 6자리를 입력하세요 (데모: 아무 숫자)');if(!code)return;S.ch[k]=v.replace(/(\d{3})(\d{3,4})(\d{4})/,'$1-$2-$3');chRefresh();toast('연결됐어요')}
 function reqPush(){if(!('Notification' in window))return toast('이 브라우저는 알림을 지원하지 않아요');
-  Notification.requestPermission().then(p=>{S.ch.push=p==='granted';render();toast(p==='granted'?'앱 알림이 켜졌어요':'알림이 허용되지 않았어요')})}
+  Notification.requestPermission().then(p=>{S.ch.push=p==='granted';chRefresh();toast(p==='granted'?'앱 알림이 켜졌어요':'알림이 허용되지 않았어요')})}
 
 /* --- AI 비서 (프로토타입: 규칙 기반 / 실서비스: LLM + 함수 호출) --- */
 const NAMES={place:['홍길동 숯불갈비','라구앤코','봄날 브런치','청담 스시오마카세','성수 베이커리'],shop:['하이어 경량 캠핑의자','하이어 폴딩테이블','데일리 텀블러 500ml'],blog:['내돈내산 후기 포스팅','방문 후기 포스팅']};
@@ -860,8 +861,8 @@ function parseUrl(t){
   if(m=t.match(/blog\.naver\.com\/([\w-]+)\/(\d+)/))return pick('blog',m[2]);
   if(/^\d{7,}$/.test(t.trim()))return pick('place',t.trim());
   return null}
-const SUGG=['강남 맛집 몇 위야?','어제보다 떨어진 키워드 알려줘','오늘 순위 요약해줘','평일 오전 9시에 카톡으로 플레이스 순위 보내줘','강남 키워드 추천해줘','https://m.place.naver.com/restaurant/1938472610 역삼 맛집, 선릉 회식 등록해줘'];
-const AI_HELLO=`안녕하세요! 순위 비서예요 🤖\n\n• <b>URL만 붙여넣으면</b> 업체·상품·블로그를 찾아 순위 추적을 등록해요\n• "강남 맛집 몇 위야?" 처럼 물어보면 바로 답해요\n• "매일 9시에 카톡으로 보내줘" 하면 알림도 예약해요`;
+const SUGG=['기능 뭐 있어?','강남 맛집 몇 위야?','캠핑의자 검색량 알려줘','강남 맛집 상위 업체 알려줘','강남 맛집 AI 분석해줘','강남 맛집 연관검색어','부정 리뷰 보여줘','어제보다 떨어진 키워드 알려줘','평일 오전 9시에 카톡으로 플레이스 순위 보내줘','https://m.place.naver.com/restaurant/1938472610 키워드 만들어줘'];
+const AI_HELLO=`안녕하세요! 랭포미 AI 비서예요 🤖\n\n• <b>순위</b> — "강남 맛집 몇 위야?", "떨어진 키워드 알려줘"\n• <b>분석·도구</b> — "캠핑의자 검색량", "강남 맛집 상위 업체", "강남 맛집 AI 분석해줘"\n• <b>등록·알림</b> — URL + 키워드로 등록, "평일 9시에 카톡으로 보내줘"\n• <b>메뉴 안내</b> — "키워드 조합기 뭐야?", "리뷰 모니터링 열어줘"\n\n"기능 뭐 있어?"라고 물어보면 전체 기능을 알려드려요.`;
 const chatMsgs=()=>{if(!S.chat.length)S.chat.push({me:false,h:AI_HELLO});return S.chat.map(m=>`<div class="msg ${m.me?'me':'bot'}">${m.h}</div>`).join('')};
 const suggChips=()=>SUGG.map(s=>`<button class="chip" onclick="aiSend(this.dataset.t)" data-t="${esc(s)}">${esc(s.length>24?s.slice(0,22)+'…':s)}</button>`).join('');
 function renderAI(){
@@ -875,7 +876,7 @@ function aiPanel(){
   const box=$('#aiBox');
   if(box){box.remove();$('#fab').classList.remove('open');$('#fab').innerHTML=`<span id="fabIco">${ic('spark',20)}</span>AI 활용하기`;return}
   const el=document.createElement('div');el.id='aiBox';
-  el.innerHTML=`<div class="aihd"><span class="aiav">${ic('spark',18)}</span><div class="grow"><b>AI 비서</b><div class="tiny" style="opacity:.85">순위 질문 · URL 등록 · 알림 예약</div></div>
+  el.innerHTML=`<div class="aihd"><span class="aiav">${ic('spark',18)}</span><div class="grow"><b>AI 비서</b><div class="tiny" style="opacity:.85">순위 · 분석 · 키워드 · 알림 · 메뉴 안내</div></div>
       <button class="iconbtn" style="color:#fff;font-size:18px" onclick="go('ai')" title="큰 화면으로 보기" aria-label="큰 화면으로 보기">⤢</button><button class="iconbtn" style="color:#fff" onclick="aiPanel()" aria-label="닫기">✕</button></div>
     <div class="chat" id="chatP">${chatMsgs()}</div>
     <div class="aift"><div class="chips" style="margin-bottom:8px">${suggChips()}</div>
@@ -898,6 +899,7 @@ const STOP=new Set(['등록','등록해줘','등록해주세요','추가','추�
 let RECO=[];
 function aiReply(t){
   const u=parseUrl(t),q=[...t.matchAll(/['"“”‘’]([^'"“”‘’]+)['"“”‘’]/g)].map(m=>m[1].trim());
+  const pre=aiUrlTool(t,u);if(pre)return pre;
   if(u){
     const rest=t.replace(/https?:\/\/\S+/g,'').split(/\s+/).filter(w=>w&&!STOP.has(w)).join(' ');
     const kws=q.length?q:rest.split(/[,\n]/).map(s=>s.trim()).filter(s=>s.length>1);
@@ -906,6 +908,7 @@ function aiReply(t){
   if(S.pending&&!/[?？]|몇|알려|요약|추천/.test(t)){const p=S.pending;S.pending=null;return register(p,(q.length?q:t.split(/[,\n]/)).map(s=>s.trim()).filter(Boolean))}
   const sq=t.replace(/\s/g,''),hit=S.items.filter(i=>sq.includes(i.keyword.replace(/\s/g,''))||sq.includes(i.name.replace(/\s/g,'')));
   if(/알림|보내줘|알려줘/.test(t)&&/(\d{1,2})\s*시|시간\s*마다/.test(t))return makeSchedule(t,hit);
+  const tool=aiTool(t,hit);if(tool)return tool;
   if(/추천/.test(t))return recommend(t,hit);
   if(hit.length)return hit.map(i=>`<b>${esc(i.keyword)}</b> · ${esc(i.name)}\n→ <b>${fmtRank(cur(i))}</b> ${dHtml(delta(i))}  (월 검색 ${fmtN(i.volume)})`).join('\n\n')+`\n\n<button class="btn sub sm" onclick="openItem('${hit[0].id}')">상세 · 그래프 보기</button>`;
   if(/떨어|하락|내려/.test(t)){const d=S.items.filter(i=>delta(i)<0);return d.length?`어제보다 떨어진 키워드 ${d.length}개예요.\n\n`+d.map(i=>`• ${esc(i.keyword)} (${esc(i.name)}) ${fmtRank(cur(i))} ${dHtml(delta(i))}`).join('\n')+`\n\n하락할 때 바로 알림을 받아볼까요? "떨어지면 12시, 18시에 알려줘"라고 말해보세요.`:'떨어진 키워드가 없어요 👍'}
@@ -915,9 +918,90 @@ function aiReply(t){
     return `📊 오늘 순위 요약\n\n`+Object.entries(TYPES).map(([k,v])=>{const a=b(k);return `<b>${v.t}</b> ${a.length}개 · 상승 ${a.filter(i=>delta(i)>0).length} · 하락 ${a.filter(i=>delta(i)<0).length} · 순위 밖 ${a.filter(i=>cur(i)==null).length}`}).join('\n')+
     `\n\n가장 많이 오른 키워드: ${(()=>{const x=[...it].sort((a,b)=>delta(b)-delta(a))[0];return x&&delta(x)>0?`${esc(x.keyword)} ${dHtml(delta(x))}`:'없음'})()}`}
   if(/등록|추가/.test(t))return '등록할 <b>플레이스·스마트스토어·블로그 URL</b>을 키워드와 함께 보내주세요.\n예) https://m.place.naver.com/restaurant/1234567 강남 맛집, 역삼 맛집';
-  if(/광고|무료|요금|가격|pro|결제/i.test(t))return `무료는 조회할 때 5초 광고 후 결과를 보여드려요. PRO(월 9,900원)는 광고 없이 카톡·문자 알림까지 쓸 수 있어요.\n<button class="btn sub sm" onclick="go('m','member')">요금제 보기</button>`;
+  if(/광고|무료|요금|pro|biz|결제|멤버십/i.test(t))return `요금제는 3가지예요. 지금은 <b>${S.plan==='free'?'무료':S.plan.toUpperCase()}</b>를 쓰고 있어요.\n\n• <b>무료</b> — 기본 순위 체크·N 바로 조회·키워드 도구. 추적 키워드 5개까지 광고 없이, 6번째부터 볼 때마다 광고\n• <b>PRO</b> (월 9,900원) — 광고 없음, 분석·감시·오픈마켓·SNS·포털·지도 메뉴, 카톡·문자 알림 월 300건\n• <b>BIZ</b> (월 29,000원, 대행사) — 플레이스 통계·대량 분석·챗봇·월보장 관리·리포트 공유·팀원 관리\n${aB('요금제 비교 보기',"go('plan')")}`;
   if(/엑셀|csv|일괄|대량/i.test(t))return '각 목록 위 <b>일괄등록</b> 버튼에서 CSV(유형,키워드,대상,MID,그룹)를 올리면 한 번에 등록돼요.';
-  return `제가 할 수 있는 일이에요:\n• URL 붙여넣고 등록 — "링크 + 키워드"\n• 순위 질문 — "캠핑의자 몇 위야?"\n• 변동 확인 — "떨어진 키워드 알려줘"\n• 알림 예약 — "평일 9시, 18시에 카톡으로 보내줘"\n• 키워드 추천 — "강남 키워드 추천해줘"`}
+  return `제가 할 수 있는 일이에요. 이렇게 물어보세요:\n\n<b>순위</b>\n• "캠핑의자 몇 위야?" · "떨어진 키워드" · "오늘 순위 요약"\n<b>분석·키워드 도구</b>\n• "강남 맛집 검색량" · "강남 맛집 연관검색어" · "강남 맛집 자동완성"\n• "강남 맛집 상위 업체" · "캠핑의자 쇼핑 상위 상품" · "강남 맛집 AI 분석해줘"\n• "블로그 지수 hi_foodie" · "강남 맛집 블로그 태그" · "강남 고기집 입찰가"\n• "#강남맛집 게시물 수" · "글자 수 세줘 '문장'"\n• 플레이스 URL + "키워드 만들어줘" / "노출 키워드 찾아줘"\n<b>관리</b>\n• "부정 리뷰 보여줘" · "유입 통계" · "알림 목록" · "포인트 얼마야" · "추적 몇 개야"\n<b>등록·알림</b>\n• URL + 키워드로 등록 · "평일 9시, 18시에 카톡으로 보내줘"\n<b>메뉴 안내</b>\n• "키워드 조합기 뭐야?" · "리뷰 모니터링 열어줘" · "기능 뭐 있어?"`}
+/* AI 비서 도구: 질문을 메뉴 기능으로 연결 — 예시는 규칙 기반(각 메뉴의 run 로직을 그대로 호출), 실서비스는 LLM이 의도·인자를 뽑아 같은 함수를 호출 */
+const aB=(l,js,c='sub')=>`<button class="btn ${c} sm" style="margin:6px 4px 0 0" onclick="${js}">${l}</button>`;
+const aOpen=(k,v)=>`${v?`AN.${k}={v:${esc(JSON.stringify(v))},res:null};`:''}${ALL.find(x=>x.k===k)?.go||`go('m','${k}')`}`; // 메뉴 열기(입력값 채워서)
+const AI_ALIAS={'검색량':'k_volume','연관검색어':'k_related','자동완성':'k_auto','조합기':'t_combine','키워드조합':'t_combine','순위변동':'p_compare','키워드순위조회':'p_hidden','히든':'p_hidden','리뷰관리':'s_review','리뷰모니터링':'p_review','플레이스통계':'p_stats','유입통계':'p_stats','정보변경':'p_change','포스팅':'b_check','블로그지수':'b_level','입찰가':'k_power','파워링크':'k_power','글자수':'t_count','바로조회':'once','챗봇':'kbot','리포트공유':'m_report','월보장':'m_project','삭제한키워드':'m_trash','그룹관리':'m_group','팀원':'m_team','포인트':'m_pay','결제내역':'m_pay','알림예약':'alert','알림설정':'alert','알림기록':'alert','알림받는곳':'alert','받는곳':'alert','태그검색':'t_btag','찜조회':'t_kwish','해시태그':'sn_tag','카카오맵':'l_map','당근':'l_karrot','통합검색':'k_total','회원정보':'member','자주묻는':'c_faq','문의':'c_ask'};
+function aiMenu(t){const n=t.replace(/\s/g,'').replace(/^N/,'');
+  const byT=ALL.filter(x=>n.includes(x.t.replace(/\s|\(.*?\)/g,'').replace(/^N/,''))).sort((a,b)=>b.t.length-a.t.length)[0];if(byT)return byT;
+  const a=Object.keys(AI_ALIAS).filter(w=>n.includes(w)).sort((a,b)=>b.length-a.length)[0];return a?ALL.find(x=>x.k===AI_ALIAS[a]):null}
+// 질문에서 키워드 뽑기: 따옴표 우선, 없으면 트리거 단어 앞(없으면 뒤)
+function aiKw(t,re){const q=t.match(/['"“”‘’]([^'"“”‘’]+)['"“”‘’]/);if(q)return q[1].trim();
+  const clean=x=>x.replace(/(좀|에서|으로|로|의|은|는|이|가|을|를|랑|하고|도)\s*$/,'').trim();
+  const [b,...rest]=t.split(re),a=rest.join(' ').replace(/알려\s*줘|보여\s*줘|조회|해\s*줘|찾아\s*줘|확인|뭐야|어때|얼마|몇|좀|요|[?？!.]/g,'').replace(re,'').trim();
+  return clean(b.trim())||clean(a)}
+const aiList=(a,f)=>a.map((x,i)=>`${i+1}. ${f(x)}`).join('\n');
+// URL이 있는 도구(등록보다 먼저): 조합기·키워드 순위 조회·포스팅 노출·찜 조회
+function aiUrlTool(t,u){
+  if(/gift\.kakao\.com\/product\/\d+/.test(t)){const rows=[...t.matchAll(/https?:\/\/gift\.kakao\.com\/product\/\d+/g)].map(m=>kwishData(m[0]));
+    return `🎁 카카오 선물하기 찜 조회\n\n`+rows.map(x=>`<b>${esc(x.name)}</b> (${esc(x.store)})\n찜 ${fmtN(x.wish)} · ⭐ ${x.rating} · 리뷰 ${fmtN(x.rv)} · ${fmtN(x.price)}원`).join('\n\n')+`\n${aB('카카오 찜 조회 열기',"go('m','t_kwish')")}`}
+  if(!u)return null;
+  if(u.type==='place'&&/조합|키워드\s*(를\s*)?(만들|생성|뽑)/.test(t)){cmbAuto(t.match(/https?:\/\/\S+|\b\d{7,}\b/)[0],1);const o=TL.cmb.out;
+    return `🧩 <b>${esc(u.name)}</b> 정보로 키워드 ${o.length}개를 만들었어요. 월 검색량 상위 10개예요.\n\n`+aiList(o.slice(0,10),x=>`${esc(x.kw)} · ${fmtN(x.sum)}회 · 경쟁 ${x.comp}`)+`\n${aB('키워드 조합기에서 전체 보기',"go('m','t_combine')")}`}
+  if(u.type==='place'&&/노출|숨은|히든|어떤\s*키워드|키워드\s*찾/.test(t)){const url=t.match(/https?:\/\/\S+|\b\d{7,}\b/)[0],res=_hidRun({url,range:'20위 이내'}),k=res.kws.filter(x=>x.rank<=20);
+    return `🔍 <b>${esc(res.name)}</b>가 20위 안에 노출되는 키워드 ${k.length}개예요.\n\n`+aiList(k.slice(0,10),x=>`${esc(x.kw)} · <b>${x.rank}위</b> · 월 ${fmtN(x.vol)}회`)+`\n${aB('키워드 순위 조회에서 보기',`HM='자동 찾기';${aOpen('p_hidden',{url,range:'20위 이내'})}`)}`}
+  if(u.type==='blog'&&/노출|몇\s*위|순위\s*확인/.test(t)){const url=t.match(/https?:\/\/\S+/)[0],kws=t.replace(url,'').replace(/노출|몇\s*위(야|인지)?|순위|확인|해\s*줘|알려\s*줘|[?？]/g,'').split(/[,\n]/).map(x=>x.trim()).filter(Boolean);
+    if(!kws.length)return '확인할 키워드를 같이 보내주세요. 예) 블로그 글 주소 + 강남 맛집, 강남 회식 노출 확인해줘';
+    const res=CFG.b_check.run({url,kw:kws.join('\n')});
+    return `📝 포스팅 노출 확인 (${res.rows.filter(x=>x.rank).length}/${res.rows.length}개 노출)\n\n`+res.rows.map(x=>`• ${esc(x.kw)} → ${x.rank?`<b>${x.rank}위</b>`:'미노출'}`).join('\n')+`\n${aB('포스팅 노출 확인 열기',aOpen('b_check',{url,kw:kws.join('\n')}))}`}
+  return null}
+// 일반 도구·안내
+function aiTool(t,hit){const n=t.replace(/\s/g,'');
+  if(/기능.*(뭐|목록|알려|있)|뭐\s*할\s*수|할\s*수\s*있는|메뉴.*(뭐|목록|전체)|도움말|^help/i.test(t))
+    return `랭포미 메뉴예요. 궁금한 메뉴는 "○○ 뭐야?", 바로 가려면 "○○ 열어줘"라고 하세요.\n\n`+TREE.filter(g=>!g.set).map(g=>`<b>${g.g}</b>\n${vis(g).map(x=>x.t).join(' · ')}`).join('\n\n')+`\n\n설정 안: 알림 · AI · 관리(월보장·그룹·삭제한 키워드) · 마이페이지 · 고객센터`;
+  const m=aiMenu(t);
+  if(m&&/뭐야|뭐예요|뭔가요|뭔데|뭐하는|무슨\s*기능|설명|어떻게\s*(써|사용|해|하)|사용법|쓰는\s*법/.test(t)){const g=CFG[m.k]?.guide,lg=LOGIC[m.k];
+    return `<b>${esc(m.t)}</b> <span class="tiny muted">${esc(m.g)}</span>\n${esc(m.d||'')}\n\n`+(g?g.map(x=>'• '+x).join('\n'):lg?'• '+lg[0]:'')+`\n${aB(m.t+' 열기',aOpen(m.k))}`}
+  if(m&&/열어|이동|가\s*줘|가자|들어가|켜\s*줘|화면/.test(t)){setTimeout(()=>{aiPanel&&$('#aiBox')&&aiPanel();eval(aOpen(m.k))},600);return `<b>${esc(m.t)}</b> 화면으로 이동할게요.`}
+  if(/검색량|검색\s*수/.test(t)){const kw=aiKw(t,/검색량|검색\s*수/);if(!kw)return '검색량을 볼 키워드를 알려주세요. 예) 캠핑의자 검색량';
+    const g=genVolume(kw),r=rng('tr'+kw),peak=Math.floor(r()*12);
+    return `📈 <b>${esc(kw)}</b> 월간 검색량 (최근 30일)\n\n• PC ${fmtN(g.pc)} · 모바일 ${fmtN(g.mo)} · <b>합계 ${fmtN(g.sum)}</b>\n• 월평균 클릭 PC ${g.cpc} · 모바일 ${g.cmo}\n• 경쟁도 ${g.comp}\n• 많이 찾는 달: ${MONTHS[peak]} 전후\n${aB('키워드 검색량 조회에서 보기',aOpen('k_volume',{kw}))}`}
+  if(/연관\s*검색어|연관\s*키워드/.test(t)){const kw=aiKw(t,/연관\s*검색어|연관\s*키워드/);if(!kw)return '키워드를 같이 알려주세요. 예) 강남 맛집 연관검색어';
+    const res=CFG.k_related.run({kw},{});return `🔗 <b>${esc(kw)}</b> 연관검색어\n\n${res.list.map(x=>'• '+esc(x)).join('\n')}\n${aB('연관검색어 조회에서 보기',aOpen('k_related',{kw}))}`}
+  if(/자동\s*완성/.test(t)){const kw=aiKw(t,/자동\s*완성/);if(!kw)return '키워드를 같이 알려주세요. 예) 캠핑의자 자동완성';
+    const l=acList(kw);return l.length?`⌨️ <b>${esc(kw)}</b> 자동완성 ${l.length}개\n\n${l.map(x=>'• '+esc(x)).join('\n')}\n${aB('자동완성 체크에서 보기',aOpen('k_auto',{kw}))}`:`<b>${esc(kw)}</b>은(는) 자동완성이 뜨지 않아요.`}
+  if(/입찰가|파워링크/.test(t)){const kw=aiKw(t,/입찰가|파워링크/);if(!kw)return '키워드를 같이 알려주세요. 예) 강남 고기집 입찰가';
+    const x=CFG.k_power.run({kw}).rows[0];return `💰 <b>${esc(kw)}</b> 파워링크 예상 입찰가\n\n• PC 1·2·3위: ${x.pc.map(v=>fmtN(v)+'원').join(' · ')}\n• 모바일 1·2·3위: ${x.mob.map(v=>fmtN(v)+'원').join(' · ')}\n• 월 검색 ${fmtN(x.sum)} · 경쟁률 ${x.ratio} · 평균 광고 ${x.ads}개\n${aB('파워링크 순위·입찰가 열기',aOpen('k_power',{kw}))}`}
+  const tag=t.match(/#[^\s#]+/);if(tag||/해시태그/.test(t)){const tg=tag?tag[0]:'#'+aiKw(t,/해시태그/).replace(/\s/g,'');const res=CFG.sn_tag.run({tag:tg});
+    return `#️⃣ <b>${esc(tg)}</b> 게시물 ${fmtN(res.vals[11])}개 (한 달 +${fmtN(res.vals[11]-res.vals[10])})\n함께 많이 쓰는 태그: ${res.rel.map(x=>x[0]).join(' ')}\n${aB('인스타 해시태그 추이 열기',aOpen('sn_tag',{tag:tg}))}`}
+  if(/블로그\s*(지수|등급)/.test(t)){const id=(t.match(/blog\.naver\.com\/([\w-]+)/)||t.match(/\b([a-z][\w-]{2,})\b/i)||[])[1];if(!id)return '블로그 아이디를 같이 알려주세요. 예) 블로그 지수 hi_foodie';
+    const b=CFG.b_level.run({id},{}).info;return `📒 <b>${esc(b.title)}</b> (${esc(b.id)})\n\n• 지수(추정) <b>${b.grade}</b>\n• 총 방문 ${fmtN(b.visit)} · 오늘 ${fmtN(b.today)} · 이웃 ${fmtN(b.nb)}\n• 게시물 ${fmtN(b.posts)}개 · 운영 ${b.period}\n${aB('블로그 지수 분석 열기',aOpen('b_level',{id}))}`}
+  if(/블로그\s*태그|태그\s*추천/.test(t)){const kw=aiKw(t,/블로그\s*태그|태그\s*추천/);if(!kw)return '키워드를 같이 알려주세요. 예) 강남 맛집 블로그 태그';
+    const d=btagData(kw),cnt={};d.forEach(x=>x.tags.forEach(g=>cnt[g]=(cnt[g]||0)+1));const top=Object.entries(cnt).sort((a,b)=>b[1]-a[1]).slice(0,10);
+    return `🏷️ <b>${esc(kw)}</b> 상위 블로그 글이 많이 쓴 태그\n\n${top.map(([g,c])=>`#${esc(g)} (${c})`).join(' ')}\n${aB('블로그 태그 검색 열기',"go('m','t_btag')")}`}
+  if(/블로그.*(상위|분석)|상위\s*블로그/.test(t)){const kw=aiKw(t,/상위\s*블로그|블로그/);if(!kw)return '키워드를 같이 알려주세요. 예) 강남 맛집 상위 블로그';
+    const r=CFG.b_bulk.run({kw}).rows.slice(0,5);return `✍️ <b>${esc(kw)}</b> 블로그 상위 5개 글\n\n`+aiList(r,x=>`${esc(x.title)} · ${esc(x.name)} (글자 ${fmtN(x.chars)} · 이미지 ${x.img})`)+`\n${aB('블로그 키워드 대량 분석 열기',aOpen('b_bulk',{kw}))}`}
+  if(/카카오\s*맵|지도\s*비교/.test(t)){const kw=aiKw(t,/카카오\s*맵|지도\s*비교/)||hit[0]?.keyword;if(!kw)return '키워드를 같이 알려주세요. 예) 강남역 고기집 카카오맵 비교';
+    const name=(hit.find(i=>i.type==='place')||S.items.find(i=>i.type==='place'&&!i.menu)||{}).name||'홍길동 숯불갈비',x=CFG.l_map.run({kw,name}).rows[0];
+    return `🗺️ <b>${esc(name)}</b> · ${esc(kw)}\n네이버 지도 <b>${x.n}위</b> · 카카오맵 <b>${x.k?x.k+'위':'순위 밖'}</b>\n${aB('네이버 지도 vs 카카오맵 열기',aOpen('l_map',{kw,name}))}`}
+  if(/글자\s*수/.test(t)){const q=t.match(/['"“”‘’]([^'"“”‘’]+)['"“”‘’]/)||t.match(/[:：]\s*(.+)$/);if(!q)return '셀 문장을 따옴표나 콜론 뒤에 넣어주세요. 예) 글자 수 세줘: 강남역 고기 맛집 BEST 5';
+    const v=q[1];return `✏️ 공백 포함 <b>${v.length}</b>자 · 공백 제외 <b>${v.replace(/\s/g,'').length}</b>자 · ${new Blob([v]).size} byte`}
+  // 키워드가 들어간 분석
+  const kw0=(hit[0]||{}).keyword;
+  if(/분석|진단|피드백|올리(려면|는\s*법)|어떻게\s*하면/.test(t)&&hit.length){const it=hit[0],shop=it.type==='shop';if(it.type==='blog')return `블로그는 "블로그 지수 ○○" 또는 "포스팅 노출 확인"으로 물어봐 주세요.`;
+    const r=shop?sfbAnalyze(CFG.s_compare.run({kw:it.keyword,n:'상위 50개'}),it):fbAnalyze(CFG.p_compare.run({kw:it.keyword,n:'상위 50개'}),it),k=shop?'s_feedback':'p_feedback';
+    return `🤖 <b>${esc(it.keyword)}</b> · ${esc(it.name)} AI 분석\n\n<b>진단</b>\n${r.diag.slice(0,3).map(d=>'• '+d).join('\n')}\n\n<b>먼저 할 일</b>\n`+aiList(r.rec.slice(0,3),x=>`<b>${x.t}</b> — ${x.d}`)+`\n${aB('AI 분석에서 전체 보기',aOpen(k,{t:`${it.keyword} · ${it.name}`}))}`}
+  if(/쇼핑|가격\s*비교|상품/.test(t)&&/상위|1위|순위\s*변동|최저가|경쟁/.test(t)){const kw=aiKw(t,/쇼핑|가격\s*비교|상위\s*상품|상품/)||kw0;if(!kw)return '쇼핑 키워드를 같이 알려주세요. 예) 캠핑의자 쇼핑 상위 상품';
+    const r=CFG.s_compare.run({kw,n:'상위 20개'}).rows;return `🛒 <b>${esc(kw)}</b> 가격비교 상위 5개 (최저가 ${fmtN(Math.min(...r.map(x=>x.price)))}원)\n\n`+aiList(r.slice(0,5),x=>`${x.me?'<b>':''}${esc(x.name)}${x.me?'</b> (내 상품)':''} · ${fmtN(x.price)}원 · ${x.kind}`)+`\n${aB('가격비교 비교분석 열기',aOpen('s_compare',{kw,n:'상위 20개'}))}`}
+  if(/상위\s*업체|1위\s*(는|가|누구)|누가\s*1위|경쟁\s*업체|순위\s*변동/.test(t)){const kw=aiKw(t,/상위\s*업체|1위|누가|경쟁\s*업체|순위\s*변동/)||kw0;if(!kw)return '키워드를 같이 알려주세요. 예) 강남 맛집 상위 업체';
+    const res=CFG.p_compare.run({kw,n:'상위 20개'}),r=res.rows,me=r.find(x=>x.me),lead=cmpCols(res)[0][0].name,keep=cmpCols(res).findIndex(c=>c[0].name!==lead);
+    return `🏆 <b>${esc(kw)}</b> 플레이스 상위 5곳\n\n`+aiList(r.slice(0,5),x=>`${x.me?'<b>':''}${esc(x.name)}${x.me?'</b> (내 업체)':''} · 방문자리뷰 ${fmtN(x.rv)} · 저장 ${fmtN(x.sv)}`)+`\n\n1위 ${esc(lead)} — ${keep<0?30:keep}일 연속 1위예요.${me?` 내 업체는 <b>${me.rank}위</b>예요.`:''}\n${aB('키워드 순위 변동 열기',aOpen('p_compare',{kw,n:'상위 20개'}))}`}
+  // 관리·현황
+  if(/리뷰/.test(t)){const k=/상품|쇼핑|스토어/.test(t)?'s':'p',c=RVK[k];if(!c.linked())return `${k==='s'?'스마트스토어 판매자':'스마트플레이스'} 계정을 먼저 연동해야 리뷰를 볼 수 있어요.\n${aB('예시 계정 연동하고 다시 보기',`${k==='s'?'SS':'MG'}.linked=true;aiSend(${esc(JSON.stringify(t))})`,'')}${aB('연동 화면으로',`go('m','${k}_review')`)}`;
+    reviewPage(k);const rows=RVROWS,neg=rows.filter(x=>x.neg),list=/부정|나쁜|안\s*좋/.test(t)?neg:rows;
+    return `💬 최근 7일 새 리뷰 ${rows.length}개 · 부정 ${neg.length}개 · 답글 대기 ${rows.filter(x=>!RVR[x.id]).length}개\n\n`+list.slice(0,5).map(x=>`${'★'.repeat(x.star)} <b>${esc(x.pl)}</b>\n"${esc(x.t)}"`).join('\n\n')+`\n${aB(k==='s'?'리뷰 관리 열기':'리뷰 모니터링 열기',`go('m','${k}_review')`)}`}
+  if(/유입|통계/.test(t)){if(!MG.linked)return `스마트플레이스 계정을 연동하면 유입 통계를 볼 수 있어요.\n${aB('예시 계정 연동하고 다시 보기',`MG.linked=true;aiSend(${esc(JSON.stringify(t))})`,'')}${aB('플레이스 통계 열기',"go('m','p_stats')")}`;
+    const d=statsData();return `📊 <b>${esc(SR.place)}</b> 이번 주 플레이스 유입 ${d.ct}회 (지난주 대비 ${d.pct>=0?'+':''}${d.pct}%)\n• 가장 많이 들어온 곳: ${d.ch[0][0]}\n• 가장 많이 검색한 키워드: ${esc(d.kw[0][0])}\n${aB('플레이스 통계 열기',"go('m','p_stats')")}`}
+  if(/정보\s*변경|변경\s*감지|바뀐\s*(곳|정보|내용)/.test(t)){const shop=/상품|쇼핑/.test(t);return `${shop?'내·경쟁 상품의 가격·할인·배송비·상품명':'내·경쟁 업체의 영업시간·사진·메뉴·가격'} 변경 내역을 매일 모아 보여드려요.\n${aB('정보 변경 감지 열기',`go('m','${shop?'s':'p'}_change')`)}`}
+  if(/알림/.test(t)&&/목록|뭐|있|확인|예약된|몇/.test(t))return S.schedules.length?`⏰ 예약된 알림 ${S.schedules.length}개\n\n`+S.schedules.map(x=>`• <b>${esc(x.name)}</b> ${x.on?'':'(꺼짐)'}\n  ${x.times.join(', ')} · ${x.days.length===7?'매일':x.days.length===5?'평일':'주말'} · ${chLabel(x).join(', ')}`).join('\n')+`\n${aB('알림 예약 보기',"go('alert')")}`:`예약된 알림이 없어요. "평일 9시에 카톡으로 보내줘"처럼 말하면 바로 예약해요.`;
+  if(/포인트|잔액/.test(t))return `💳 보유 포인트 <b>${fmtN(MG.point)}P</b>\n문자 1건 40P · 알림톡 1건 10P · 앱 알림 무료\n${aB('포인트 · 결제 내역',"go('m','m_pay')")}`;
+  if(/그룹/.test(t))return `📁 그룹 ${groupList().length}개\n\n`+groupList().map(([g,c])=>`• ${esc(g)} — 키워드 ${c}개`).join('\n')+`\n${aB('그룹 관리',"go('m','m_group')")}`;
+  if(/몇\s*개|추적\s*(중|목록)|등록된/.test(t)&&/추적|키워드|등록/.test(t)){const by={};S.items.forEach(i=>{const k=i.menu||i.type;by[k]=(by[k]||0)+1});
+    return `📋 추적 중인 키워드 <b>${S.items.length}개</b>\n\n`+Object.entries(by).map(([k,c])=>`• ${ALL.find(x=>x.k===k)?.t||k} ${c}개`).join('\n')+`\n${aB('내 추적 목록',"go('mytrack')")}`}
+  return null}
 function register(u,kws){
   const add=kws.map(k=>mkItem(u.type,k,u.name,u.mid,fakeRank(u.type,k,u.name)));S.items.unshift(...add);
   return `✅ ${u.typeName} <b>${esc(u.name)}</b> 등록 완료\n`+add.map(i=>`• ${esc(i.keyword)}`).join('\n')+`\n\n오늘부터 매일 자동으로 순위를 기록해요.\n<button class="btn sm" onclick="gate(()=>showResult(S.items.find(i=>i.id==='${add[0].id}'),false))">지금 순위 확인하기</button>`}
@@ -935,7 +1019,7 @@ function makeSchedule(t,hit){
   S.schedules.push(s);
   const miss=['kakao','sms'].filter(k=>ch[k]&&!S.ch[k]);
   return `⏰ 알림을 예약했어요\n\n• 시간: ${times.join(', ')} (${days.length===7?'매일':days.length===5?'평일':'주말'})\n• 대상: ${hit.length?hit.map(i=>esc(i.keyword)).join(', '):(type==='all'?'전체 키워드':TYPES[type].t)}\n• 조건: ${cond==='out'?s.th+'위 밖으로 밀리면':COND[cond]}\n• 받는 곳: ${chLabel(s).join(', ')}\n\n미리보기:\n<span class="small muted">${esc(msgFor(s)||'(현재는 조건에 맞는 변동 없음)').split('\n').slice(0,3).join('\n')}</span>`+
-    (miss.length?`\n\n⚠️ ${miss.map(k=>k==='kakao'?'카카오톡':'문자').join('·')} 번호가 아직 연결되지 않았어요.\n<button class="btn sm" onclick="go('channels')">받는 곳 연결하기</button>`:`\n<button class="btn sub sm" onclick="go('alert')">알림 예약 보기</button>`)}
+    (miss.length?`\n\n⚠️ ${miss.map(k=>k==='kakao'?'카카오톡':'문자').join('·')} 번호가 아직 연결되지 않았어요.\n<button class="btn sm" onclick="chSheet()">받는 곳 연결하기</button>`:`\n<button class="btn sub sm" onclick="go('alert')">알림 예약 보기</button>`)}
 function recommend(t,hit){
   const base=hit[0]||S.items.find(i=>i.type==='place'),word=(t.match(/([가-힣]+?)(?:\s*(?:키워드|지역))?\s*(?:관련\s*)?추천/)||[])[1];
   const region=(word&&!/키워드|추천/.test(word)?word:null)||(base?base.keyword.split(' ')[0]:'강남');
@@ -949,39 +1033,39 @@ function addReco(i,bid,el){const b=S.items.find(x=>x.id===bid),r=RECO[i];if(!b||
 /* --- 전체 메뉴 트리 (참고: 애드로그·애드랭크·셀러닷컴) ---
    go: 이미 만든 화면, 없으면 기획 중 페이지(m/키)로 이동 */
 const TREE=[
-  {k:'quick',g:'바로 조회',n:'바로 조회',i:'refresh',items:[
-    {k:'once',t:'바로 조회',d:'플레이스·쇼핑·블로그 순위를 등록 없이 바로 확인',go:"go('once')",src:'애드로그(1회 순위 조회)'}]},
+  {k:'quick',g:'N 바로 조회',n:'N 바로 조회',i:'refresh',items:[
+    {k:'once',t:'N 바로 조회',d:'네이버 플레이스·쇼핑·블로그 순위를 등록 없이 바로 확인',go:"go('once')",src:'애드로그(1회 순위 조회)'}]},
   {k:'place',g:'N 플레이스',n:'N 플레이스',i:'pin',items:[
-    {k:'place',t:'N 플레이스 순위 체크',d:'등록한 키워드의 플레이스 순위를 매일 자동으로 기록',go:"go('place')",src:'애드로그, 셀러닷컴'},
-    {k:'p_compare',t:'순위 비교분석',d:'같은 키워드 상위 업체와 리뷰·저장 수·사진 수 비교',src:'애드로그, 셀러닷컴'},
-    {k:'p_trend',t:'추세·이력 분석',d:'기간별 순위 흐름, 순위 변동 시점과 변경 이력',src:'애드로그, 셀러닷컴'},
-    {k:'p_hidden',t:'히든·상위 키워드 찾기',d:'내 업체가 노출되는 숨은 키워드와 상위권 키워드 발굴',src:'애드로그'},
-    {k:'p_save',t:'저장 수 체크',d:'업체 저장(찜) 수 매일 기록',src:'애드로그'},
-    {k:'p_stats',t:'유입·플레이스 통계',d:'스마트플레이스 유입 통계를 한눈에',src:'애드로그, 셀러닷컴'},
-    {k:'p_report',t:'종합 분석 리포트',d:'업체 상태 종합 진단과 개선 포인트 리포트',src:'애드로그'},
+    {k:'place',s:'순위',t:'N 플레이스 순위 체크',d:'등록한 키워드의 플레이스 순위를 매일 자동으로 기록',go:"go('place')",src:'애드로그, 셀러닷컴'},
+    {k:'p_compare',t:'키워드 순위 변동',d:'키워드 상위 업체의 30일 순위 흐름과 평균 리뷰·저장 수',src:'애드로그, 셀러닷컴'},
     {k:'p_stay',t:'숙소 실시간예약 순위',d:'펜션·숙소 실시간 예약 탭 순위를 매일 기록',src:'애드로그'},
-    {k:'p_rival',t:'경쟁 업체 같이 추적',d:'내 키워드에 경쟁 업체를 묶어 순위·리뷰·저장을 한 그래프로 비교',src:'랭포미 제안'},
+    {k:'p_stats',s:'분석',t:'플레이스 통계',d:'스마트플레이스 유입 통계를 한눈에',src:'애드로그, 셀러닷컴'},
     {k:'p_review',t:'리뷰 모니터링',d:'새 리뷰와 부정 리뷰(불친절·위생 등)를 모아 보고 알림',src:'랭포미 제안'},
+    {k:'p_feedback',t:'AI 분석',d:'업체 종합 진단과 키워드 순위 변동 데이터를 읽어 대응 방법 추천',src:'셀러닷컴, 애드로그(AI 인사이트·종합분석)'},
     {k:'p_change',t:'정보 변경 감지',d:'내·경쟁 업체의 영업시간·사진·메뉴·가격 변경 내역',src:'랭포미 제안'},
-    {k:'p_feedback',t:'AI 플레이스 피드백',d:'AI가 업체 정보·리뷰를 보고 개선점 제안',src:'셀러닷컴, 애드로그(AI 인사이트)'}]},
+    {k:'p_hidden',s:'키워드 찾기',t:'키워드 순위 조회',d:'내 업체가 노출되는 키워드를 자동으로 찾거나, 넣은 키워드의 순위를 한 번에 조회',src:'애드로그'},
+    {k:'t_combine',t:'키워드 조합기',d:'플레이스 URL을 넣으면 AI가 업체명·위치·메뉴·의도 단어를 채워 키워드를 자동 생성',src:'랭포미, 셀러닷컴(AI 키워드)'}]},
   {k:'shop',g:'N 쇼핑',n:'N 쇼핑',i:'cart',items:[
-    {k:'shop',t:'N 가격비교 순위 체크',d:'가격비교·스토어 상품 순위를 매일 자동으로 기록',go:"go('shop')",src:'애드로그, 셀러닷컴'},
+    {k:'shop',s:'순위',t:'N 가격비교 순위 체크',d:'가격비교·스토어 상품 순위를 매일 자동으로 기록',go:"go('shop')",src:'애드로그, 셀러닷컴'},
     {k:'s_store',t:'스마트스토어 순위 체크',d:'N+ 스토어 단독 상품 순위를 매일 기록',src:'애드로그'},
-    {k:'s_compare',t:'가격비교 비교분석',d:'키워드 검색량·경쟁 강도와 상위 상품의 가격·판매처·브랜드 비교',src:'셀러닷컴, 애드로그(쇼핑 키워드 분석)'}]},
+    {k:'s_compare',t:'가격비교 비교분석',d:'키워드 검색량·경쟁 강도와 상위 상품의 날짜별 순위 흐름',src:'셀러닷컴, 애드로그(쇼핑 키워드 분석)'},
+    {k:'s_review',s:'분석',t:'리뷰 관리',d:'내 상품의 새 리뷰·부정 리뷰를 모아 보고 AI 답글 초안으로 답글',src:'랭포미 제안'},
+    {k:'s_feedback',t:'AI 분석',d:'가격비교 비교분석 데이터를 읽어 진단하고 대응 방법 추천',src:'랭포미 제안'},
+    {k:'s_change',t:'정보 변경 감지',d:'내·경쟁 상품의 가격·할인·배송비·상품명 변경 내역',src:'랭포미 제안'}]},
   {k:'blog',g:'N 블로그',n:'N 블로그',i:'doc',items:[
-    {k:'blog',t:'N 블로그 순위 체크',d:'블로그 글의 키워드별 노출 순위를 매일 자동으로 기록',go:"go('blog')",src:'애드로그'},
-    {k:'b_level',t:'블로그 지수·계정 분석',d:'블로그 등급, 최근 글 노출 상태, 계정 정보',src:'애드로그'},
-    {k:'b_check',t:'블로그 글 검사',d:'글 누락·노출 여부 상시 체크',src:'애드로그, 셀러닷컴(247 블로그 체크)'},
-    {k:'b_bulk',t:'블로그 키워드 대량 분석',d:'키워드 여러 개를 한 번에 노출·경쟁도 분석',src:'애드로그'},
-    {k:'b_infl',t:'인플루언서 순위 체크',d:'인플루언서 탭에서 내 포스팅 순위를 매일 기록',src:'애드로그'},
+    {k:'blog',s:'순위',t:'N 블로그 순위 체크',d:'블로그 글의 키워드별 노출 순위를 매일 자동으로 기록',go:"go('blog')",src:'애드로그'},
+    {k:'b_check',t:'포스팅 노출 확인',d:'키워드와 글 주소를 넣으면 블로그 탭 몇 위에 노출되는지 확인',src:'애드로그, 셀러닷컴(247 블로그 체크)'},
+    {k:'b_infl',s:'탭별 순위',t:'인플루언서 순위 체크',d:'인플루언서 탭에서 내 포스팅 순위를 매일 기록',src:'애드로그'},
     {k:'b_clip',t:'클립 순위 체크',d:'클립(숏폼) 탭에서 내 영상 순위를 매일 기록',src:'애드로그'},
     {k:'b_kin',t:'지식인 순위 체크',d:'지식인 탭에서 내 답변·질문 순위를 매일 기록',src:'애드로그'},
     {k:'b_cafe',t:'카페 순위 체크',d:'카페 탭에서 내 게시물 순위를 매일 기록',src:'애드로그'},
     {k:'b_block',t:'스마트블록 노출 체크',d:'스마트블록 주제별 내 글 노출 위치를 매일 기록',src:'애드로그'},
     {k:'b_pop',t:'인기글 순위 체크',d:'인기글 영역에서 내 글 순위를 매일 기록',src:'애드로그'},
+    {k:'b_level',s:'분석',t:'블로그 지수 분석',d:'블로그 등급, 최근 글 노출 상태, 계정 정보',src:'애드로그'},
+    {k:'b_bulk',t:'블로그 키워드 대량 분석',d:'키워드 여러 개를 한 번에 노출·경쟁도 분석',src:'애드로그'},
     {k:'t_btag',t:'블로그 태그 검색',d:'키워드 상위 블로그 글들이 쓴 태그를 한 번에 모아보기',src:'랭포미'}]},
   {k:'market',g:'오픈마켓',n:'오픈마켓',i:'grid',items:[
-    {k:'o_coupang',t:'쿠팡 순위 체크',d:'쿠팡 검색 결과에서 내 상품 순위를 매일 기록',src:'애드로그'},
+    {k:'o_coupang',s:'순위',t:'쿠팡 순위 체크',d:'쿠팡 검색 결과에서 내 상품 순위를 매일 기록',src:'애드로그'},
     {k:'o_ohou',t:'오늘의집 순위 체크',d:'오늘의집 검색 결과에서 내 상품 순위를 매일 기록',src:'애드로그'},
     {k:'o_musinsa',t:'무신사 순위 체크',d:'무신사 검색 결과에서 내 상품 순위를 매일 기록',src:'애드로그'},
     {k:'o_11st',t:'11번가 순위 체크',d:'11번가 검색 결과에서 내 상품 순위를 매일 기록',src:'애드로그'},
@@ -989,48 +1073,43 @@ const TREE=[
     {k:'o_ssg',t:'SSG 순위 체크',d:'SSG 검색 결과에서 내 상품 순위를 매일 기록',src:'애드로그'},
     {k:'o_kgift',t:'카카오선물하기 순위 체크',d:'카카오 선물하기 검색 결과에서 내 상품 순위를 매일 기록',src:'애드로그'},
     {k:'o_kdeal',t:'카카오톡딜 순위 체크',d:'카카오톡딜 검색 결과에서 내 상품 순위를 매일 기록',src:'애드로그'},
-    {k:'t_kwish',t:'카카오 찜 조회',d:'카카오 선물하기 상품의 찜(하트) 수·평점·리뷰를 여러 개 한 번에 확인',src:'랭포미'}]},
-  {k:'sns',g:'SNS 순위 조회',n:'SNS',i:'spark',items:[
-    {k:'sn_insta',t:'인스타 피드 순위 조회',d:'해시태그·키워드 검색 피드에서 내 게시물 순위를 매일 기록'},
-    {k:'sn_tag',t:'인스타 해시태그 추이',d:'해시태그 게시물 수 월별 추이와 함께 쓰는 해시태그',src:'랭포미 제안'},
+    {k:'t_kwish',s:'분석',t:'카카오 찜 조회',d:'카카오 선물하기 상품의 찜(하트) 수·평점·리뷰를 여러 개 한 번에 확인',src:'랭포미'}]},
+  {k:'sns',g:'SNS',n:'SNS',i:'spark',items:[
+    {k:'sn_insta',s:'순위',t:'인스타 피드 순위 조회',d:'해시태그·키워드 검색 피드에서 내 게시물 순위를 매일 기록'},
     {k:'sn_yt',t:'유튜브 검색 순위',d:'유튜브 검색 결과에서 내 영상 순위를 매일 기록',src:'랭포미 제안'},
-    {k:'sn_tt',t:'틱톡 검색 순위',d:'틱톡 검색 결과에서 내 영상 순위를 매일 기록',src:'랭포미 제안'}]},
-  {k:'local',g:'지역·지도',n:'지역',i:'pin',items:[
+    {k:'sn_tt',t:'틱톡 검색 순위',d:'틱톡 검색 결과에서 내 영상 순위를 매일 기록',src:'랭포미 제안'},
+    {k:'sn_tag',s:'분석',t:'인스타 해시태그 추이',d:'해시태그 게시물 수 월별 추이와 함께 쓰는 해시태그',src:'랭포미 제안'}]},
+  {k:'local',g:'포털·지도',n:'포털·지도',i:'globe',items:[
+    {k:'k_web',s:'순위',t:'웹사이트 순위 체크',d:'웹사이트 영역에서 내 사이트 순위를 매일 기록',src:'애드로그'},
+    {k:'k_daum',t:'다음·카카오 순위',d:'다음 통합웹 순위, 카카오 트렌드랭킹',src:'애드로그'},
     {k:'l_karrot',t:'당근 비즈프로필 노출',d:'당근 동네 검색에서 내 비즈프로필 순위를 매일 기록',src:'랭포미 제안'},
     {k:'l_map',t:'네이버 지도 vs 카카오맵',d:'같은 키워드에서 두 지도 앱의 순위를 나란히 비교',src:'랭포미 제안'}]},
   {k:'kw',g:'검색·키워드',n:'키워드',i:'search',items:[
-    {k:'k_volume',t:'키워드 검색량 조회',d:'월간 PC·모바일 검색량, 경쟁도',src:'애드로그, 셀러닷컴'},
+    {k:'k_volume',s:'키워드 찾기',t:'키워드 검색량 조회',d:'월간 PC·모바일 검색량, 경쟁도와 월별 추이(계절성)',src:'애드로그, 셀러닷컴'},
     {k:'k_related',t:'연관검색어 조회',d:'키워드의 연관검색어 조회 및 노출 체크',src:'애드로그'},
     {k:'k_auto',t:'자동완성 체크',d:'키워드를 여러 개 넣으면 네이버 자동완성 노출 여부와 목록을 한 번에 확인',src:'랭포미'},
-    {k:'k_trend',t:'검색량 추이 (월별)',d:'최근 12개월 월별 검색량과 계절성',src:'랭포미 제안'},
-    {k:'k_ai',t:'AI 키워드 생성',d:'업종·지역을 넣으면 AI가 공략 키워드 추천',src:'셀러닷컴'},
-    {k:'k_total',t:'통합검색 노출 모니터링',d:'통합검색 첫 화면 노출 영역 추적',src:'애드랭크, 애드로그'},
+    {k:'k_total',s:'순위',t:'통합검색 노출 모니터링',d:'통합검색 첫 화면 노출 영역 추적',src:'애드랭크, 애드로그'},
     {k:'k_power',t:'파워링크 순위·입찰가',d:'파워링크 노출 순위와 입찰가 분석',src:'애드랭크, 애드로그'},
-    {k:'k_web',t:'웹사이트 순위 체크',d:'웹사이트 영역에서 내 사이트 순위를 매일 기록',src:'애드로그'},
-    {k:'k_daum',t:'다음·카카오 순위',d:'다음 통합웹 순위, 카카오 트렌드랭킹',src:'애드로그'},
-    {k:'t_combine',t:'키워드 조합기',d:'지역·업체명·메뉴·의도 키워드를 조합해 대량 생성',src:'랭포미'},
-    {k:'t_count',t:'글자 수 세기',d:'공백 포함·제외 글자 수',src:'애드로그'}]},
+    {k:'t_count',s:'도구',t:'글자 수 세기',d:'공백 포함·제외 글자 수',src:'애드로그'}]},
   {k:'help',g:'고객센터',n:'고객센터',i:'help',set:true,items:[
     {k:'c_faq',t:'자주 묻는 질문',d:'',src:'애드랭크'},
     {k:'c_ask',t:'1:1 문의 (카톡 채널)',d:'카카오톡 채널 상담 연결',src:'세 곳 공통'}]},
   {k:'account',g:'마이페이지',n:'마이페이지',i:'crown',set:true,items:[
-    {k:'member',t:'회원 정보 (요금제 · 회원 정보 수정)',d:'요금제 확인·변경과 회원 정보(프로필·비밀번호·추천·수신 동의) 수정',src:'셀러닷컴(내 설정), 애드랭크(결제)'},
+    {k:'member',t:'회원 정보',d:'요금제 확인·변경과 회원 정보(프로필·비밀번호·추천·수신 동의) 수정',src:'셀러닷컴(내 설정), 애드랭크(결제)'},
     {k:'m_team',t:'팀원 관리',biz:true,d:'대행사 멤버십 전용 — 직원·광고주 계정마다 볼 수 있는 그룹(광고주)과 메뉴, 권한 지정',src:'랭포미 제안'},
     {k:'m_report',t:'리포트 공유 링크',d:'그룹(광고주)별 읽기 전용 순위 페이지·월간 리포트(PDF)',src:'랭포미 제안'},
-    {k:'m_pay',t:'포인트 · 결제 내역',d:'포인트 충전·사용 내역, 결제 내역·영수증, 세금계산서',src:'애드로그, 애드랭크, 셀러닷컴'}]},
+    {k:'m_pay',t:'포인트 · 결제 내역',d:'포인트 충전·사용 내역, 결제 내역·영수증',src:'애드로그, 애드랭크, 셀러닷컴'}]},
   /* set:true = 메뉴 대신 설정 화면 안에서 여는 그룹 */
   {k:'alert',g:'알림',n:'알림',i:'bell',set:true,items:[
-    {k:'alert',t:'알림 예약',d:'정해진 시간에 순위를 앱·카톡·문자로 받기',go:"go('alert')",src:'애드로그(문자알림)'},
-    {k:'inbox',t:'받은 알림',d:'보내진 순위 알림 모아보기',go:"go('alert','inbox')"},
-    {k:'channels',t:'알림 받는 곳 (앱·카톡·문자)',d:'알림 받을 앱·카카오톡·문자 번호 연결',go:"go('channels')"},
+    {k:'alert',t:'알림 설정',d:'정해진 시간에 순위를 앱·카톡·문자로 받기, 보낸 알림 기록 확인',go:"go('alert')",src:'애드로그(문자알림)'},
   ]},
   {k:'aig',g:'AI',n:'AI',i:'spark',set:true,items:[
-    {k:'ai',t:'AI 비서 (대화 크게 보기)',d:'"AI 활용하기"로 나눈 대화를 큰 화면에서 이어서 보고 쓰기 — 같은 대화',go:"go('ai')"},
+    {k:'ai',t:'AI 비서',d:'"AI 활용하기"로 나눈 대화를 큰 화면에서 이어서 보고 쓰기 — 같은 대화',go:"go('ai')"},
     {k:'kbot',t:'카카오톡 챗봇 조회',d:'카톡 채널에 키워드를 보내면 바로 순위를 답해주는 챗봇',src:'랭포미 제안'}]},
   {k:'manage',g:'관리',n:'관리',i:'grid',set:true,items:[
-    {k:'m_project',t:'프로젝트(월보장) 관리',biz:true,d:'추적 중인 플레이스의 월보장 목표·진행률 관리',src:'셀러닷컴'},
     {k:'m_group',t:'그룹 관리',d:'광고주·매장별 그룹을 만들고 그룹을 쓸 메뉴를 지정',src:'애드로그(그룹 관리)'},
-    {k:'m_trash',t:'삭제한 키워드',d:'지운 키워드 복구, 기록 보관',src:'애드로그'}]}];
+    {k:'m_trash',t:'삭제한 키워드',d:'지운 키워드 복구, 기록 보관',src:'애드로그'},
+    {k:'m_project',t:'프로젝트(월보장) 관리',biz:true,d:'추적 중인 플레이스의 월보장 목표·진행률 관리',src:'셀러닷컴'}]}];
 /* 등록·추적형 메뉴(틀 A): 기본 순위 체크 목록과 같은 화면, 유형(place/shop/blog)별 데이터 모양 재사용 */
 const TRK={
   p_stay:{type:'place',tg:'숙소명',unit:'숙소 플레이스 URL',info:'매일 12:10 이후 자동 체크 · 300위까지',samples:[['가평 펜션','가평 리버뷰 풀빌라'],['청평 독채','하이어 스테이'],['홍천 풀빌라','숲속의 아침 펜션']]},
@@ -1054,16 +1133,17 @@ const TRK={
 const SEEDED={};
 function seedTrk(k){if(SEEDED[k])return;SEEDED[k]=1;const c=TRK[k];
   c.samples.forEach(([kw,nm])=>S.items.push(mkItem(c.type,kw,nm,String(hash(nm)).slice(0,10),fakeRank(c.type,kw,nm),'기본',{menu:k,...(c.x||{})})))}
+TREE.forEach(g=>{let s;g.items.forEach(it=>it.s=s=it.s||s)}); // s = 하위 메뉴 소제목, 첫 항목에만 적고 아래로 이어짐
+const secH=(a,i)=>a[i].s&&a[i].s!==a[i-1]?.s?a[i].s:''; // 소제목이 바뀌는 첫 항목이면 소제목
 const ALL=TREE.flatMap(g=>g.items.map(it=>({...it,g:g.g,gk:g.k})));
-const FREE_MENUS=['once','t_count','place','shop','blog','t_btag','t_kwish','k_volume','k_related','k_auto','t_combine'],BIZ_MENUS=['p_report','p_stats','b_bulk','kbot','m_project','m_report','m_team'];
+const FREE_MENUS=['once','t_count','place','shop','blog','t_btag','t_kwish','k_volume','k_related','k_auto','t_combine'],BIZ_MENUS=['p_stats','b_bulk','kbot','m_project','m_report','m_team'];
 const needPlan=k=>BIZ_MENUS.includes(k)?'biz':FREE_MENUS.includes(k)||TREE.some(g=>(g.set||g.k==='help')&&g.items.some(x=>x.k===k))?'free':'pro';
 const canUse=k=>['free','pro','biz'].indexOf(S.plan)>=['free','pro','biz'].indexOf(needPlan(k));
 const lockTag=k=>canUse(k)?'':needPlan(k)==='biz'?' <span class="tag" style="background:linear-gradient(90deg,#3b5bfd,#a74bff);color:#fff">🔒 BIZ</span>':' <span class="tag" style="background:var(--pri-soft);color:var(--pri)">🔒 PRO</span>'; // PRO=연파랑, BIZ=보라 그라데이션
 const vis=g=>g.items.filter(it=>!S.subOff[it.k]);
 const SUBOPEN={}; // 메뉴 편집의 하위 메뉴 묶음 펼침 상태(스위치 눌러 다시 그려도 유지) // 설정에서 끈 하위 메뉴는 상단 탭·전체 메뉴에서 숨김
 const MENUS={home:['홈','home'],...Object.fromEntries(TREE.filter(g=>!g.set).map(g=>[g.k,[g.n,g.i]]))};
-const NO={}; // PC 사이드바 그룹 펼침 상태
-const curKey=()=>route==='m'?sub:route==='alert'&&sub==='inbox'?'inbox':route;
+const curKey=()=>route==='m'?sub:route;
 const curGroup=()=>ALL.find(x=>x.k===curKey())?.gk;
 function openMenu(k){const it=ALL.find(x=>x.k===k);if(!it)return;it.go?Function(it.go)():go('m',k)}
 function openGroup(k){if(curGroup()!==k)openMenu(vis(TREE.find(g=>g.k===k))[0].k)}
@@ -1071,14 +1151,13 @@ function renderMore(){
   const L=(i,t,fn,right='')=>`<button class="listlink" onclick="${fn}"><span class="ico">${ic(i,18)}</span><span class="grow">${t}</span>${right}<span class="muted">›</span></button>`;
   const BIZT=' <span class="tag" style="background:linear-gradient(90deg,#3b5bfd,#a74bff);color:#fff">BIZ</span>';
   // biz:true 메뉴는 BIZ 요금제일 때만 나타남
-  const SG=k=>{const g=TREE.find(t=>t.k===k);return `<div class="card"><h3>${g.g}</h3>${g.items.filter(it=>!it.biz||S.plan==='biz').map(it=>L(g.i,it.t+(it.biz?BIZT:lockTag(it.k)),it.go||`go('m','${it.k}')`)).join('')}</div>`};
+  const SG=(k,extra='')=>{const g=TREE.find(t=>t.k===k);return `<div class="card"><h3>${g.g}</h3>${g.items.filter(it=>!it.biz||S.plan==='biz').map(it=>L(g.i,it.t+(it.biz?BIZT:lockTag(it.k)),it.go||`go('m','${it.k}')`)).join('')}${extra}</div>`};
   return `<div class="card"><h3>화면</h3>
       ${L('grid','메뉴 · 홈 화면 편집',"go('menuedit')")}
       ${L('moon','화면 테마',"cycleTheme()",`<span class="small muted">${{auto:'시스템',light:'라이트',dark:'다크'}[S.theme]}</span>`)}
       ${L('phone','홈 화면에 앱 설치',"installApp()",`<span class="small muted">${matchMedia('(display-mode: standalone)').matches?'설치됨':''}</span>`)}</div>
-    ${SG('alert')}${SG('aig')}${SG('manage')}
-    <div class="card"><h3>마이페이지</h3>${TREE.find(t=>t.k==='account').items.filter(it=>!it.biz||S.plan==='biz').map(it=>L('crown',it.t+(it.biz?BIZT:lockTag(it.k)),`go('m','${it.k}')`)).join('')}
-      ${L('star','내 추적 목록',"go('mytrack')",`<span class="small muted">${S.items.length}개</span>`)}</div>
+    ${SG('alert',L('star','내 추적 목록',"go('mytrack')",`<span class="small muted">${S.items.length}개</span>`))}${SG('aig')}${SG('manage')}
+    <div class="card"><h3>마이페이지</h3>${TREE.find(t=>t.k==='account').items.filter(it=>!it.biz||S.plan==='biz').map(it=>L('crown',it.t+(it.biz?BIZT:lockTag(it.k)),`go('m','${it.k}')`)).join('')}</div>
     ${SG('help')}
     <div class="card"><h3>기획 관리</h3>
       ${L('doc','전달된 기획 모아보기',"go('notes')")}
@@ -1090,17 +1169,13 @@ function menuSheet(){
     <button class="listlink" onclick="closeSheet();go('home')"><span class="ico">${ic('home',18)}</span><span class="grow">홈</span><span class="muted">›</span></button>
     ${TREE.filter(g=>!g.set).map(g=>vis(g).length===1?`<button class="listlink" onclick="closeSheet();openMenu('${vis(g)[0].k}')"><span class="ico">${ic(g.i,18)}</span><span class="grow">${g.g}</span><span class="muted">›</span></button>`
       :`<details class="grp" ${cg===g.k?'open':''} style="border-bottom:1px solid var(--line)"><summary class="listlink" style="border:0"><span class="ico">${ic(g.i,18)}</span><span class="grow">${g.g}</span><span class="muted small">${vis(g).length}</span></summary>
-      <div style="padding:0 0 8px 46px">${vis(g).map(it=>`<button class="listlink" style="padding:10px 0;font-weight:${key===it.k?800:500};color:${key===it.k?'var(--pri)':'inherit'}" onclick="closeSheet();openMenu('${it.k}')"><span class="grow">${it.t}${lockTag(it.k)}</span></button>`).join('')}</div></details>`).join('')}`)}
+      <div style="padding:0 0 8px 46px">${vis(g).map((it,i,a)=>(secH(a,i)?`<div class="sech">${secH(a,i)}</div>`:'')+`<button class="listlink" style="padding:10px 0;font-weight:${key===it.k?800:500};color:${key===it.k?'var(--pri)':'inherit'}" onclick="closeSheet();openMenu('${it.k}')"><span class="grow">${it.t}${lockTag(it.k)}</span></button>`).join('')}</div></details>`).join('')}`)}
 /* --- 기획 중 메뉴의 예시 화면 (가짜 데이터) --- */
 let T=(cols,rows)=>`<div class="tw"><table class="dtable"><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</table></div>`;
 const K=a=>`<div class="stats" style="margin-bottom:12px">${a.map(([l,v,c=''])=>`<div><b class="${c}">${v}</b><span>${l}</span></div>`).join('')}</div>`;
 const BAR=(p,c='var(--pri)')=>`<span class="bar2"><i style="width:${p}%;background:${c}"></i></span>`;
 const U=n=>`<span class="up">▲${n}</span>`,Dn=n=>`<span class="down">▼${n}</span>`,ME=s=>`<b style="color:var(--pri)">${s}</b>`;
 const DEMO={
-p_trend:()=>K([['30일 평균','3.8위'],['최고','1위','up'],['최저','9위','down'],['TOP3 유지','21일']])+T(['날짜','순위','변동','메모'],[
-    ['10/29','2위',U(1),'리뷰 이벤트 시작'],['10/28','3위',Dn(2),''],['10/27','1위',U(1),'사진 20장 추가'],['10/26','2위','-',''],['10/25','2위',U(4),'영업시간 수정']]),
-p_save:()=>K([['오늘 저장','8,301'],['어제 대비','+42','up'],['7일 증가','+268','up'],['30일 증가','+1,104','up']])+T(['날짜','저장 수','증감'],[
-    ['10/29','8,301',U(42)],['10/28','8,259',U(37)],['10/27','8,222',U(51)],['10/26','8,171',U(29)]]),
   t_count:()=>`<textarea class="input" rows="5" placeholder="글을 붙여넣으면 바로 세어드려요" oninput="const v=this.value;this.nextElementSibling.innerHTML='공백 포함 <b>'+v.length+'</b>자 · 공백 제외 <b>'+v.replace(/\\s/g,'').length+'</b>자 · '+new Blob([v]).size+' byte'">강남역 고기 맛집 BEST 5 솔직후기</textarea><div class="small" style="margin-top:8px">공백 포함 <b>21</b>자 · 공백 제외 <b>17</b>자</div>`
 };
 /* --- 기획 전달하기: 메뉴별 기획을 여러 사람이 남기고 모두가 보는 공용 게시판 ---
@@ -1166,14 +1241,16 @@ const placeName=r=>pick(r,SYL1)+' '+pick(r,SYL2);
 const fmtD=d=>`${d.getFullYear()}.${pad(d.getMonth()+1)}.${pad(d.getDate())}`;
 const daysAgo=n=>{const d=new Date();d.setDate(d.getDate()-n);return d};
 const dlt=(a,b)=>a==null||b==null?'-':a<b?U(b-a):a>b?Dn(a-b):'<span class="same">-</span>';
-const xlsxBtn=(k)=>`<button class="btn ghost sm" onclick="anExport('${k}')">엑셀(CSV)</button>`;
+const xlsxBtn=(k)=>`<button class="btn ghost sm" onclick="anExport('${k}')">리스트 다운로드</button>`;
 
 function fieldHtml(k,f,v){
   const id=`f_${k}_${f.id}`,val=v??f.def??'';
   const ctl=f.type==='select'?`<select class="input" id="${id}">${f.opts.map(o=>`<option ${String(o)===String(val)?'selected':''}>${o}</option>`).join('')}</select>`
     :f.type==='textarea'?`<textarea class="input" id="${id}" rows="${f.rows||4}" placeholder="${esc(f.ph||'')}">${esc(val)}</textarea>`
     :`<input class="input" id="${id}" placeholder="${esc(f.ph||'')}" value="${esc(val)}">`;
-  return `<label class="lb">${f.label}${f.hint?` <span class="tiny muted">${f.hint}</span>`:''}</label>${ctl}`}
+  // f.act = [버튼 글자, onclick] → 라벨 줄 오른쪽 작은 글자 버튼
+  const lb=`<label class="lb"${f.act?' style="display:flex;align-items:center;gap:4px"':''}>${f.label}${f.hint?` <span class="tiny muted">${f.hint}</span>`:''}${f.act?`<button type="button" class="tiny" style="margin-left:auto;padding:3px 8px;border-radius:6px;background:var(--pri-soft);color:var(--pri);font-weight:700" onclick="${f.act[1]}">${f.act[0]}</button>`:''}</label>`;
+  return lb+ctl}
 function renderAnalyze(k){
   const c=CFG[k],st=AN[k]||(AN[k]={v:{},res:null}),used=USE[k]||0;
   if(c.before){const b=c.before();if(b)return b}
@@ -1201,6 +1278,7 @@ function trackChecked(type,kw){
   const sel=[...document.querySelectorAll('#anRes input.sel:checked')];if(!sel.length)return toast('등록할 항목을 선택하세요');
   sel.forEach(e=>{if(!S.items.some(i=>i.type===type&&i.keyword===e.dataset.kw&&i.name===(e.dataset.name||kw)))S.items.unshift(mkItem(type,e.dataset.kw,e.dataset.name||kw,String(hash(e.dataset.name||kw)).slice(0,10),+e.dataset.rank||fakeRank(type,e.dataset.kw,kw),'기본'))});
   toast(`${sel.length}개 키워드를 추적 등록했어요`)}
+function selCopy(){const a=[...document.querySelectorAll('#anRes input.sel:checked')].map(e=>e.dataset.kw);if(!a.length)return toast('복사할 키워드를 선택하세요');navigator.clipboard.writeText(a.join('\n')).then(()=>toast(a.length+'개 키워드를 복사했어요'))}
 const allChk=`<input type="checkbox" onclick="document.querySelectorAll('#anRes input.sel').forEach(e=>e.checked=this.checked)">`;
 
 /* ── 가짜 엔진: 입력값 해시 기반이라 같은 입력이면 같은 결과 ── */
@@ -1215,19 +1293,21 @@ function genPlaces(kw,n,seedExtra=''){const r=rng('pl'+kw+seedExtra),out=[];cons
 
 const CFG={
   /* 키워드 검색량 조회 — 애드로그 naver_keyword_searchad, 셀러닷컴 keyword_analysis */
-  k_volume:{guide:['키워드를 쉼표나 줄바꿈으로 여러 개 넣으면 한 번에 조회해요.','네이버 검색광고 기준 최근 30일 월간 검색수(PC·모바일)와 클릭수·클릭률을 보여줘요.','조회한 키워드는 아래 목록에 쌓이고 엑셀로 내려받을 수 있어요.'],
-    form:[{id:'kw',label:'검색 키워드',type:'textarea',rows:3,ph:'강남 맛집, 역삼 회식\n캠핑의자',req:true}],btn:'검색량 조회',limit:100,
+  k_volume:{guide:['키워드를 쉼표나 줄바꿈으로 여러 개 넣으면 한 번에 조회해요.','네이버 검색광고 기준 최근 30일 월간 검색수(PC·모바일)와 클릭수·클릭률을 보여줘요.','조회한 키워드는 아래 목록에 쌓이고 리스트로 내려받을 수 있어요.','월별 추이 탭에서 키워드를 고르면 최근 12개월 월별 검색량과 많이 찾는 달(계절성)을 볼 수 있어요.'],
+    form:[{id:'kw',label:'검색 키워드',type:'textarea',rows:3,ph:'강남 맛집, 역삼 회식\n캠핑의자',req:true,def:'강남 맛집\n역삼 회식\n캠핑의자'}],btn:'검색량 조회',limit:100,
     run:(v,st)=>{const list=st.res?.list||[];v.kw.split(/[,\n]/).map(s=>s.trim()).filter(Boolean).forEach(kw=>{const i=list.findIndex(x=>x.kw===kw);const row={...genVolume(kw),at:fmtD(new Date())};i>=0?list[i]=row:list.unshift(row)});return {list}},
-    view:(res,v,k)=>`<div class="card"><h3>조회한 키워드 <span class="more">${res.list.length}개</span></h3>
-      ${T(['','키워드','PC','모바일','합계','클릭 PC','클릭 모바일','경쟁도','조회일',''],res.list.map((x,i)=>[`<input type="checkbox" class="sel" data-kw="${esc(x.kw)}">`,`<b>${esc(x.kw)}</b>`,fmtN(x.pc),fmtN(x.mo),`<b>${fmtN(x.sum)}</b>`,x.cpc,x.cmo,x.comp,x.at,`<button class="btn ghost sm" style="height:28px" onclick="AN.k_volume.res.list.splice(${i},1);render()">삭제</button>`]))}
-      <div class="row" style="margin-top:12px;gap:6px;flex-wrap:wrap">${xlsxBtn(k)}<button class="btn sub sm" onclick="const s=[...document.querySelectorAll('#anRes input.sel:checked')].map(e=>e.dataset.kw);if(!s.length)return toast('복사할 키워드를 선택하세요');navigator.clipboard.writeText(s.join('
-')).then(()=>toast(s.length+'개 키워드를 복사했어요'))">선택 키워드 복사</button></div></div>`,
+    view:(res,v,k)=>{if(!res.list.some(x=>x.kw===KVT.kw))KVT.kw=res.list[0]?.kw;
+      const tabs=`<div class="seg" style="margin-bottom:14px">${['검색량','월별 추이'].map(t=>`<button class="${KVT.tab===t?'on':''}" onclick="KVT.tab='${t}';render()">${t}</button>`).join('')}</div>`;
+      if(KVT.tab==='월별 추이')return `<div class="card">${tabs}<div class="chips" style="flex-wrap:wrap;margin-bottom:12px">${res.list.map((x,i)=>`<button class="chip ${x.kw===KVT.kw?'on':''}" onclick="KVT.kw=AN.k_volume.res.list[${i}].kw;render()">${esc(x.kw)}</button>`).join('')}</div>${KVT.kw?volTrend(KVT.kw):''}</div>`;
+      return `<div class="card">${tabs}<div class="row" style="margin-bottom:12px;gap:6px;flex-wrap:wrap"><h3 class="grow" style="margin:0;white-space:nowrap">조회한 키워드 <span class="tiny muted" style="font-weight:500">${res.list.length}개</span></h3><button class="btn sub sm" onclick="const s=[...document.querySelectorAll('#anRes input.sel:checked')].map(e=>e.dataset.kw);if(!s.length)return toast('복사할 키워드를 선택하세요');navigator.clipboard.writeText(s.join('
+')).then(()=>toast(s.length+'개 키워드를 복사했어요'))">선택 키워드 복사</button>${xlsxBtn(k)}</div>
+      ${T([allChk,'키워드','PC','모바일','합계','클릭 PC','클릭 모바일','경쟁도','조회일'],res.list.map(x=>[`<input type="checkbox" class="sel" data-kw="${esc(x.kw)}">`,`<b>${esc(x.kw)}</b>`,fmtN(x.pc),fmtN(x.mo),`<b>${fmtN(x.sum)}</b>`,x.cpc,x.cmo,x.comp,x.at]))}</div>`},
     csv:res=>[['키워드','PC','모바일','합계','월평균클릭 PC','월평균클릭 모바일','경쟁도','조회일'],...res.list.map(x=>[x.kw,x.pc,x.mo,x.sum,x.cpc,x.cmo,x.comp,x.at])]},
 
-  /* 순위 비교분석 — 셀러닷컴 place_comparison, 애드로그 naver_place_keyword_list */
-  p_compare:{guide:['키워드를 넣으면 그 키워드의 플레이스 상위 업체를 리뷰·저장 수와 함께 비교해요.','기준일을 고르면 그날 순위와 비교한 변동(이력)이 표시돼요.','내가 추적 중인 업체는 파란색으로 강조돼요. 업체 옆 버튼으로 바로 추적 등록할 수 있어요.'],
-    form:[{id:'kw',label:'분석할 키워드',ph:'예: 강남역 고기집',req:true,def:'강남역 고기집'},{id:'base',label:'비교 기준일',type:'select',opts:['1일전','2일전','3일전','7일전'],def:'1일전'},{id:'n',label:'보기',type:'select',opts:['상위 20개','상위 50개','상위 100개'],def:'상위 20개'}],
-    btn:'분석 및 비교',limit:50,
+  /* 키워드 순위 변동 — 셀러닷컴 place_comparison, 애드로그 naver_place_keyword_list */
+  p_compare:{guide:['키워드를 넣으면 그 키워드의 플레이스 상위 업체 순위 변동을 보여줘요.','오늘부터 날짜별로 1위부터 순서대로 업체 이름을 나열해, 날짜를 옆으로 넘기며 순위가 어떻게 바뀌었는지 볼 수 있어요. 위에는 상위 업체 평균 리뷰·저장 수가 나와요.','내가 추적 중인 업체는 파란색으로 강조돼요. 업체 옆 버튼으로 바로 추적 등록할 수 있어요.'],
+    form:[{id:'kw',label:'분석할 키워드',ph:'예: 강남역 고기집',req:true,def:'강남역 고기집'},{id:'n',label:'보기',type:'select',opts:['상위 20개','상위 50개','상위 100개'],def:'상위 20개'}],
+    btn:'조회',limit:50,
     run:v=>({rows:genPlaces(v.kw,parseInt(v.n.replace(/\D/g,'')),v.base)}),
     view:(res,v,k)=>{const r=res.rows,avg=f=>fmtN(Math.round(r.reduce((s,x)=>s+x[f],0)/r.length));
       return `<div class="card"><h3>${esc(v.kw)} 상위 ${r.length}곳 <span class="more">${v.base} 대비</span></h3>
@@ -1237,26 +1317,26 @@ const CFG={
       <div class="row" style="margin-top:12px">${xlsxBtn(k)}</div></div>`},
     csv:(res,st)=>[['순위','이전순위','상호명','카테고리','방문자리뷰','블로그리뷰','저장','주소'],...res.rows.map(x=>[x.rank,x.prev,x.name,x.cat,x.rv,x.bl,x.sv,x.addr])]},
 
-  /* 히든 키워드 — 애드로그 naver_place_hidden_keyword */
-  p_hidden:{guide:['플레이스 URL(https://m.place.naver.com/…) 또는 숫자 ID를 넣으면 이 업체가 노출되는 숨은 키워드를 찾아줘요.','범위를 고르면 그 순위 안에 드는 키워드만 보여줘요.','체크한 키워드는 한 번에 순위 추적으로 등록할 수 있어요.'],
+  /* 키워드 순위 조회(히든 키워드) — 애드로그 naver_place_hidden_keyword */
+  p_hidden:{guide:['플레이스 URL(https://m.place.naver.com/…) 또는 숫자 ID를 넣으면 이 업체가 노출되는 숨은 키워드를 찾아줘요.','범위를 고르면 그 순위 안에 드는 키워드만 보여줘요.','체크한 키워드는 복사해 가져갈 수 있어요.'],
     form:[{id:'url',label:'플레이스 URL 또는 ID',ph:'https://m.place.naver.com/restaurant/1938472610',req:true,def:'https://m.place.naver.com/restaurant/1938472610'},{id:'range',label:'범위',type:'select',opts:['5위 이내','10위 이내','20위 이내','30위 이내','50위 이내','100위 이내'],def:'20위 이내'}],
-    btn:'히든 키워드 조회',limit:100,
+    btn:'순위 조회',limit:100,
     run:v=>{const u=parseUrl(v.url)||{name:placeName(rng(v.url)),mid:v.url.replace(/\D/g,'').slice(0,10)},r=rng('hid'+u.mid),e=ext('place','',u.name),region=pick(r,['강남','역삼','선릉','신논현','논현']);
       const sfx=['맛집','고기집','회식','점심','저녁','데이트','갈비','소고기','룸식당','단체석','가족모임','술집','한우','숯불구이'];
       const kws=sfx.map(s=>({kw:`${pick(r,[region,region+'역'])} ${s}`,rank:Math.floor(r()*99)+1,vol:Math.floor(r()*30000+300),stores:Math.floor(r()*900+30)})).sort((a,b)=>a.rank-b.rank);
       return {name:u.name,mid:u.mid,cat:e.cat,rv:e.rv,bl:e.bl,sv:e.sv,addr:`서울 강남구 ${pick(r,STREETS)} ${Math.floor(r()*300+1)}`,kws}},
     view:(res,v,k)=>{const lim=parseInt(v.range),kws=res.kws.filter(x=>x.rank<=lim);
       return `<div class="card"><h3>기본 정보</h3>${T(['업체명','카테고리','방문자리뷰','블로그리뷰','저장','주소'],[[`<b>${esc(res.name)}</b>`,res.cat,fmtN(res.rv),fmtN(res.bl),fmtN(res.sv),res.addr]])}</div>
-      <div class="card"><h3>숨은 키워드 <span class="more">${v.range} ${kws.length}개</span></h3>
+      <div class="card"><h3>노출 키워드 <span class="more">${v.range} ${kws.length}개</span></h3>
       ${kws.length?T([allChk,'키워드','순위','월 검색량','업체 수'],kws.map(x=>[`<input type="checkbox" class="sel" data-kw="${esc(x.kw)}" data-name="${esc(res.name)}" data-rank="${x.rank}">`,esc(x.kw),`<b>${x.rank}위</b>`,fmtN(x.vol),fmtN(x.stores)])):'<div class="muted small">이 범위 안에 드는 키워드가 없어요. 범위를 넓혀보세요.</div>'}
-      <div class="row" style="margin-top:12px;gap:6px">${xlsxBtn(k)}<button class="btn sm" onclick="trackChecked('place','${esc(res.name)}')">선택 키워드 추적 등록</button></div></div>`},
+      <div class="row" style="margin-top:12px;gap:6px"><button class="btn sub sm" onclick="selCopy()">선택 키워드 복사</button>${xlsxBtn(k)}</div></div>`},
     csv:res=>[['키워드','순위','월검색량','업체수'],...res.kws.map(x=>[x.kw,x.rank,x.vol,x.stores])]},
 
   /* 쇼핑 비교분석 — 셀러닷컴 s_comparison, 애드로그 naver_shopping_list */
-  s_compare:{guide:['쇼핑 키워드를 넣으면 네이버 가격비교 상위 상품의 가격·판매처·브랜드를 비교해요.','기준일 대비 순위 변동이 함께 표시돼요.','상품 옆 버튼으로 바로 순위 추적에 등록할 수 있어요.'],
-    form:[{id:'kw',label:'쇼핑 키워드',ph:'예: 캠핑의자',req:true,def:'캠핑의자'},{id:'base',label:'비교 기준일',type:'select',opts:['1일전','2일전','3일전','7일전'],def:'1일전'},{id:'n',label:'보기',type:'select',opts:['상위 20개','상위 50개','상위 100개'],def:'상위 20개'}],
-    btn:'분석 및 비교',limit:50,
-    run:v=>{const r=rng('sc'+v.kw+v.base),n=parseInt(v.n.replace(/\D/g,'')),brands=['헬리녹스','코멧','캠프타운','로티캠프','노르디스크','모비가든','하이어','버팔로'];
+  s_compare:{guide:['쇼핑 키워드를 넣으면 키워드 검색량·경쟁 강도와 함께 네이버 가격비교 상위 상품의 날짜별 순위를 보여줘요.','오늘부터 날짜별로 1위부터 순서대로 상품명을 나열해, 옆으로 넘기며 순위가 어떻게 바뀌었는지 볼 수 있어요.','상품명을 누르면 가격·판매처와 최근 순위 이력을 보고 추적 등록할 수 있어요.'],
+    form:[{id:'kw',label:'쇼핑 키워드',ph:'예: 캠핑의자',req:true,def:'캠핑의자'},{id:'n',label:'보기',type:'select',opts:['상위 20개','상위 50개','상위 100개'],def:'상위 20개'}],
+    btn:'조회',limit:50,
+    run:v=>{const r=rng('sc'+v.kw+(v.base||'1일전')),n=parseInt(v.n.replace(/\D/g,'')),brands=['헬리녹스','코멧','캠프타운','로티캠프','노르디스크','모비가든','하이어','버팔로'];
       return {rows:Array.from({length:n},(_,i)=>{const b=pick(r,brands);return {rank:i+1,prev:Math.max(1,i+1+Math.round((r()-.5)*8)),name:`${b} ${v.kw} ${pick(r,['경량','프리미엄','접이식','릴렉스','미니','스탠다드'])} ${pick(r,['체어','세트','2024','플러스','라이트'])}`,
         cat:shopCat(v.kw),mall:pick(r,[...MALLS,'네이버 가격비교']),brand:b,kind:r()<.4?'가격비교':'단독',price:Math.floor(r()*120+15)*1000-Math.floor(r()*9)*100,pid:String(Math.floor(r()*9e9+1e9))}})}},
     view:(res,v,k)=>{const g=genVolume(v.kw),pc=Math.floor(rng(v.kw)()*180000+3000);return `<div class="card"><h3>${esc(v.kw)} 키워드</h3>${K([['월 검색량',fmtN(g.sum)],['상품 수',fmtN(pc)],['경쟁 강도',g.comp],['상품당 검색',(g.sum/pc).toFixed(2)]])}</div>
@@ -1266,7 +1346,7 @@ const CFG={
       <div class="row" style="margin-top:12px">${xlsxBtn(k)}</div></div>`},
     csv:res=>[['순위','이전순위','상품명','카테고리','판매처','브랜드','유형','가격','제품ID'],...res.rows.map(x=>[x.rank,x.prev,x.name,x.cat,x.mall,x.brand,x.kind,x.price,x.pid])]},
 
-  /* 블로그 지수·계정 분석 — 애드로그 naver_blog_level, naver_blog_bbs_index_check */
+  /* 블로그 지수 분석 — 애드로그 naver_blog_level, naver_blog_bbs_index_check */
   b_level:{guide:['블로그 ID 또는 블로그 주소(https://blog.naver.com/아이디)를 넣으면 블로그 기본 정보와 최근 글 노출 상태를 보여줘요.','조회한 블로그는 아래 조회 내역에 쌓여요.','하루 30회까지 무료로 쓸 수 있어요.'],
     form:[{id:'id',label:'블로그 ID 또는 주소',ph:'예: hi_foodie 또는 https://blog.naver.com/hi_foodie',req:true,def:'hi_foodie'}],btn:'블로그 분석',limit:30,
     run:(v,st)=>{const id=(v.id.match(/blog\.naver\.com\/([\w-]+)/)||[,v.id])[1],r=rng('bl'+id),made=daysAgo(Math.floor(r()*2500+200)),first=new Date(made.getTime()+Math.floor(r()*60)*864e5);
@@ -1295,42 +1375,31 @@ const CFG={
 };
 /* 남은 메뉴 예시 기능 (모두 예시 데이터 — 실제 조회 없음) */
 Object.assign(TRK,{
-  p_save:{type:'place',unit:'플레이스 URL (음식점·카페 카테고리만)',info:'매주 월·목 자동 기록 · 저장 수 추이',samples:[['강남 맛집','홍길동 숯불갈비'],['신논현 파스타','라구앤코']]},
   k_total:{type:'blog',tg:'찾을 콘텐츠',unit:'찾을 URL 주소',info:'매일 자동 체크 · 통합검색 첫 화면 영역별 노출 위치',x:{area:'통합검색'},samples:[['강남역 고기집','홍길동 숯불갈비 플레이스'],['캠핑의자','하이어 캠핑의자 블로그 리뷰']]}});
 const SFX=['맛집','고기집','회식','점심','데이트','추천','가성비','룸식당','단체석','주차'];
 Object.assign(CFG,{
-  p_trend:{guide:['키워드를 넣으면 상위 업체들의 최근 순위 흐름을 날짜별로 보여줘요.','칸 색이 진할수록 순위가 높아요. 업체를 누르면 바로 추적 등록할 수 있어요.'],
-    form:[{id:'kw',label:'키워드',req:true,def:'강남역 고기집'},{id:'n',label:'보기',type:'select',opts:['상위 10위','상위 30위','상위 50위'],def:'상위 10위'}],btn:'추세 분석',limit:50,
-    run:v=>{const n=parseInt(v.n.replace(/\D/g,'')),rows=genPlaces(v.kw,n),days=[30,25,20,15,10,7,5,3,1,0];
-      return {days,rows:rows.map(x=>{const r=rng('tr'+x.name);return {...x,hist:days.map((d,i)=>i===days.length-1?x.rank:Math.max(1,x.rank+Math.round((r()-.5)*Math.min(20,d+4))))}})}},
-    view:(res,v,k)=>`<div class="card"><h3>${esc(v.kw)} 순위 추세 <span class="more">${v.n}</span></h3>
-      ${T(['업체',...res.days.map(d=>d?d+'일전':'오늘'),''],res.rows.map(x=>[x.me?ME(esc(x.name)):esc(x.name),...x.hist.map(r=>`<span class="heat" style="--h:${Math.max(.08,1-r/30)}${r<=12?';color:#fff':''}">${r}</span>`),
-        `<button class="btn ghost sm" style="height:28px" onclick="trackAdd('place','${esc(v.kw)}','${esc(x.name)}')">추적</button>`]))}
-      <div class="row" style="margin-top:12px">${xlsxBtn(k)}</div></div>`,
-    csv:(res)=>[['업체',...res.days.map(d=>d?d+'일전':'오늘')],...res.rows.map(x=>[x.name,...x.hist])]},
 
-  p_report:{guide:['플레이스 URL 또는 ID를 넣으면 업체 상태를 항목별로 진단하고 개선할 점을 정리해줘요.','경쟁사 비교를 켜면 같은 키워드 상위 3곳 평균과 비교해요.'],
-    form:[{id:'url',label:'플레이스 URL 또는 ID',req:true,def:'https://m.place.naver.com/restaurant/1938472610'},{id:'cmp',label:'경쟁사 비교',type:'select',opts:['끄기','켜기'],def:'켜기'}],btn:'종합 분석',limit:30,
-    run:v=>{const r=rng('rp'+v.url),sc=()=>Math.floor(r()*45+50);const items=[['기본 정보 완성도',sc()],['사진·영상',sc()],['메뉴·가격 등록',sc()],['리뷰 수',sc()],['리뷰 답글 응답률',sc()],['저장·공유 반응',sc()],['예약·주문 연동',sc()]];
-      return {name:(parseUrl(v.url)||{}).name||placeName(r),items,total:Math.round(items.reduce((s,x)=>s+x[1],0)/items.length),avg:items.map(()=>sc())}},
-    view:(res,v)=>`<div class="card"><h3>${esc(res.name)} 종합 진단 <span class="more">종합 ${res.total}점</span></h3>
-      ${res.items.map(([l,s],i)=>`<div class="row small" style="padding:8px 0;border-bottom:1px solid var(--line)"><span style="width:120px;flex:none">${l}</span>${BAR(s,s>=75?'var(--ok)':s>=60?'var(--pri)':'var(--up)')}<b style="width:44px;text-align:right">${s}점</b>${v.cmp==='켜기'?`<span class="tiny muted">상위 평균 ${res.avg[i]}</span>`:''}</div>`).join('')}
-      <h3 style="margin-top:16px">개선 포인트</h3><ul class="small" style="margin:0;padding-left:18px;line-height:1.8">${res.items.filter(x=>x[1]<70).map(([l])=>`<li>${l} 보강 필요 — 상위 업체 평균보다 낮아요</li>`).join('')||'<li>모든 항목이 양호해요</li>'}</ul></div>`},
+  p_feedback:{guide:['추적 중인 플레이스 키워드를 고르면, 키워드 순위 변동 데이터(최근 30일 순위·상위 업체 리뷰·저장 수)를 읽어 지금 상황을 진단하고 무엇을 먼저 하면 좋을지 추천해요.','업체 상세(기본 정보·사진·메뉴·리뷰 답글·예약 연동 등)를 항목별 점수로 종합 진단해 상위 3곳 평균과 비교하고, 낮은 항목은 추천 대응에 넣어요.','추천마다 상위 업체와의 차이를 숫자로 보여줘요.'],
+    get form(){const o=S.items.filter(i=>i.type==='place'&&!i.menu).map(i=>`${i.keyword} · ${i.name}`);return [{id:'t',label:'분석할 키워드 · 내 업체',type:'select',opts:o.length?o:['추적 중인 플레이스가 없어요'],def:o[0],req:true}]},
+    btn:'AI 피드백 받기',limit:20,
+    run:v=>{const it=S.items.find(i=>i.type==='place'&&`${i.keyword} · ${i.name}`===v.t);if(!it)return {none:1};
+      const res=CFG.p_compare.run({kw:it.keyword,n:'상위 50개'});return {...fbAnalyze(res,it),kw:it.keyword,name:it.name}},
+    view:res=>res.none?'<div class="card"><div class="empty">N 플레이스 순위 체크에 키워드를 먼저 등록해주세요</div></div>':fbView(res)},
 
-  p_feedback:{guide:['키워드나 궁금한 점을 적으면 AI가 플레이스 개선 방향을 알려줘요.','자주 묻는 질문을 누르면 바로 답을 볼 수 있어요.'],
-    form:[{id:'q',label:'질문',type:'select',opts:['순위 올리는 방법','순위가 떨어진 이유','리뷰 늘리는 방법','예상 마케팅 비용'],def:'순위 올리는 방법'},{id:'kw',label:'키워드 (선택)',ph:'예: 강남역 고기집',def:'강남역 고기집'}],btn:'AI 피드백 받기',limit:20,
-    run:v=>({q:v.q,kw:v.kw}),
-    view:res=>`<div class="card"><div class="msg bot" style="max-width:100%">${esc(res.kw||'')} ${esc(res.q)}에 대한 피드백이에요.\n\n${{
-      '순위 올리는 방법':'• 대표 사진을 메뉴 사진으로 바꾸고 최근 사진을 주 1회 올려주세요.\n• 소개글·대표 키워드에 실제 유입 상위 키워드를 넣어주세요.\n• 방문자 리뷰 답글 응답률을 70% 이상으로 유지하세요.',
-      '순위가 떨어진 이유':'• 최근 7일 리뷰 증가가 상위 업체 평균보다 적어요.\n• 저장 수 증가가 멈췄어요.\n• 경쟁 업체가 사진·메뉴 정보를 새로 등록했어요.',
-      '리뷰 늘리는 방법':'• 영수증 리뷰 안내 문구를 테이블·계산대에 두세요.\n• 리뷰 이벤트(음료 증정 등)를 2주 단위로 운영해보세요.',
-      '예상 마케팅 비용':'• 리워드 유입: 하루 100건 × 7일 기준 약 3~5만원\n• 체험단 블로그 5건: 약 25~50만원\n• 파워링크: 키워드당 클릭 1,000~3,000원'}[res.q]}</div></div>`},
+  s_feedback:{guide:['추적 중인 쇼핑 상품 키워드를 고르면, 가격비교 비교분석 데이터(최근 30일 순위·상위 상품 가격·리뷰·가격비교/단독 유형)를 읽어 지금 상황을 진단하고 무엇을 먼저 하면 좋을지 추천해요.','추천마다 상위 상품과의 차이를 숫자로 보여줘요.'],
+    get form(){const o=S.items.filter(i=>i.type==='shop'&&!i.menu).map(i=>`${i.keyword} · ${i.name}`);return [{id:'t',label:'분석할 키워드 · 내 상품',type:'select',opts:o.length?o:['추적 중인 쇼핑 상품이 없어요'],def:o[0],req:true}]},
+    btn:'AI 피드백 받기',limit:20,
+    run:v=>{const it=S.items.find(i=>i.type==='shop'&&`${i.keyword} · ${i.name}`===v.t);if(!it)return {none:1};
+      return {...sfbAnalyze(CFG.s_compare.run({kw:it.keyword,n:'상위 50개'}),it),kw:it.keyword,name:it.name}},
+    view:res=>res.none?'<div class="card"><div class="empty">N 가격비교 순위 체크에 상품을 먼저 등록해주세요</div></div>':sfbView(res)},
 
-  b_check:{guide:['블로그 아이디나 주소를 한 줄에 하나씩 넣으면 최근 글의 검색 노출·색인(누락) 상태를 한 번에 확인해요(최대 100개).','블로그 정보·지수는 "블로그 지수·계정 분석"에서 봐요.'],
-    form:[{id:'ids',label:'블로그 아이디 또는 URL',type:'textarea',rows:4,req:true,def:'hi_foodie\nsoso_trip\ndaily_fit'}],btn:'체크',limit:100,
-    run:v=>({ids:v.ids.split('\n').map(s=>(s.match(/blog\.naver\.com\/([\w-]+)/)||[,s.trim()])[1]).filter(Boolean).slice(0,100)}),
-    view:(res,v,k)=>{
-      return `<div class="card"><h3>게시글 노출 검사</h3>${T(['아이디','제목','작성일','댓글','검색 노출','색인 상태'],res.ids.flatMap(id=>{const r=rng('bp'+id);return Array.from({length:3},(_,i)=>{const ok=r()<.8;return [esc(id),`${pick(r,['강남','성수','제주'])} ${pick(r,['맛집','카페','숙소'])} ${pick(r,['후기','추천','BEST'])}`,fmtD(daysAgo(i*4+1)),Math.floor(r()*30),ok?'<span class="up">노출</span>':'<span class="down">미노출</span>',ok?'정상':'<span class="down">누락</span>']})}))}</div>`}},
+  b_check:{guide:['키워드를 한 줄에 하나씩(최대 20개) 넣고 확인할 블로그 글 주소를 넣으면, 키워드마다 블로그 탭 몇 위에 노출되는지 확인해요.','노출된 키워드는 체크해서 한 번에 매일 순위 추적으로 등록할 수 있어요.'],
+    form:[{id:'kw',label:'키워드',hint:'줄바꿈으로 최대 20개',type:'textarea',rows:3,req:true,def:'강남 맛집\n강남역 고기집\n강남 회식'},{id:'url',label:'블로그 글 주소',req:true,def:'https://blog.naver.com/hi_foodie/223456789012'}],btn:'노출 확인',limit:100,
+    run:v=>({url:v.url.trim(),rows:v.kw.split('\n').map(x=>x.trim()).filter(Boolean).slice(0,20).map(kw=>({kw,rank:fakeRank('blog',kw,v.url.trim())}))}),
+    view:(res,v,k)=>`<div class="card"><h3>포스팅 노출 확인 <span class="more">${res.rows.filter(x=>x.rank).length}/${res.rows.length}개 노출</span></h3><div class="tiny muted" style="margin-bottom:8px;word-break:break-all">${esc(res.url)}</div>
+      ${T([allChk,'키워드','블로그 탭 순위','노출'],res.rows.map(x=>[`<input type="checkbox" class="sel" data-kw="${esc(x.kw)}" data-name="${esc(res.url)}" data-rank="${x.rank||''}">`,`<b>${esc(x.kw)}</b>`,x.rank?`<b>${x.rank}위</b>`:'<span class="muted">순위 밖</span>',x.rank?'<span style="color:var(--ok);font-weight:700">노출</span>':'<span class="muted">미노출</span>']))}
+      <div class="row" style="margin-top:12px;gap:6px">${xlsxBtn(k)}<button class="btn sm" onclick="trackChecked('blog',AN.b_check.res.url)">선택 키워드 추적 등록</button></div></div>`,
+    csv:res=>[['키워드','블로그탭순위','노출'],...res.rows.map(x=>[x.kw,x.rank||'순위 밖',x.rank?'노출':'미노출'])]},
 
   b_bulk:{guide:['키워드를 줄바꿈으로 최대 10개 넣으면 키워드별 블로그 상위 10개 글을 한 번에 분석해요.','글자 수·이미지 수·공감 수로 상위 글의 공통점을 볼 수 있어요.'],
     form:[{id:'kw',label:'키워드',hint:'줄바꿈으로 최대 10개',type:'textarea',rows:3,req:true,def:'강남 맛집\n제주 숙소'}],btn:'조회 시작',limit:20,
@@ -1355,12 +1424,6 @@ Object.assign(CFG,{
       ${MG.relW.length?`<div class="card"><h3>매일 노출 체크 <span class="more">${MG.relW.length}개</span></h3>${T(['연관검색어','검색어','최근 7일','등록일',''],MG.relW.map((w,i)=>{const r=rng('rw'+w.rel);return [esc(w.rel),esc(w.kw),Array.from({length:7},()=>r()<.8?'●':'<span class="muted">○</span>').join(' '),w.at,`<a class="lnk" onclick="MG.relW.splice(${i},1);render()">해제</a>`]}))}<div class="tiny muted" style="margin-top:8px">● 노출 ○ 미노출 · 매일 09시 확인 (예시)</div></div>`:''}
       <div class="card"><h3>조회 내역</h3>${T(['검색어','추출 수','조회일'],res.hist.map(h=>[esc(h.kw),h.n+'개',h.at]))}</div>`},
 
-  k_ai:{guide:['업종과 지역을 넣으면 AI가 공략하기 좋은 키워드를 검색량·경쟁도와 함께 추천해요.','마음에 드는 키워드를 체크해 한 번에 순위 추적에 등록할 수 있어요.'],
-    form:[{id:'biz',label:'업종',req:true,def:'고기집'},{id:'area',label:'지역',req:true,def:'강남역'},{id:'name',label:'업체명 (추적 등록용)',def:'홍길동 숯불갈비'}],btn:'키워드 추천받기',limit:30,
-    run:v=>({name:v.name,rows:[`${v.area} ${v.biz}`,`${v.area} 맛집`,`${v.area} 회식`,`${v.area} 회식 장소`,`${v.area} 데이트`,`${v.area} 점심`,`${v.area} 룸식당`,`${v.area.replace('역','')} ${v.biz}`].map(kw=>{const g=genVolume(kw),r=rng('ai'+kw);return {...g,why:pick(r,['검색량 대비 경쟁 낮음','상위 업체 리뷰 수가 적음','최근 검색량 증가','대표 키워드와 연관도 높음'])}})}),
-    view:(res,v,k)=>`<div class="card"><h3>추천 키워드 <span class="more">${res.rows.length}개</span></h3>${T([allChk,'키워드','월 검색량','경쟁','추천 이유'],res.rows.map(x=>[`<input type="checkbox" class="sel" data-kw="${esc(x.kw)}" data-name="${esc(res.name)}">`,`<b>${esc(x.kw)}</b>`,fmtN(x.sum),x.comp,x.why]))}
-      <div class="row" style="margin-top:12px;gap:6px">${xlsxBtn(k)}<button class="btn sm" onclick="trackChecked('place','${esc(res.name)}')">선택 키워드 추적 등록</button></div></div>`,
-    csv:res=>[['키워드','월검색량','경쟁','추천 이유'],...res.rows.map(x=>[x.kw,x.sum,x.comp,x.why])]},
 
   k_daum:{guide:['다음 통합웹 순위와 카카오 지역 트렌드 랭킹을 확인해요. 카카오맵 플레이스 순위는 "네이버 지도 vs 카카오맵"에서 봐요.','카카오 트렌드랭킹은 지역과 업종을 고르면 인기 업체 순위를 보여줘요.'],
     form:[{id:'svc',label:'서비스',type:'select',opts:['카카오 트렌드랭킹','다음 통합웹 순위'],def:'카카오 트렌드랭킹'},{id:'area',label:'지역 또는 키워드',req:true,def:'서울 강남구'},{id:'cat',label:'업종 (트렌드랭킹)',type:'select',opts:['음식점','카페','숙박','병원','미용'],def:'음식점'}],btn:'조회',limit:50,
@@ -1378,7 +1441,13 @@ Object.assign(CFG,{
 });
 /* ===== 관리·고객센터 메뉴 (E형) — 예시 데이터, 상태는 메모리에만 ===== */
 const MG={proj:null,point:12400,uses:[['10/29','알림톡 발송 18건',-180],['10/28','포인트 충전',10000],['10/27','문자 발송 5건',-200]],asks:[{type:'알림',t:'카카오톡 알림이 어제부터 안 와요',at:'2026-10-27',ans:'알림톡 수신 번호가 바뀌어 발송이 멈췄어요. 설정 → 알림 받는 곳에서 번호를 다시 인증하면 바로 받으실 수 있어요.'}],relW:[],ad:true,
-  me:{name:'김랭포',email:'rank@example.com',company:'하이어 마케팅',biz:'대행사'}};
+  me:{name:'김랭포',email:'rank@example.com',company:'하이어 마케팅',bizDoc:null}};
+// 사업자등록증 올리기: 이미지는 미리보기, PDF는 파일명만 (예시라 서버에 올리지 않음, 새로고침하면 사라짐)
+function bizDocPick(el){const f=el.files[0];el.value='';if(!f)return;
+  if(!/^image\/|application\/pdf/.test(f.type))return toast('이미지나 PDF 파일만 올릴 수 있어요');if(f.size>10*1024*1024)return toast('10MB 이하 파일만 올릴 수 있어요');
+  Object.assign(MG.me,{name:$('#meName').value,email:$('#meEmail').value,company:$('#meCo').value}); // 입력 중이던 값 유지
+  if(f.type==='application/pdf'){MG.me.bizDoc={name:f.name};render();return toast('사업자등록증을 올렸어요')}
+  const r=new FileReader();r.onload=()=>{MG.me.bizDoc={name:f.name,img:r.result};render();toast('사업자등록증을 올렸어요')};r.readAsDataURL(f)}
 const TRASH=[];
 function projSeed(){if(MG.proj)return;MG.proj=S.items.filter(i=>i.type==='place'&&!i.menu).slice(0,3).map((it,n)=>({id:it.id,goal:[5,3,10][n],start:fmtD(daysAgo([12,27,3][n])),days:30}))}
 const projStat=p=>{const it=S.items.find(i=>i.id===p.id);if(!it||!p.start)return {it,label:'시작일 미설정',pct:0,ok:0};
@@ -1407,15 +1476,20 @@ const MANAGE={
 
   c_point:()=>`
     ${K([['보유 포인트',fmtN(MG.point)+'P'],['문자 1건','40P'],['알림톡 1건','10P'],['분석 초과 1회','20P']])}
-    <div class="card"><h3>충전하기</h3><div class="row" style="gap:8px;flex-wrap:wrap">${[10000,30000,50000,100000].map(n=>`<button class="btn sub" style="flex:1 1 120px" onclick="MG.point+=${n};MG.uses.unshift(['${new Date().getMonth()+1}/${new Date().getDate()}','포인트 충전 (예시)',${n}]);render();toast('${fmtN(n)}P 충전했어요 (예시)')">${fmtN(n)}원</button>`).join('')}</div>
-      <div class="tiny muted" style="margin-top:8px">1원 = 1P · VAT 별도 · 세금계산서 발행 가능</div></div>
+    <div class="card"><h3>충전하기</h3><div class="row" style="gap:8px;flex-wrap:wrap">${[10000,30000,50000,100000].map(n=>`<button class="btn sub" style="flex:1 1 120px" onclick="ptCharge(${n})">${fmtN(n)}원</button>`).join('')}</div>
+      <label class="lb">직접 입력</label><div class="row" style="gap:8px"><input class="input grow" id="ptAmt" inputmode="numeric" placeholder="충전할 금액 (1,000원 단위)" oninput="const v=this.value.replace(/[^0-9]/g,'');this.value=v?(+v).toLocaleString():''"><button class="btn" onclick="ptCharge(+$('#ptAmt').value.replace(/[^0-9]/g,''))">충전</button></div>
+      <div class="tiny muted" style="margin-top:8px">1원 = 1P · VAT 별도 · 직접 입력은 1,000원 ~ 1,000,000원, 1,000원 단위</div></div>
     <div class="card"><h3>사용 내역</h3>${T(['날짜','내용','포인트'],MG.uses.map(([d,t,n])=>[d,t,n>0?`<span class="up">+${fmtN(n)}P</span>`:`<span class="down">${fmtN(n)}P</span>`]))}</div>`,
 
   c_my:()=>{const m=MG.me;return `<div class="card"><h3>프로필</h3>
       <label class="lb">이름</label><input class="input" id="meName" value="${esc(m.name)}"><label class="lb">이메일</label><input class="input" id="meEmail" value="${esc(m.email)}">
       <label class="lb">회사명</label><input class="input" id="meCo" value="${esc(m.company)}">
-      <label class="lb">업종</label><select class="input" id="meBiz">${['자영업(요식업)','자영업(기타)','대행사','의료','법률'].map(o=>`<option ${o===m.biz?'selected':''}>${o}</option>`).join('')}</select>
-      <button class="btn block" style="margin-top:14px" onclick="Object.assign(MG.me,{name:$('#meName').value,email:$('#meEmail').value,company:$('#meCo').value,biz:$('#meBiz').value});toast('프로필을 저장했어요')">프로필 저장</button></div>
+      <label class="lb">사업자등록증 <span class="tiny muted">이미지(JPG·PNG) 또는 PDF · 10MB 이하</span></label>
+      ${m.bizDoc?`<div class="row" style="gap:10px;padding:10px;border:1px solid var(--line);border-radius:12px">${m.bizDoc.img?`<img src="${m.bizDoc.img}" alt="사업자등록증" style="width:56px;height:56px;object-fit:cover;border-radius:8px">`:`<span class="tag">PDF</span>`}
+        <span class="grow small" style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(m.bizDoc.name)}</span><button class="btn ghost sm" onclick="$('#meDoc').click()">변경</button><button class="btn ghost sm" onclick="MG.me.bizDoc=null;render()">삭제</button></div>`
+        :`<button class="btn sub block" onclick="$('#meDoc').click()">${ic('plus',16)} 사업자등록증 올리기</button>`}
+      <input type="file" id="meDoc" accept="image/*,application/pdf" style="display:none" onchange="bizDocPick(this)">
+      <button class="btn block" style="margin-top:14px" onclick="Object.assign(MG.me,{name:$('#meName').value,email:$('#meEmail').value,company:$('#meCo').value});toast('프로필을 저장했어요')">프로필 저장</button></div>
     <div class="card"><h3>비밀번호 변경</h3><input class="input" type="password" placeholder="현재 비밀번호" style="margin-bottom:8px"><input class="input" type="password" id="pw1" placeholder="새 비밀번호 (8자 이상, 영문·숫자·특수문자)" style="margin-bottom:8px"><input class="input" type="password" id="pw2" placeholder="새 비밀번호 확인">
       <button class="btn sub block" style="margin-top:10px" onclick="const a=$('#pw1').value,b=$('#pw2').value;if(a.length<8)return toast('새 비밀번호는 8자 이상이어야 해요');if(a!==b)return toast('새 비밀번호가 서로 달라요');toast('비밀번호를 바꿨어요 (예시)')">비밀번호 변경</button></div>
     <div class="card"><h3>추천</h3><div class="row"><input class="input grow" readonly value="https://rankforme.kro.kr/?ref=RFM7Q2"><button class="btn sub" onclick="navigator.clipboard.writeText('https://rankforme.kro.kr/?ref=RFM7Q2').then(()=>toast('추천 링크를 복사했어요'))">복사</button></div>
@@ -1444,14 +1518,14 @@ const GUIDE={
   m_project:['추적 중인 플레이스를 월보장 목록에 넣으면 목표 순위 안에 든 날을 세서 진행률을 보여줘요.','보장일수를 다 채우면 "월보장 완료", 7일 이내로 남으면 "마감 임박"이에요.'],
   m_trash:['추적을 중단한 키워드가 여기에 보관돼요. 복구하면 기록과 함께 다시 추적해요.'],
   c_point:['문자·알림톡 발송과 일부 분석에 포인트가 쓰여요.','충전은 예시 화면이라 실제 결제는 되지 않아요.'],
-  alert:['시간·요일·조건·받는 곳을 정해 알림을 예약해요.','"지금 테스트 발송"으로 받을 내용을 미리 확인할 수 있어요.'],
+  alert:['시간·요일·조건·받는 곳을 정해 알림을 예약해요.','"지금 테스트 발송"으로 받을 내용을 미리 확인할 수 있어요.','받는 곳(알림 예약 화면의 받는 곳 카드 → 팝업): 앱 알림은 브라우저 푸시 권한을, 카카오톡·문자는 휴대폰 번호 인증을 받아 발송 대상에 저장해요.','기록 탭: 예약한 알림이 실행될 때마다 보낸 메시지를 시간순으로 저장해 보여줘요. 헤더 종 아이콘을 누르면 기록 탭으로 열려요.'],
   k_auto:['키워드를 한 줄에 하나씩 넣고 분석 시작을 누르면 키워드별 자동완성 노출 여부와 목록이 나와요.','결과 복사하기로 엑셀에 바로 붙여넣을 수 있어요.'],
-  t_combine:['지역·업체명·메뉴·의도 칸에 단어를 줄바꿈으로 넣고 조합 생성을 누르면 키워드가 만들어져요.','칸마다 위치 고정·필수를 정할 수 있고, 체크한 키워드는 선택 복사로 가져가요.']};
+  t_combine:['플레이스 URL을 넣고 AI 자동 생성을 누르면 AI가 업체명·위치·메뉴·의도 칸을 채우고 바로 키워드를 만들어요.','칸 단어를 고쳐 다시 조합할 수도 있어요. 칸마다 위치 고정·필수를 정할 수 있어요.','결과는 월 검색량 순으로 나오고, 체크한 키워드는 복사해 가져가요.']};
 const GUIDE_TRK=['+ 버튼으로 검색 키워드와 대상 URL을 등록하면 매일 자동으로 순위를 기록해요.','순위 구간(1~5위 등)·그룹으로 걸러 보고, 항목을 누르면 그래프·최근 7일 기록·상위 경쟁 현황을 볼 수 있어요.','내보내기·일괄등록으로 엑셀 입출력을 하고, 재조회로 지금 순위를 다시 확인해요.'];
 const CHAN={place:'네이버 플레이스(지도) 검색 결과',shop:'네이버 쇼핑 검색 결과',blog:'네이버 블로그 탭 검색 결과',p_stay:'플레이스 숙소 "실시간 예약" 탭',s_store:'네이버 쇼핑 N+스토어 검색 결과',
   o_coupang:'쿠팡 검색 결과',o_ohou:'오늘의집 검색 결과',o_musinsa:'무신사 검색 결과',o_11st:'11번가 검색 결과',o_kurly:'마켓컬리 검색 결과',o_ssg:'SSG 검색 결과',o_kgift:'카카오 선물하기 검색 결과',o_kdeal:'카카오톡딜 검색 결과',
   b_infl:'네이버 인플루언서 탭',b_clip:'네이버 클립 탭',b_kin:'네이버 지식iN 탭',b_cafe:'네이버 카페 탭',b_block:'통합검색 스마트블록 영역',b_pop:'통합검색 인기글 영역',k_web:'네이버 웹사이트 탭',sn_insta:'인스타그램 해시태그 인기·최근 피드',
-  p_save:'플레이스 업체 상세의 저장 수',k_total:'네이버 통합검색 첫 화면 전체 영역'};
+  k_total:'네이버 통합검색 첫 화면 전체 영역'};
 const METRIC={place:'방문자리뷰·블로그리뷰·저장 수·카테고리',shop:'가격·리뷰 수·판매처',blog:'블로그명·작성일·댓글·공감'};
 function trkLogic(k){const type=TRK[k]?.type||k,max=(TRK[k]?.info||CHECK_INFO[type]).match(/(\d+)위/);
   return [`등록: 키워드 + 대상 URL을 저장할 때 URL에서 고유 ID(플레이스 ID·상품 번호·글 번호)를 뽑아 대상으로 삼아요 — 이름이 바뀌어도 같은 대상으로 추적돼요.`,
@@ -1461,28 +1535,24 @@ function trkLogic(k){const type=TRK[k]?.type||k,max=(TRK[k]?.info||CHECK_INFO[ty
     `재조회: 버튼을 누르면 위 수집을 그 자리에서 한 번 더 실행해요(무료 요금제는 광고 뒤 결과).`]}
 const LOGIC={
   once:['입력한 키워드로 해당 유형 검색 결과를 실시간으로 한 번 읽어 대상의 위치를 찾아요(저장하지 않음).','플레이스 순위는 검색 위치·기기에 따라 달라서, 고른 위치 좌표와 기기(모바일/PC) 조건으로 검색해요.','결과 화면의 상위 10개는 같은 검색에서 함께 읽은 업체·상품·글 정보예요.','"추적 목록에 추가"를 누르면 그때부터 매일 수집 대상(추적형 메뉴)에 들어가요.'],
-  p_compare:['키워드로 플레이스 검색 결과 상위 N개를 읽고, 각 업체 상세에서 방문자리뷰·블로그리뷰·저장 수·카테고리·주소를 가져와요.','기준일(1·2·3·7일 전)에 저장해 둔 같은 키워드 기록과 업체 ID로 맞춰 순위 변동(이력)을 계산해요.','평균 지표는 상위 N개 값의 평균, 내 업체는 추적 목록의 업체 ID와 같은 행을 강조해요.'],
-  p_trend:['키워드별로 매일 수집해 둔 상위 업체 순위 기록(30일)을 불러와요.','업체 ID 기준으로 30·25·20·15·10·7·5·3·1일 전과 오늘 순위를 한 줄로 맞춰 보여주고, 순위가 높을수록 칸 색을 진하게 칠해요.'],
-  p_hidden:['플레이스 URL에서 플레이스 ID를 뽑아 업체 정보(이름·카테고리·주소·메뉴·리뷰 키워드)를 실제 플레이스 데이터로 조회해요.','업체 정보에서 지역명(동·역)과 업종·메뉴·리뷰 키워드를 조합해 후보 키워드를 자동 생성해요.','후보 키워드마다 플레이스 검색을 돌려 이 업체가 노출되는 순위를 찾고, 설정한 범위(5~100위) 안에 드는 키워드만 순위·검색량·업체 수와 함께 목록으로 보여줘요.','체크한 키워드는 바로 플레이스 순위 체크(매일 추적)에 등록돼요.'],
+  p_compare:['키워드별로 매일 수집해 둔 상위 업체 순위 기록(30일)을 불러와 날짜마다 1위부터 업체 이름을 세로로 나열해요(열 = 날짜, 오늘부터 기록이 있는 날까지).','각 업체 상세에서 방문자리뷰·블로그리뷰·저장 수를 읽어 상위 N개 평균을 보여주고, 내 업체는 추적 목록의 업체 ID와 같은 행을 강조해요.'],
+  p_hidden:['플레이스 URL에서 플레이스 ID를 뽑아 업체 정보(이름·카테고리·주소·메뉴·리뷰 키워드)를 실제 플레이스 데이터로 조회해요.','업체 정보에서 지역명(동·역)과 업종·메뉴·리뷰 키워드를 조합해 후보 키워드를 자동 생성해요.','후보 키워드마다 플레이스 검색을 돌려 이 업체가 노출되는 순위를 찾고, 설정한 범위(5~100위) 안에 드는 키워드만 순위·검색량·업체 수와 함께 목록으로 보여줘요.','체크한 키워드는 복사해 다른 메뉴에 붙여 넣을 수 있어요.'],
   p_stats:['스마트플레이스 관리자 네이버 아이디·비밀번호로 연동해요. 비밀번호는 로그인할 때 한 번만 쓰고 저장하지 않고, 로그인 세션(쿠키)만 암호화해 보관해요. 세션이 만료되면 "연동 만료"로 표시하고 다시 연동을 요청해요.','매일 스마트플레이스 통계 > 리포트의 방문 전·후 지표(플레이스 유입, 예약·주문, 스마트콜, 리뷰)와 유입 채널·유입 키워드를 가져와 일간(시간별)·주간·월간으로 보여주고 직전 기간과 비교해요.','유입 키워드는 바로 순위 추적에 등록할 수 있어요.'],
-  p_report:['플레이스 ID로 업체 상세를 읽어 기본정보 입력 상태, 사진·영상 수와 최근 업로드일, 메뉴·가격 등록, 리뷰 수·답글 응답률, 저장·공유, 예약·주문 연동을 확인해요.','항목별 기준값과 비교해 0~100점으로 점수를 매기고, 경쟁사 비교를 켜면 대표 키워드 상위 3곳 평균과 나란히 보여줘요.','기준보다 낮은 항목은 "개선 포인트"로 정리해요.'],
-  p_feedback:['질문과 키워드를 받아, 그 키워드의 순위 기록·상위 업체 비교 데이터를 함께 AI(LLM)에 넘겨 답을 만들어요.','순위가 떨어진 이유는 최근 7일 리뷰·저장 증가량을 상위 업체와 비교해 근거로 제시해요.'],
-  s_compare:['쇼핑 키워드로 네이버 쇼핑 검색 결과 상위 N개 상품을 읽어 상품명·카테고리·판매처·브랜드·가격비교/단독 여부·가격·상품 ID를 가져와요.','기준일 기록과 상품 ID로 맞춰 순위 변동을 계산하고, 최저가·평균가·유형 비율을 요약해요.'],
+  s_feedback:['고른 키워드로 가격비교 비교분석 데이터(상위 50개 상품의 최근 30일 순위, 가격, 리뷰 수, 가격비교/단독 유형)와 키워드 검색량·경쟁 강도를 불러와요.','내 순위 추이, 상위 3개 평균과의 가격·리뷰 차이, 상위 10개의 가격비교/단독 비율, 7일 사이 급상승 상품과 신규 진입, 1위 유지 기간을 계산해요.','가격·리뷰 차이가 큰 순으로 우선순위를 매겨 추천하고, 실서비스에선 같은 데이터를 LLM에 넘겨 문장으로 다듬어요.'],
+  p_feedback:['업체 종합 진단: 플레이스 ID로 업체 상세를 읽어 기본정보 입력 상태, 사진·영상 수와 최근 업로드일, 메뉴·가격 등록, 리뷰 수·답글 응답률, 저장·공유, 예약·주문 연동을 항목별 0~100점으로 매기고 대표 키워드 상위 3곳 평균과 비교해요. 70점 미만 항목은 추천 대응에 넣어요.','고른 키워드로 키워드 순위 변동 데이터(상위 50곳의 최근 30일 순위, 방문자·블로그 리뷰, 저장 수)를 불러와요.','내 순위 추이(오늘·7일 전·30일 전), 상위 3곳 평균과의 리뷰·저장 차이, 7일 사이 급상승 업체와 10위 안 신규 진입, 1위 유지 기간을 계산해요.','차이가 큰 지표 순으로 우선순위(높음·보통)를 매겨 하루 목표량까지 추천하고, 실서비스에선 같은 데이터를 LLM에 넘겨 문장으로 다듬어요.'],
+  s_compare:['쇼핑 키워드로 네이버 쇼핑 검색 결과 상위 N개 상품을 읽어 상품명·카테고리·판매처·브랜드·가격비교/단독 여부·가격·상품 ID를 가져와요.','최저가·평균가·가격비교/단독 상품 수를 요약해요.','날짜별로 매일 수집해 둔 상위 상품 순위(최대 30일)를 불러와, 날짜마다 1위부터 상품명을 세로로 나열해요(열 = 날짜, 오늘부터 기록이 있는 날까지). 추적 중인 내 상품은 상품 ID로 맞춰 강조해요.'],
   b_level:['블로그 ID로 블로그 공개 정보(닉네임·제목·개설일·방문자·이웃·게시물·스크랩)를 읽어요.','최근 글마다 제목 키워드로 블로그 탭을 검색해 노출되는지 확인하고, 노출 비율·글 품질 지표로 블로그 지수(일반~최적화)를 추정해요.','조회한 블로그는 조회 내역에 쌓여요.'],
-  b_check:['계정 조회: 아이디마다 블로그 공개 정보를 읽어 계정 유형·개설일·첫 글·게시글 수를 가져와요.','게시글 조회: 최근 글 목록을 읽고 글마다 제목으로 검색해 노출 여부를 확인, 검색에 안 잡히면 색인 "누락"으로 표시해요.','누락이 생기면 알림 예약으로 바로 알려줄 수 있어요.'],
+  b_check:['키워드마다 네이버 블로그 탭을 검색해 결과 글 주소 중 입력한 글 주소(블로그 아이디+글 번호)와 같은 글이 몇 번째인지 찾아요.','찾지 못하면 "순위 밖(미노출)"으로 표시하고, 체크한 키워드는 블로그 순위 체크(매일 추적)에 등록돼요.'],
   b_bulk:['키워드마다 블로그 탭 상위 10개 글을 읽고, 각 글 본문을 열어 글자·이미지·동영상·지도·링크·태그 수와 공감·댓글 수를 세요.','블로그 정보(개설일·방문자)도 함께 가져와 키워드별로 상위 글의 공통점을 비교할 수 있게 표로 만들어요.'],
-  k_volume:['네이버 검색광고 API(키워드 도구)로 키워드의 최근 30일 PC·모바일 월간 검색수, 월평균 클릭수·클릭률, 경쟁 정도를 조회해요.','여러 키워드는 한 번에 묶어 요청하고, 조회한 키워드는 목록에 쌓아 조회일과 함께 보관해요.'],
+  k_volume:['네이버 검색광고 API(키워드 도구)로 키워드의 최근 30일 PC·모바일 월간 검색수, 월평균 클릭수·클릭률, 경쟁 정도를 조회해요.','여러 키워드는 한 번에 묶어 요청하고, 조회한 키워드는 목록에 쌓아 조회일과 함께 보관해요.','월별 추이: 검색광고 데이터의 월별 검색수(최근 12개월)를 불러와 막대로 보여주고, 가장 많은 달·적은 달로 계절성을 계산해요.'],
   k_related:['검색어로 네이버 통합검색의 연관검색어 영역을 읽어 추출 검색어 목록을 만들어요.','"매일 노출 체크"를 걸면 매일 같은 검색어로 다시 읽어 체크한 연관검색어가 계속 노출되는지 기록해요.'],
   k_auto:['키워드마다 네이버 검색창 자동완성 목록을 조회해 노출 여부(O/X)와 개수, 전체 목록을 보여줘요.','여러 키워드는 한 줄씩 차례로(간격을 두고) 조회해요.'],
-  k_ai:['업종·지역을 받아 [지역 변형(역·동·구)] × [업종·의도(맛집·회식·데이트…)] 후보 키워드를 만들고, 검색광고 데이터로 검색량·경쟁도를 붙여요.','검색량 대비 경쟁이 낮거나, 상위 업체 리뷰 수가 적어 진입이 쉬운 키워드를 AI가 골라 추천 이유와 함께 보여줘요.'],
   k_power:['입찰가 조회: 검색광고 API의 순위별 예상 입찰가로 PC·모바일 1~3위 입찰가와 검색수·클릭수·경쟁률·평균 광고수를 가져와요.','순위 체크(실서비스): 광고 영역(PC/모바일)에서 키워드를 검색해 내 광고그룹 ID·표시 URL이 몇 번째에 나오는지 기록해요.'],
   k_daum:['카카오 트렌드랭킹: 지역·업종별로 카카오맵이 공개하는 인기 장소 순위를 읽어요.','다음 플레이스·통합웹: 다음 검색 결과에서 카카오맵 장소 ID·게시물 URL의 위치를 찾아 순위로 기록해요.'],
   t_count:['붙여넣은 글의 글자 수를 공백 포함·제외, 바이트로 세요. 브라우저 안에서만 계산해요.'],
-  t_combine:['칸별 단어를 모든 순서로 조합하되, 필수 칸은 반드시 포함하고 위치 고정 칸은 그 자리에 둬요.','중복을 빼고 섞은 뒤 추출 수량만큼 보여줘요.'],
-  alert:['예약한 시간이 되면 서버가 대상 키워드를 다시 수집해 최신 순위를 확인해요.','조건(매번·변동 시·하락 시·N위 밖)에 맞는 키워드만 골라 메시지를 만들고, 앱 푸시·카카오 알림톡·문자로 보내요(문자·알림톡은 포인트 차감).','보낸 내용은 받은 알림에 남아요.'],
-  inbox:['알림 예약이 실행될 때마다 보낸 메시지를 시간순으로 저장해 보여줘요.'],
-  channels:['앱 알림은 브라우저 푸시 권한을, 카카오톡·문자는 휴대폰 번호 인증을 받아 발송 대상에 저장해요.'],
-  ai:['질문을 받으면 AI(LLM)가 내 추적 데이터·알림 설정을 읽어 답하거나, 등록·알림 예약 같은 기능을 대신 실행해요.','URL을 붙여넣으면 URL 종류(플레이스·상품·블로그)를 판별해 ID를 뽑고 추적 등록까지 이어서 처리해요.'],
+  t_combine:['AI 자동 생성: 플레이스 URL에서 플레이스 ID를 뽑아 업체 정보(이름·주소·카테고리·메뉴·리뷰 키워드)를 읽고, 업체명을 업체명 칸에, 주소의 동·역·구 변형을 위치 칸에, 카테고리·메뉴를 메뉴 칸에, 업종에 맞는 검색 의도(맛집·회식·데이트…)를 의도 칸에 AI가 채워요.','칸별 단어를 모든 순서로 조합하되, 필수 칸은 반드시 포함하고 위치 고정 칸은 그 자리에 둬요. 중복을 빼고 추출 수량만큼 만들어요.','만든 키워드마다 검색광고 데이터로 월 검색량·경쟁도를 붙이고, 검색량 대비 경쟁이 낮은 키워드는 추천 이유를 달아 검색량 순으로 보여줘요.'],
+  alert:['예약한 시간이 되면 서버가 대상 키워드를 다시 수집해 최신 순위를 확인해요.','조건(매번·변동 시·하락 시·N위 밖)에 맞는 키워드만 골라 메시지를 만들고, 앱 푸시·카카오 알림톡·문자로 보내요(문자·알림톡은 포인트 차감).','보낸 내용은 알림 기록에 남아요.'],
+  ai:['질문을 받으면 AI(LLM)가 의도(순위·분석·키워드 도구·관리 현황·등록·알림·메뉴 안내)와 인자(키워드·URL·블로그 ID 등)를 뽑아, 각 메뉴가 쓰는 같은 조회·분석 함수를 호출해 답해요.','예) "캠핑의자 검색량" → 키워드 검색량 조회, "강남 맛집 AI 분석해줘" → AI 분석, 플레이스 URL + "키워드 만들어줘" → 키워드 조합기, "리뷰 모니터링 열어줘" → 화면 이동.','답 아래 버튼으로 같은 입력값이 채워진 메뉴 화면을 열 수 있어요. 예시는 규칙 기반이라 정해진 표현 위주로 알아들어요.'],
   m_project:['월보장 목록에 넣은 플레이스는 매일 순위 수집 결과에서 "목표 순위 이내였는지"를 하루씩 세요.','달성 일수 ÷ 보장일수로 진행률을 내고, 남은 일수가 7일 이하면 마감 임박, 다 채우면 완료로 바꿔요.'],
   m_trash:['추적을 중단하면 바로 지우지 않고 기록과 함께 30일 보관해요. 복구하면 그동안의 순위 기록도 이어져요.'],
   plan:['요금제마다 추적 키워드 수·알림 예약 수·카톡/문자 포함 건수·AI 질문 횟수·광고 여부가 달라요. 결제 후 바로 한도가 바뀌어요.'],
@@ -1500,7 +1570,7 @@ function howHtml(k){
 /* ===== 빠진 기능 보강 (예시 데이터, 새로고침하면 처음 상태) ===== */
 MG.blogs=[];MG.linked=false;MG.groups=[];
 const rowsHtml=(rows)=>rows.map(([k,v])=>`<div class="row small" style="padding:6px 0;border-bottom:1px solid var(--line)"><span class="muted" style="width:110px;flex:none">${k}</span><span class="grow">${v}</span></div>`).join('');
-/* 순위 비교분석: 업체를 누르면 이 키워드에서의 순위 이력·리뷰·저장 추이 */
+/* 키워드 순위 변동: 업체를 누르면 이 키워드에서의 순위 이력·리뷰·저장 추이 */
 function compHist(kw,name,rank){
   const r=rng('ch'+kw+name),days=14,hist=[];let x=rank;for(let i=0;i<days;i++){hist.unshift(x);x=Math.max(1,x+Math.round((r()-.5)*4))}
   const e=ext('place','',name),rv=mSeries('rv'+name,e.rv,e.grow[0],days),bl=mSeries('bl'+name,e.bl,e.grow[1],days),sv=mSeries('sv'+name,e.sv,e.grow[2],days),c=(a,i)=>fmtN(a[i])+(i?incTag(a[i],a[i-1]):''),rows=hist.map((v,i)=>[dayLabel(i,days),v+'위'+(i?rankTag(v,hist[i-1]):''),c(rv,i),c(bl,i),c(sv,i)]).reverse();
@@ -1509,27 +1579,117 @@ function compHist(kw,name,rank){
     ${rowsHtml([['카테고리',e.cat],['방문자리뷰',fmtN(e.rv)],['블로그리뷰',fmtN(e.bl)],['저장',fmtN(e.sv)]])}
     <h3 style="font-size:15px;margin:14px 0 4px">일별 기록</h3>${T(['날짜','순위','방문자리뷰','블로그리뷰','저장'],rows)}
     <button class="btn block" style="margin-top:14px" onclick="trackAdd('place','${esc(kw)}','${esc(name)}');closeSheet()">${ic('plus',16)} 이 업체 추적 등록</button>`)}
-CFG.p_compare.view=(res,v,k)=>{const r=res.rows,avg=f=>fmtN(Math.round(r.reduce((s,x)=>s+x[f],0)/r.length));
-  return `<div class="card"><h3>${esc(v.kw)} 상위 ${r.length}곳 <span class="more">${v.base} 대비</span></h3>
-  ${K([['평균 방문자리뷰',avg('rv')],['평균 블로그리뷰',avg('bl')],['평균 저장',avg('sv')],['1위 방문자리뷰',fmtN(r[0].rv)]])}
-  ${T(['순위','이력','상호명','카테고리','방문자리뷰','블로그리뷰','저장','주소',''],r.map(x=>[x.rank,dlt(x.rank,x.prev),`<a class="lnk" onclick="compHist('${esc(v.kw)}','${esc(x.name)}',${x.rank})">${x.me?ME(esc(x.name)):esc(x.name)}</a>`,x.cat,fmtN(x.rv),fmtN(x.bl),fmtN(x.sv),x.addr,
-    x.me?'<span class="tag">추적 중</span>':`<button class="btn ghost sm" style="height:28px" onclick="trackAdd('place','${esc(v.kw)}','${esc(x.name)}')">추적</button>`]))}
-  <div class="row" style="margin-top:12px">${xlsxBtn(k)}</div></div>`};
+const _cmpRun=CFG.p_compare.run;
+CFG.p_compare.run=v=>{const res=_cmpRun(v);res.days=Array.from({length:30},(_,d)=>d); // 오늘부터 기록이 있는 날까지(최대 30일) 하루 단위
+  res.rows.forEach(x=>{const r=rng('tr'+x.name);let c=x.rank;x.hist=res.days.map(d=>d?c=Math.max(1,c+Math.round((r()-.5)*3)):c)});return res};
+// 날짜별 순위표: 열 = 날짜(오늘부터), 행 = 순위, 칸 = 그날 그 순위 업체
+const cmpCols=res=>res.days.map((_,i)=>[...res.rows].sort((a,b)=>a.hist[i]-b.hist[i]||a.rank-b.rank));
+const cmpDate=d=>fmtD(daysAgo(d)).slice(5);
+CFG.p_compare.view=(res,v,k)=>{const r=res.rows,avg=f=>fmtN(Math.round(r.reduce((s,x)=>s+x[f],0)/r.length)),cols=cmpCols(res);
+  return `<div class="card">
+    <div class="row" style="margin-bottom:12px;gap:8px"><span class="tiny muted grow">내 업체는 파란색이에요. 업체 이름을 누르면 순위 이력을 보고 추적 등록할 수 있어요.</span>${xlsxBtn(k)}</div>
+    ${K([['평균 방문자리뷰',avg('rv')],['평균 블로그리뷰',avg('bl')],['평균 저장',avg('sv')],['1위 방문자리뷰',fmtN(r[0].rv)]])}
+    ${_T(['순위',...res.days.map(cmpDate)],r.map((_,n)=>[`<b>${n+1}</b>`,...cols.map(c=>{const x=c[n];return `<a class="lnk" style="text-decoration:none;font-weight:500;color:inherit" onclick="compHist('${esc(v.kw)}','${esc(x.name)}',${x.rank})">${x.me?ME(esc(x.name)):esc(x.name)}</a>`})]))}</div>`};
+CFG.p_compare.csv=res=>{const cols=cmpCols(res);return [['순위',...res.days.map(cmpDate)],...res.rows.map((_,n)=>[n+1,...cols.map(c=>c[n].name)])]};
+/* 가격비교 비교분석: 키워드 순위 변동과 같은 틀(날짜별 순위표) — 추적 중인 내 상품은 파란색 */
+const _scRun=CFG.s_compare.run;
+CFG.s_compare.run=v=>{const res=_scRun(v);res.days=Array.from({length:30},(_,d)=>d);
+  S.items.filter(i=>i.type==='shop'&&!i.menu&&i.keyword===v.kw&&cur(i)!=null&&cur(i)<=res.rows.length).forEach(m=>Object.assign(res.rows[cur(m)-1],{name:m.name,me:true}));
+  res.rows.forEach(x=>{const r=rng('str'+x.name);let c=x.rank;x.hist=res.days.map(d=>d?c=Math.max(1,c+Math.round((r()-.5)*3)):c)});return res};
+CFG.s_compare.view=(res,v,k)=>{const r=res.rows,cols=cmpCols(res),g=genVolume(v.kw),pc=Math.floor(rng(v.kw)()*180000+3000);
+  return `<div class="card"><h3>${esc(v.kw)} 키워드</h3>${K([['월 검색량',fmtN(g.sum)],['상품 수',fmtN(pc)],['경쟁 강도',g.comp],['상품당 검색',(g.sum/pc).toFixed(2)]])}</div>
+  <div class="card">
+    <div class="row" style="margin-bottom:12px;gap:8px"><span class="tiny muted grow">내 상품은 파란색이에요. 상품명을 누르면 가격·판매처와 순위 이력을 보고 추적 등록할 수 있어요.</span>${xlsxBtn(k)}</div>
+    ${K([['최저가',fmtN(Math.min(...r.map(x=>x.price)))+'원'],['평균가',fmtN(Math.round(r.reduce((s,x)=>s+x.price,0)/r.length))+'원'],['가격비교 상품',r.filter(x=>x.kind==='가격비교').length+'개'],['단독 상품',r.filter(x=>x.kind==='단독').length+'개']])}
+    ${_T(['순위',...res.days.map(cmpDate)],r.map((_,n)=>[`<b>${n+1}</b>`,...cols.map(c=>{const x=c[n];return `<a class="lnk" style="text-decoration:none;font-weight:500;color:inherit" onclick="shopHist(${x.rank-1})">${x.me?ME(esc(x.name)):esc(x.name)}</a>`})]))}</div>`};
+CFG.s_compare.csv=res=>{const cols=cmpCols(res);return [['순위',...res.days.map(cmpDate)],...res.rows.map((_,n)=>[n+1,...cols.map(c=>c[n].name)])]};
+function shopHist(i){const st=AN.s_compare,x=st.res.rows[i],kw=st.v.kw,hist=x.hist.slice(0,14).reverse();
+  sheet(`<h2>${esc(x.name)}</h2><div class="small muted">키워드 ${esc(kw)} · 최근 14일 이력</div>
+    <div class="card" style="box-shadow:none;border:1px solid var(--line);padding:12px 8px 6px;margin-top:12px">${chart({history:hist})}</div>
+    ${rowsHtml([['가격',fmtN(x.price)+'원'],['판매처',esc(x.mall)],['브랜드',x.brand],['유형',x.kind],['카테고리',x.cat],['제품ID',x.pid]])}
+    ${x.me?'<div class="tag" style="margin-top:14px">추적 중</div>':`<button class="btn block" style="margin-top:14px" onclick="trackAdd('shop','${esc(kw)}','${esc(x.name)}');closeSheet()">${ic('plus',16)} 이 상품 추적 등록</button>`}`)}
+/* 키워드 검색량 조회 > 월별 추이 탭: 최근 12개월 월별 검색량과 계절성 */
+let KVT={tab:'검색량',kw:null};
+function volTrend(kw){const g=genVolume(kw),r=rng('tr'+kw),peak=Math.floor(r()*12),vals=MONTHS.map((m,i)=>Math.round(g.sum*(.55+.45*Math.cos((i-peak)/12*Math.PI*2))*(.9+r()*.2))),mx=vals.indexOf(Math.max(...vals)),mn=vals.indexOf(Math.min(...vals));
+  return `${K([['최근 월',fmtN(vals[11])],['최고 달',MONTHS[mx]],['최저 달',MONTHS[mn]],['차이',Math.round(vals[mx]/vals[mn]*10)/10+'배']])}${bars(vals,MONTHS)}
+    <div class="small muted" style="margin-top:8px">${esc(kw)}은(는) ${MONTHS[mx]} 전후로 검색이 가장 많아요. 그 1~2달 전부터 순위를 올려두면 좋아요.</div>`}
+/* AI 분석(쇼핑): 가격비교 비교분석 데이터(rows = 상위 상품, hist[d] = d일 전 순위)를 읽어 진단·추천 — 예시는 규칙 기반, 실서비스는 같은 데이터를 LLM에 넘겨 문장화 */
+function sfbAnalyze(res,it){const rows=res.rows.map(x=>({...x,rv:x.me?it.rv:ext('shop','',x.name).rv})),me=rows.find(x=>x.me),avg=(a,f)=>Math.round(a.reduce((s,x)=>s+x[f],0)/a.length);
+  const top3=rows.slice(0,3).filter(x=>!x.me),top10=rows.slice(0,10),t3={price:avg(top3,'price'),rv:avg(top3,'rv')},low=Math.min(...top10.map(x=>x.price));
+  const my={price:it.price,rv:it.rv,kind:me?me.kind:'단독'},now=me?me.hist[0]:null,w7=me?me.hist[7]:null,m30=me?me.hist[29]:null;
+  const others=rows.filter(x=>!x.me),climb=others.map(x=>({...x,up:x.hist[7]-x.hist[0]})).sort((a,b)=>b.up-a.up)[0];
+  const enter=others.filter(x=>x.hist[0]<=10&&x.hist[7]>10),cols=cmpCols(res),lead=cols[0][0].name,keep=cols.findIndex(c=>c[0].name!==lead);
+  const cmpN=top10.filter(x=>x.kind==='가격비교').length,pg=(my.price-t3.price)/t3.price,rg=t3.rv-my.rv,g=genVolume(it.keyword),diag=[],rec=[];
+  if(now==null)diag.push('상위 50위 안에 없어요. 상위 3개 상품과 가격·리뷰 차이부터 줄여야 해요.');
+  else{diag.push(`오늘 <b>${now}위</b> · 7일 전 ${w7}위 → ${w7>now?`<span class="up">${w7-now}계단 상승</span>`:w7<now?`<span class="down">${now-w7}계단 하락</span>`:'변동 없음'} · 30일 전 ${m30}위`);
+    if(now<=3)diag.push('상위 3위 안이에요. 가격·리뷰로 치고 올라오는 상품을 막는 유지 전략이 중요해요.')}
+  diag.push(`월 검색량 ${fmtN(g.sum)} · 경쟁 강도 ${g.comp}. 상위 10개 중 가격비교 상품 ${cmpN}개 · 단독 상품 ${10-cmpN}개${cmpN>=6?'로 가격비교(카탈로그) 상품이 유리한 키워드예요.':'로 단독 상품도 상위에 잘 오르는 키워드예요.'}`);
+  diag.push(`내 가격 ${fmtN(my.price)}원 · 상위 3개 평균 ${fmtN(t3.price)}원 · 상위 10개 최저가 ${fmtN(low)}원 → 평균보다 ${pg>0?`<b>${Math.round(pg*100)}% 비싸요</b>`:`${Math.round(-pg*100)}% 저렴해요`}.`);
+  diag.push(`1위 <b>${esc(lead)}</b> — 최근 ${keep<0?30:keep}일 연속 1위예요.`);
+  if(climb&&climb.up>=3)diag.push(`최근 7일 가장 많이 오른 상품은 <b>${esc(climb.name)}</b>(${climb.hist[7]}위 → ${climb.hist[0]}위)예요. ${fmtN(climb.price)}원 · 리뷰 ${fmtN(climb.rv)} · ${climb.kind} 상품으로 ${climb.price<t3.price?'상위 평균보다 가격이 낮아요.':climb.rv>t3.rv?'리뷰가 상위 평균보다 많아요.':'가격·리뷰보다 최근 판매량(할인·광고)이 늘었을 가능성이 커요.'}`);
+  if(enter.length)diag.push(`7일 사이 10위 안에 새로 들어온 상품이 ${enter.length}개 있어요: ${enter.map(x=>esc(x.name)).join(', ')}`);
+  if(now!=null&&w7<now)rec.push({lv:'높음',t:'하락 원인 점검',d:`7일 사이 ${now-w7}계단 떨어졌어요. ${climb&&climb.up>=3?`급상승한 ${esc(climb.name)}의 가격·할인·리뷰 변화를 확인하고, `:''}내 상품의 품절·배송비·가격 변경 여부를 확인하세요.`});
+  if(pg>.1)rec.push({lv:'높음',t:'가격 경쟁력 맞추기',d:`상위 3개 평균보다 <b>${fmtN(my.price-t3.price)}원</b> 비싸요. 즉시 할인·쿠폰으로 ${fmtN(t3.price)}원 안팎을 맞추거나, 구성(세트·사은품)으로 가격 차이를 설명해 주세요.`});
+  if(rg>t3.rv*.1)rec.push({lv:rec.length?'보통':'높음',t:'리뷰 늘리기',d:`상위 3개 평균 ${fmtN(t3.rv)} · 내 상품 ${fmtN(my.rv)} → <b>${fmtN(rg)}개</b> 차이. 구매 확정 후 리뷰 적립금(포토 리뷰 우대)으로 하루 ${Math.ceil(rg/30)}개씩 30일.`});
+  if(cmpN>=6&&my.kind==='단독')rec.push({lv:'보통',t:'가격비교 매칭 신청',d:`상위 10개 중 ${cmpN}개가 가격비교 상품이에요. 같은 모델을 파는 카탈로그가 있으면 가격비교 매칭을 신청해 리뷰·판매 실적을 합쳐 받으세요.`});
+  rec.push({lv:'보통',t:'상품명·태그 정리',d:`상품명 앞쪽에 "${esc(it.keyword)}"와 브랜드·핵심 속성을 넣고, 카테고리·속성(색상·사이즈 등)을 빠짐없이 채우세요.`});
+  if(now!=null&&now<=3)rec.push({lv:'보통',t:'상위권 유지',d:'재고·배송 일정을 넉넉히 유지하고, 문의·리뷰 답변을 하루 안에 달아 판매 지수를 지키세요.'});
+  rec.push({lv:'참고',t:'광고 병행',d:`검색량 ${fmtN(g.sum)}회 키워드예요. 순위가 오르기 전까지 쇼핑 검색광고를 소액으로 병행해 판매 실적을 먼저 쌓으면 순위 상승이 빨라요.`});
+  return {now,w7,t3,my,low,diag,rec}}
+const sfbView=r=>{const c={높음:'var(--up)',보통:'var(--pri)',참고:'var(--sub)'};
+  return `<div class="card"><div class="row" style="margin-bottom:10px;gap:8px"><span class="small grow"><b>${esc(r.kw)}</b> · ${esc(r.name)}</span><button class="btn ghost sm" onclick="AN.s_compare={v:{kw:'${esc(r.kw)}',n:'상위 20개'},res:null};go('m','s_compare')">비교분석 보기</button></div>
+    ${K([['오늘 순위',r.now==null?'50위 밖':r.now+'위'],['7일 변동',r.now==null||r.w7===r.now?'-':(r.w7>r.now?'▲':'▼')+Math.abs(r.w7-r.now),r.w7>r.now?'up':r.w7<r.now?'down':''],[`가격<br>상위3 평균 ${fmtN(r.t3.price)}원`,fmtN(r.my.price)+'원'],[`리뷰<br>상위3 평균 ${fmtN(r.t3.rv)}`,fmtN(r.my.rv)]])}
+    <h3>${ic('spark',16)} 진단</h3><ul class="small" style="margin:0 0 14px;padding-left:18px;line-height:1.8">${r.diag.map(d=>`<li>${d}</li>`).join('')}</ul>
+    <h3>추천 대응</h3>${r.rec.map((x,i)=>`<div class="list-row" style="display:block"><div class="row small"><b class="grow">${i+1}. ${x.t}</b><span class="tag" style="color:${c[x.lv]}">${x.lv}</span></div><div class="small" style="margin-top:4px;color:var(--sub)">${x.d}</div></div>`).join('')}</div>`};
+/* AI 분석(플레이스): 키워드 순위 변동 데이터(rows = 상위 업체, hist[d] = d일 전 순위)를 읽어 진단·추천 — 예시는 규칙 기반, 실서비스는 같은 데이터를 LLM에 넘겨 문장화 */
+function fbAnalyze(res,it){const rows=res.rows,me=rows.find(x=>x.me),avg=(a,f)=>Math.round(a.reduce((s,x)=>s+x[f],0)/a.length);
+  const top3=rows.slice(0,3).filter(x=>!x.me),t3={rv:avg(top3,'rv'),bl:avg(top3,'bl'),sv:avg(top3,'sv')};
+  const my={rv:it.rv,bl:it.bl,sv:it.sv},now=me?me.hist[0]:null,w7=me?me.hist[7]:null,m30=me?me.hist[29]:null;
+  const others=rows.filter(x=>!x.me),climb=others.map(x=>({...x,up:x.hist[7]-x.hist[0]})).sort((a,b)=>b.up-a.up)[0];
+  const enter=others.filter(x=>x.hist[0]<=10&&x.hist[7]>10),cols=cmpCols(res),lead=cols[0][0].name,keep=cols.findIndex(c=>c[0].name!==lead);
+  const gap=f=>({f,g:t3[f]-my[f],p:my[f]?(t3[f]-my[f])/t3[f]:1}),gaps=['rv','bl','sv'].map(gap).filter(x=>x.p>.1).sort((a,b)=>b.p-a.p);
+  const L={rv:'방문자리뷰',bl:'블로그리뷰',sv:'저장'},diag=[],rec=[];
+  if(now==null)diag.push(`상위 50위 안에 없어요. 상위 3곳과 기본 지표 차이부터 줄여야 해요.`);
+  else{diag.push(`오늘 <b>${now}위</b> · 7일 전 ${w7}위 → ${w7>now?`<span class="up">${w7-now}계단 상승</span>`:w7<now?`<span class="down">${now-w7}계단 하락</span>`:'변동 없음'} · 30일 전 ${m30}위`);
+    if(now<=3)diag.push('상위 3위 안이에요. 새로 치고 올라오는 업체를 막는 유지 전략이 중요해요.')}
+  diag.push(`1위 <b>${esc(lead)}</b> — 최근 ${keep<0?30:keep}일 연속 1위예요.${keep<0||keep>=14?' 상위권이 안정적인 키워드라 지표를 꾸준히 쌓는 게 효과적이에요.':' 1위가 자주 바뀌는 키워드라 단기 활동으로도 순위가 움직여요.'}`);
+  if(climb&&climb.up>=3)diag.push(`최근 7일 가장 많이 오른 곳은 <b>${esc(climb.name)}</b>(${climb.hist[7]}위 → ${climb.hist[0]}위)예요. 저장 ${fmtN(climb.sv)} · 방문자리뷰 ${fmtN(climb.rv)}로 ${climb.sv>t3.sv?'저장 수가 상위 평균보다 많아요.':climb.rv>t3.rv?'방문자리뷰가 상위 평균보다 많아요.':'지표보다 최근 활동(사진·소식)이 늘었을 가능성이 커요.'}`);
+  if(enter.length)diag.push(`7일 사이 10위 안에 새로 들어온 업체가 ${enter.length}곳 있어요: ${enter.map(x=>esc(x.name)).join(', ')}`);
+  const how={rv:g=>`영수증 리뷰 안내(테이블·계산대 QR)로 하루 ${Math.ceil(g/30)}개씩 30일`,bl:g=>`블로그 체험단 월 ${Math.min(30,Math.max(5,Math.ceil(g/20)))}건 진행, 대표 키워드 "${esc(it.keyword)}"를 제목에 넣기`,sv:g=>`저장 이벤트(저장하면 음료 등)로 하루 ${Math.ceil(g/30)}개씩 30일`};
+  gaps.forEach((x,i)=>rec.push({lv:i?'보통':'높음',t:`${L[x.f]} 늘리기`,d:`상위 3곳 평균 ${fmtN(t3[x.f])} · 내 업체 ${fmtN(my[x.f])} → <b>${fmtN(x.g)}개</b> 차이. ${how[x.f](x.g)}.`}));
+  if(now!=null&&w7<now)rec.unshift({lv:'높음',t:'하락 원인 점검',d:`7일 사이 ${now-w7}계단 떨어졌어요. ${climb&&climb.up>=3?`급상승한 ${esc(climb.name)}의 최근 사진·소식·메뉴 변경을 확인하고, `:''}내 업체 최근 리뷰 증가 속도와 영업시간·대표 사진 변경 여부를 확인하세요.`});
+  if(now!=null&&now<=3)rec.push({lv:'보통',t:'상위권 유지',d:'리뷰 답글 응답률 70% 이상, 사진·소식 주 1회 업데이트로 활동성을 유지하세요.'});
+  if(!gaps.length&&!(now!=null&&w7<now))rec.push({lv:'보통',t:'지표는 충분해요',d:'리뷰·저장은 상위 3곳 이상이에요. 대표 키워드·소개글에 실제 검색 키워드를 넣고 사진을 주 1회 올려 클릭률을 높이세요.'});
+  // 업체 종합 진단: 업체 상세 항목별 점수(0~100, 리뷰 수·저장은 실제 지표로 상위 3곳 평균 = 90점) vs 상위 3곳 평균, 70점 미만은 추천에 추가(리뷰·저장은 위 지표 차이로 이미 다룸)
+  const rr=rng('rp'+it.name),sc=()=>Math.floor(rr()*45+50),REP=[['기본 정보 완성도','영업시간·주차·편의시설·소개글을 빠짐없이 채우세요.'],['사진·영상','메뉴·내부·외부 사진을 주 1회 올리고 영상도 1개 이상 등록하세요.'],['메뉴·가격 등록','대표 메뉴 사진과 가격을 모두 등록하세요.'],['리뷰 수','영수증 리뷰 안내로 리뷰를 꾸준히 쌓으세요.'],['리뷰 답글 응답률','리뷰 모니터링의 AI 답글 초안으로 답글 응답률을 70% 이상 유지하세요.'],['저장·공유 반응','저장 이벤트·소식 글로 저장·공유를 늘리세요.'],['예약·주문 연동','네이버 예약·주문을 연결하면 전환 지표가 함께 쌓여요.']];
+  const byData={'리뷰 수':['rv'],'저장·공유 반응':['sv']},rep=REP.map(([l,tip])=>{const f=byData[l]?.[0];return f?{l,tip,s:Math.min(100,Math.round(my[f]/t3[f]*90)),a:90}:{l,tip,s:sc(),a:sc()}}),total=Math.round(rep.reduce((s,x)=>s+x.s,0)/rep.length),done=gaps.map(x=>({rv:'리뷰 수',sv:'저장·공유 반응'})[x.f]);
+  rep.filter(x=>x.s<70&&!done.includes(x.l)).forEach(x=>rec.push({lv:'보통',t:`${x.l} 보강`,d:`종합 진단 ${x.s}점 · 상위 3곳 평균 ${x.a}점. ${x.tip}`}));
+  if(!rep.some(x=>x.s<70&&['기본 정보 완성도','사진·영상','메뉴·가격 등록'].includes(x.l)))rec.push({lv:'참고',t:'정보 최신화',d:'영업시간·메뉴·가격·편의시설을 최신으로 맞추고, 대표 사진은 메뉴 사진으로 두세요.'});
+  return {now,w7,t3,my,diag,rec,rep,total}}
+const fbView=r=>{const c={높음:'var(--up)',보통:'var(--pri)',참고:'var(--sub)'};
+  return `<div class="card"><div class="row" style="margin-bottom:10px;gap:8px"><span class="small grow"><b>${esc(r.kw)}</b> · ${esc(r.name)}</span><button class="btn ghost sm" onclick="AN.p_compare={v:{kw:'${esc(r.kw)}',n:'상위 20개'},res:null};go('m','p_compare')">순위 변동 보기</button></div>
+    ${K([['오늘 순위',r.now==null?'50위 밖':r.now+'위'],['7일 변동',r.now==null?'-':r.w7===r.now?'-':(r.w7>r.now?'▲':'▼')+Math.abs(r.w7-r.now),r.w7>r.now?'up':r.w7<r.now?'down':''],[`방문자리뷰<br>상위3 평균 ${fmtN(r.t3.rv)}`,fmtN(r.my.rv)],[`저장<br>상위3 평균 ${fmtN(r.t3.sv)}`,fmtN(r.my.sv)]])}
+    <h3>${ic('spark',16)} 진단</h3><ul class="small" style="margin:0 0 14px;padding-left:18px;line-height:1.8">${r.diag.map(d=>`<li>${d}</li>`).join('')}</ul>
+    <h3>업체 종합 진단 <span class="more">종합 ${r.total}점</span></h3>${r.rep.map(x=>`<div class="row small" style="padding:8px 0;border-bottom:1px solid var(--line)"><span style="width:116px;flex:none">${x.l}</span>${BAR(x.s,x.s>=75?'var(--ok)':x.s>=60?'var(--pri)':'var(--up)')}<b style="width:40px;text-align:right">${x.s}점</b><span class="tiny muted" style="width:62px;text-align:right">상위 ${x.a}</span></div>`).join('')}
+    <div style="height:16px"></div>
+    <h3>추천 대응</h3>${r.rec.map((x,i)=>`<div class="list-row" style="display:block"><div class="row small"><b class="grow">${i+1}. ${x.t}</b><span class="tag" style="color:${c[x.lv]}">${x.lv}</span></div><div class="small" style="margin-top:4px;color:var(--sub)">${x.d}</div></div>`).join('')}</div>`};
 CFG.p_compare.guide=[...CFG.p_compare.guide,'업체 이름을 누르면 그 업체의 최근 14일 순위·리뷰·저장 이력을 볼 수 있어요.'];
 
-/* 히든·상위 키워드: 자동 찾기 + 직접 입력(내 키워드만 순위 조회) */
+/* 키워드 순위 조회: 자동 찾기 + 직접 입력(내 키워드만 순위 조회) */
+let HM='자동 찾기'; // 키워드 순위 조회 탭: 자동 찾기 / 직접 입력
 const _hidRun=CFG.p_hidden.run,_hidView=CFG.p_hidden.view;
 Object.assign(CFG.p_hidden,{
-  guide:['자동 찾기: 플레이스 URL만 넣으면 이 업체가 노출되는 숨은 키워드를 찾아줘요.','직접 입력: 키워드를 줄바꿈으로 넣고 URL·범위를 정하면 그 키워드들의 순위만 조회해요.','체크한 키워드는 한 번에 순위 추적으로 등록할 수 있어요.'],
-  form:[{id:'mode',label:'방식',type:'select',opts:['자동 찾기','직접 입력'],def:'자동 찾기'},{id:'url',label:'플레이스 URL 또는 ID',ph:'https://m.place.naver.com/restaurant/1938472610',req:true,def:'https://m.place.naver.com/restaurant/1938472610'},
-    {id:'kws',label:'키워드 (직접 입력일 때)',hint:'줄바꿈으로 최대 50개',type:'textarea',rows:3,def:'강남 맛집\n강남역 고기집\n역삼 회식\n선릉 갈비'},{id:'range',label:'범위',type:'select',opts:['5위 이내','10위 이내','20위 이내','30위 이내','50위 이내','100위 이내'],def:'20위 이내'}],
-  run:v=>{const res=_hidRun(v);if(v.mode!=='직접 입력')return res;
+  guide:['자동 찾기: 플레이스 URL만 넣으면 이 업체가 노출되는 키워드를 찾아 범위 안에 드는 것만 보여줘요.','직접 입력: 키워드를 줄바꿈으로 넣으면 그 키워드들만 순위를 조회해요. 범위 밖이어도 모두 보여주고 범위 안은 파란색, 밖은 빨간색이에요.','체크한 키워드는 복사해 가져갈 수 있어요.'],
+  after:()=>`<div class="seg" style="margin-bottom:12px">${['자동 찾기','직접 입력'].map(t=>`<button class="${HM===t?'on':''}" onclick="HM='${t}';AN.p_hidden.res=null;render()">${t}</button>`).join('')}</div>`,
+  run:v=>{const res=_hidRun(v);if(HM!=='직접 입력')return res;
     res.kws=v.kws.split('\n').map(s=>s.trim()).filter(Boolean).slice(0,50).map(kw=>{const r=rng('hd'+kw+res.mid);const q=r();return {kw,rank:q<.12?999:q<.6?Math.floor(r()*20)+1:Math.floor(r()*100)+21,vol:genVolume(kw).sum,stores:Math.floor(r()*900+30)}});res.direct=true;return res},
   view:(res,v,k)=>{if(!res.direct)return _hidView(res,v,k);const lim=parseInt(v.range);
     return `<div class="card"><h3>${esc(res.name)} · 직접 입력 키워드 순위 <span class="more">${v.range}</span></h3>
     ${T([allChk,'키워드','순위','월 검색량','업체 수'],res.kws.map(x=>[`<input type="checkbox" class="sel" data-kw="${esc(x.kw)}" data-name="${esc(res.name)}" data-rank="${x.rank<999?x.rank:''}">`,esc(x.kw),`<b style="color:${x.rank<=lim?'var(--down)':'var(--up)'}">${x.rank<999?x.rank+'위':'순위 밖'}</b>`,fmtN(x.vol),fmtN(x.stores)]))}
     <div class="tiny muted" style="margin-top:6px"><b style="color:var(--down)">파란색</b> = ${v.range} 안 · <b style="color:var(--up)">빨간색</b> = 범위 밖</div>
-    <div class="row" style="margin-top:12px;gap:6px">${xlsxBtn(k)}<button class="btn sm" onclick="trackChecked('place','${esc(res.name)}')">선택 키워드 추적 등록</button></div></div>`}});
+    <div class="row" style="margin-top:12px;gap:6px"><button class="btn sub sm" onclick="selCopy()">선택 키워드 복사</button>${xlsxBtn(k)}</div></div>`}});
+Object.defineProperty(CFG.p_hidden,'form',{get:()=>[{id:'url',label:'플레이스 URL 또는 ID',ph:'https://m.place.naver.com/restaurant/1938472610',req:true,def:'https://m.place.naver.com/restaurant/1938472610'}, // 탭(HM)에 따라 입력칸이 바뀜
+  ...(HM==='직접 입력'?[{id:'kws',label:'조회할 키워드',hint:'줄바꿈으로 최대 50개',act:['조합기에서 불러오기','hidLoad()'],type:'textarea',rows:3,req:true,def:'강남 맛집\n강남역 고기집\n역삼 회식\n선릉 갈비'}]:[]),{id:'range',label:'범위',type:'select',opts:['5위 이내','10위 이내','20위 이내','30위 이내','50위 이내','100위 이내'],def:'20위 이내'}]});
 LOGIC.p_hidden=[...LOGIC.p_hidden,'직접 입력: 사용자가 넣은 키워드만 하나씩 플레이스 검색을 돌려 이 업체의 순위를 찾고, 범위 안이면 파란색·밖이면 빨간색으로 표시해요.'];
 
 /* 블로그 지수 분석: 조회한 블로그를 매일 추적 */
@@ -1558,7 +1718,7 @@ Object.assign(CFG.k_power,{
   csv:(res,st)=>res.rank?[['키워드','내 광고 위치','노출 광고 수','확인 시각'],...res.rank.map(x=>[x.kw,x.p||'미노출',x.n,x.t])]:_pwCsv(res,st)});
 
 /* 유입 통계: 네이버 스마트플레이스 연동 단계 */
-/* 유입·플레이스 통계: 스마트플레이스 통계 > 리포트 화면 구성(방문 전·후 지표, 이번 주 vs 지난 주 유입, 유입 채널·키워드). 연동 전엔 연동 안내 */
+/* 플레이스 통계: 스마트플레이스 통계 > 리포트 화면 구성(방문 전·후 지표, 이번 주 vs 지난 주 유입, 유입 채널·키워드). 연동 전엔 연동 안내 */
 const SR={sel:['홍길동 숯불갈비'],tab:'리포트',per:'주간',off:0,place:'홍길동 숯불갈비',inT:'채널'};
 const WD='일월화수목금토',PW={일간:{a:'하루',prev:'어제',u:'시간'},주간:{a:'한 주',prev:'지난주',u:'일'},월간:{a:'한 달',prev:'지난달',u:'일'}};
 function statsData(){const t=new Date();t.setHours(0,0,0,0);let st,en,labels,lastLen;
@@ -1599,21 +1759,24 @@ function statsReport(){const d=statsData(),g='#03c75a',w=PW[SR.per],dl=d.pct<0?`
     :SR.tab==='플레이스'?`<div class="card"><h3>유입 키워드</h3>${T(['순위','키워드','유입',''],d.kw.map(([k,c],i)=>[i+1,esc(k),c+'회',`<button class="btn ghost sm" style="height:28px" onclick="trackAdd('place','${esc(k)}','${esc(SR.place)}')">추적</button>`]))}</div>
       <div class="card"><h3>유입 채널</h3>${T(['채널','유입','비중'],d.ch.map(([c,n])=>[c,n+'회',BAR(Math.round(n/d.ct*100))]))}</div>`
     :`<div class="card"><div class="empty" style="padding:30px 0"><div style="font-size:40px">📊</div><div class="small">조회 기간에 수집된 ${SR.tab} 데이터가 없습니다.</div></div></div>`;
-  return `<div class="card" style="padding:12px 16px"><div class="row" style="margin-bottom:8px"><span class="tag" style="background:var(--ok);color:#fff">연동됨</span><span class="small grow">업체 <b>${SR.sel.length}곳</b> 보는 중 <span class="tiny muted">· 연동 계정 ${NAVER_IDS.length}개</span></span><button class="btn sub sm" onclick="linkSheet()">네이버 연동하기</button></div><div class="row"><select class="input grow" style="height:36px" onchange="SR.place=this.value;render()">${SR.sel.map(o=>`<option ${o===SR.place?'selected':''}>${esc(o)}</option>`).join('')}</select></div></div>
+  return `${linkBar(`<select class="input grow" style="height:36px" onchange="SR.place=this.value;render()">${SR.sel.map(o=>`<option ${o===SR.place?'selected':''}>${esc(o)}</option>`).join('')}</select>`)}
     <div class="subtabs" style="margin:0 0 12px">${tabs.map(t=>`<button class="${SR.tab===t?'on':''}" onclick="SR.tab='${t}';render()">${t}</button>`).join('')}</div>
     <div class="row" style="gap:8px;margin-bottom:12px"><select class="input" style="width:96px;height:40px" onchange="SR.per=this.value;SR.off=0;render()">${['일간','주간','월간'].map(o=>`<option ${o===SR.per?'selected':''}>${o}</option>`).join('')}</select>
       <div class="row grow" style="border:1px solid var(--line);border-radius:10px;height:40px;background:var(--card);padding:0 6px"><button class="iconbtn" style="color:${g}" onclick="SR.off++;render()">◀</button><b class="grow small" style="text-align:center">${d.range}</b><button class="iconbtn" ${d.canNext?`style="color:${g}"`:'disabled style="opacity:.3"'} onclick="if(SR.off>0){SR.off--;render()}">▶</button></div></div>
     ${body}`}
-CFG.p_stats.before=()=>MG.linked||PREVIEW?statsReport():NAVER_IDS.length?`<div class="card"><h3>연동된 업체</h3><div class="small muted" style="margin-bottom:6px">통계를 볼 업체를 체크하고 보기를 눌러요.</div>${acctPick()}</div>`
-  :`<div class="card"><h3>네이버 스마트플레이스 연동</h3><div class="small muted" style="margin-bottom:12px">스마트플레이스 관리자 네이버 계정을 연동하면 관리 중인 업체 통계를 매일 불러와요.</div>
+/* 스마트플레이스 계정 연동: 플레이스 통계와 리뷰 모니터링이 같은 연동 계정(NAVER_IDS)·선택 업체(SR.sel)를 씀 */
+const linkBar=sel=>`<div class="card" style="padding:12px 16px"><div class="row" style="margin-bottom:8px"><span class="tag" style="background:var(--ok);color:#fff">연동됨</span><span class="small grow">업체 <b>${SR.sel.length}곳</b> 보는 중 <span class="tiny muted">· 연동 계정 ${NAVER_IDS.length}개</span></span><button class="btn sub sm" onclick="linkSheet()">네이버 연동하기</button></div><div class="row">${sel}</div></div>`;
+const linkFirst=what=>NAVER_IDS.length?`<div class="card"><h3>연동된 업체</h3><div class="small muted" style="margin-bottom:6px">${what}를 볼 업체를 체크하고 보기를 눌러요.</div>${acctPick()}</div>`
+  :`<div class="card"><h3>네이버 스마트플레이스 연동</h3><div class="small muted" style="margin-bottom:12px">스마트플레이스 관리자 네이버 계정을 연동하면 관리 중인 업체의 ${what}를 매일 불러와요.</div>
   <button class="btn block" onclick="linkSheet(1)">스마트플레이스 계정 연동하기</button></div>`;
+CFG.p_stats.before=()=>MG.linked||PREVIEW?statsReport():linkFirst('통계');
 // 연동된 계정 체크 목록 + 보기 / 새 계정 추가 (처음 화면·시트 공용)
 const acctPick=()=>`<div class="acList">${NAVER_IDS.flatMap(id=>NAVER_PL[id].map(pl=>`<label class="listlink" style="cursor:pointer"><input type="checkbox" value="${esc(pl)}" ${SR.sel.includes(pl)?'checked':''} style="width:20px;height:20px;accent-color:var(--pri)"><span class="grow"><b>${esc(pl)}</b><div class="tiny muted">네이버 계정 ${esc(id)}</div></span></label>`)).join('')}</div>
   <div class="row" style="margin-top:12px;gap:8px"><button class="btn sub grow" onclick="linkSheet(1)">+ 계정 추가 연동</button><button class="btn grow" onclick="const a=[...this.closest('.card,.sheet').querySelectorAll('.acList input:checked')].map(e=>e.value);if(!a.length)return toast('업체를 하나 이상 골라주세요');SR.sel=a;SR.place=a[0];MG.linked=true;closeSheet();render()">보기</button></div>`;
 const NAVER_IDS=['hong_bbq'],NAVER_PL={hong_bbq:['홍길동 숯불갈비','라구앤코','네일하우스 강남점']};
 function linkSheet(add){const has=NAVER_IDS.length;
-  if(has&&!add)return sheet(`<h2>업체 선택</h2><div class="small muted" style="margin-bottom:8px">통계를 볼 업체를 체크하고 보기를 눌러요.</div>${acctPick()}`);
-  sheet(`<h2>스마트플레이스 계정 ${has?'추가':'연동'}</h2><div class="small muted" style="margin-bottom:6px">스마트플레이스 관리자 네이버 계정을 입력하면 관리 중인 업체 통계를 불러와요.</div>
+  if(has&&!add)return sheet(`<h2>업체 선택</h2><div class="small muted" style="margin-bottom:8px">통계·리뷰를 볼 업체를 체크하고 보기를 눌러요.</div>${acctPick()}`);
+  sheet(`<h2>스마트플레이스 계정 ${has?'추가':'연동'}</h2><div class="small muted" style="margin-bottom:6px">스마트플레이스 관리자 네이버 계정을 입력하면 관리 중인 업체의 통계·리뷰를 불러와요.</div>
   <label class="lb">네이버 아이디</label><input class="input" id="lnId" autocomplete="off" placeholder="네이버 아이디">
   <label class="lb">비밀번호</label><input class="input" id="lnPw" type="password" autocomplete="new-password" placeholder="비밀번호">
   <div class="tiny muted" style="margin-top:8px">🔒 비밀번호는 연동할 때 한 번만 쓰고 저장하지 않아요. 2단계 인증을 켠 계정은 네이버 앱에서 승인 요청이 와요. (예시 화면이라 실제로 로그인하지 않아요)</div>
@@ -1628,17 +1791,6 @@ TRK.k_total.extra=its=>{if(!its.length)return '';const areas=['플레이스','�
   <div class="card"><h3>${esc(it.keyword)} · ${m+1}월 노출 달력</h3><div class="cal">${DAYS.map(x=>`<b>${x}</b>`).join('')}${cells.map(c=>c===''?'<span></span>':`<span class="${c>d.getDate()?'fut':r()<.75?'on':'off'}">${c}</span>`).join('')}</div>
     <div class="row tiny muted" style="margin-top:8px;gap:12px"><span><i class="lg on"></i> 노출</span><span><i class="lg off"></i> 미노출</span></div></div>`};
 
-/* 저장 수 체크: 저장 수 추이 중심 */
-const saveSeries=it=>mSeries('sv'+it.id,it.sv,it.grow?.[2]||20);
-function saveCard(it){const s=saveSeries(it),d1=s[29]-s[28],d7=s[29]-s[22];
-  return `<div class="item" onclick="openItem('${it.id}')"><div class="rk" style="width:78px"><b style="font-size:20px">${fmtN(s[29])}</b><div class="tiny muted">저장</div></div>
-    <div class="grow"><div class="kw">${esc(it.keyword)}</div><div class="nm">${esc(it.name)} · ${it.cat}</div>
-      <div class="row tiny muted" style="margin-top:5px;gap:8px"><span class="tag">${esc(it.group)}</span><span>7일 ${d7>=0?'+':''}${fmtN(d7)}</span><span>순위 ${fmtRank(cur(it))}</span></div></div>
-    <div class="rt">${spark(s.map(v=>-v))}<div style="margin-top:2px" class="${d1>=0?'up':'down'}">${d1>=0?'+':''}${fmtN(d1)}</div></div></div>`}
-function saveDetail(it){const s=saveSeries(it);
-  return `<h3 style="font-size:15px;margin:12px 0 4px">저장 수 추이 (30일)</h3><div class="card" style="box-shadow:none;border:1px solid var(--line);padding:10px 8px 6px">${spark(s.map(v=>-v),300,90).replace('<svg ','<svg style="width:100%;height:90px" preserveAspectRatio="none" ')}</div>
-    ${K([['오늘',fmtN(s[29])],['어제 대비',(s[29]-s[28]>=0?'+':'')+fmtN(s[29]-s[28])],['7일 증가',(s[29]-s[22]>=0?'+':'')+fmtN(s[29]-s[22])],['30일 증가',(s[29]-s[0]>=0?'+':'')+fmtN(s[29]-s[0])]])}`}
-
 /* 알림 예약: 발송 내역 + 포인트 차감 */
 const SEND_LOG=[{t:'10/29 09:00',name:'아침 순위 브리핑',ch:'카카오톡',to:'010-****-1234',ok:true,pt:10,msg:'강남 맛집 | 홍길동 숯불갈비 | 4위 (▲1) 외 2건'},{t:'10/28 18:00',name:'내 매장 하락 감시',ch:'문자',to:'010-****-1234',ok:true,pt:40,msg:'역삼 회식 | 홍길동 숯불갈비 | 11위 (▼1)'},{t:'10/28 12:00',name:'내 매장 하락 감시',ch:'문자',to:'010-****-1234',ok:false,pt:0,msg:'포인트 부족으로 발송 안 됨'}];
 function sendLogCard(){return `<div class="card"><h3>포인트 차감 내역 <span class="more">보유 ${fmtN(MG.point)}P</span></h3>
@@ -1651,27 +1803,34 @@ function chargeSend(s,body){const d=new Date(),t=`${d.getMonth()+1}/${d.getDate(
     SEND_LOG.unshift({t,name:s.name,ch:l,to:S.ch[k]||'번호 미연결',ok,pt:ok?c:0,msg:ok?first:linked?'포인트 부족':'번호 미연결'})})}
 
 /* 프로젝트·그룹 관리: 그룹 추가·이름 변경·삭제 */
-// 그룹 = 이름 + 쓸 메뉴(MG.gmenus[이름] = [메뉴키]). 지정 안 하면 키워드가 있는 메뉴가 기본
+// 그룹 = 이름 + 쓸 메뉴 1개(MG.gmenus[이름] = [메뉴키]). 지정 안 하면 키워드가 있는 메뉴가 기본
 const trkMenus=()=>[['place','N 플레이스 순위 체크'],['shop','N 가격비교 순위 체크'],['blog','N 블로그 순위 체크'],...Object.keys(TRK).map(k=>[k,(ALL.find(x=>x.k===k)||{}).t||k])];
 MG.gmenus={};
 function groupList(){const m=new Map();S.items.forEach(i=>m.set(i.group,(m.get(i.group)||0)+1));MG.groups.forEach(g=>m.has(g)||m.set(g,0));return [...m]}
 const groupMenus=g=>MG.gmenus[g]||[...new Set(S.items.filter(i=>i.group===g).map(i=>i.menu||i.type))];
-const menuChecks=(sel=[])=>`<div class="mchk">${trkMenus().map(([k,t])=>`<label><input type="checkbox" value="${k}" ${sel.includes(k)?'checked':''}> ${t}</label>`).join('')}</div>`;
+// 그룹을 쓸 메뉴: 드롭다운 하나(상위 메뉴별 묶음), 그룹당 메뉴 1개
+const menuSelect=sel=>{const by={};trkMenus().sort((a,b)=>ALL.findIndex(x=>x.k===a[0])-ALL.findIndex(x=>x.k===b[0])).forEach(([k,t])=>{const g=(ALL.find(x=>x.k===k)||{}).g||'기타';(by[g]=by[g]||[]).push([k,t])});
+  return `<select class="input mpick">${Object.entries(by).map(([g,a])=>`<optgroup label="${esc(g)}">${a.map(([k,t])=>`<option value="${k}" ${k===sel?'selected':''}>${t}</option>`).join('')}</optgroup>`).join('')}</select>`};
+const pickedMenus=root=>[(root||document).querySelector('.mpick').value];
 function groupCard(){const name=k=>(trkMenus().find(x=>x[0]===k)||[,k])[1];
   return `<div class="card"><h3>그룹 만들기</h3><input class="input" id="gNew" placeholder="그룹 이름 (예: 광고주C)">
-    <label class="lb">이 그룹을 쓸 메뉴</label>${menuChecks(['place'])}
+    <label class="lb">이 그룹을 쓸 메뉴</label>${menuSelect('place')}
     <button class="btn block" style="margin-top:12px" onclick="groupAdd()">그룹 만들기</button></div>
   <div class="card"><h3>그룹 목록 <span class="more">${groupList().length}개</span></h3>
-  ${T(['그룹','쓰는 메뉴','키워드 수',''],groupList().map(([g,n])=>[`<input class="input" style="height:34px;min-width:110px" value="${esc(g)}" ${g==='기본'?'disabled':''} onchange="groupRename('${esc(g)}',this.value)">`,
-    (g==='기본'?'모든 메뉴':groupMenus(g).map(name).join(', ')||'-'),n+'개',
-    g==='기본'?'':`<button class="btn ghost sm" style="height:28px" onclick="groupEdit('${esc(g)}')">메뉴 선택</button> <button class="btn ghost sm" style="height:28px;color:var(--up)" onclick="groupDel('${esc(g)}')">삭제</button>`]))}
-  <div class="tiny muted" style="margin-top:6px">이름 칸을 고치면 바로 바뀌어요. "기본" 그룹은 모든 메뉴에서 쓸 수 있어요.</div></div>`}
-function groupAdd(){const n=$('#gNew').value.trim(),ms=[...document.querySelectorAll('.mchk input:checked')].map(e=>e.value);
-  if(!n)return toast('그룹 이름을 넣어주세요');if(groupList().some(g=>g[0]===n))return toast('이미 있는 그룹이에요');if(!ms.length)return toast('그룹을 쓸 메뉴를 하나 이상 골라주세요');
+  <div class="glrow gh"><span>위치</span><span>그룹명</span><span>키워드</span><span></span><span></span></div>
+  ${groupList().map(([g,n])=>`<div class="glrow"><span class="muted ell">${g==='기본'?'모든 메뉴':(name(groupMenus(g)[0])||'-').replace(/ 순위 체크$/,'')}</span><b class="ell">${esc(g)}</b><span>${n}개</span>
+    ${g==='기본'?'<span></span><span></span>':`<button class="btn ghost sm" style="height:30px" onclick="groupEdit('${esc(g)}')">변경</button><button class="btn ghost sm" style="height:30px;color:var(--up)" onclick="groupDel('${esc(g)}')">삭제</button>`}</div>`).join('')}
+  <div class="tiny muted" style="margin-top:6px">변경을 누르면 그룹 이름과 쓸 메뉴를 고칠 수 있어요. "기본" 그룹은 모든 메뉴에서 쓸 수 있어요.</div></div>`}
+function groupAdd(){const n=$('#gNew').value.trim(),ms=pickedMenus($('#main'));
+  if(!n)return toast('그룹 이름을 넣어주세요');if(groupList().some(g=>g[0]===n))return toast('이미 있는 그룹이에요');
   MG.groups.push(n);MG.gmenus[n]=ms;render();toast('그룹을 만들었어요')}
-function groupEdit(g){sheet(`<h2>${esc(g)} · 쓸 메뉴</h2><div class="small muted" style="margin-bottom:10px">체크한 메뉴의 등록 화면에서 이 그룹을 고를 수 있어요.</div>${menuChecks(groupMenus(g))}
-  <button class="btn block" style="margin-top:14px" onclick="const ms=[...document.querySelectorAll('.sheet .mchk input:checked')].map(e=>e.value);if(!ms.length)return toast('메뉴를 하나 이상 골라주세요');MG.gmenus['${esc(g)}']=ms;closeSheet();render();toast('메뉴를 저장했어요')">저장</button>`)}
-function groupRename(a,b){b=b.trim();if(!b||a===b)return;if(groupList().some(g=>g[0]===b))return toast('이미 있는 이름이에요');S.items.forEach(i=>{if(i.group===a)i.group=b});MG.groups=MG.groups.map(g=>g===a?b:g);if(MG.gmenus[a]){MG.gmenus[b]=MG.gmenus[a];delete MG.gmenus[a]}render();toast('그룹 이름을 바꿨어요')}
+function groupEdit(g){sheet(`<h2>그룹 변경</h2><label class="lb">그룹 이름</label><input class="input" id="gEditName" value="${esc(g)}">
+  <label class="lb">이 그룹을 쓸 메뉴</label>${menuSelect(groupMenus(g)[0])}
+  <div class="row" style="gap:8px;margin-top:14px"><button class="btn ghost grow" onclick="closeSheet()">취소</button><button class="btn grow" onclick="groupSave('${esc(g)}')">저장</button></div>`)}
+function groupSave(g){const sh=$('.sheet'),nm=$('#gEditName').value.trim(),ms=pickedMenus(sh);
+  if(!nm)return toast('그룹 이름을 넣어주세요');if(nm!==g&&groupList().some(x=>x[0]===nm))return toast('이미 있는 이름이에요');
+  MG.gmenus[g]=ms;if(nm!==g){S.items.forEach(i=>{if(i.group===g)i.group=nm});MG.groups=MG.groups.map(x=>x===g?nm:x);MG.gmenus[nm]=ms;delete MG.gmenus[g]}
+  closeSheet();render();toast('그룹을 변경했어요')}
 function groupDel(g){if(!confirm(`"${g}" 그룹을 지울까요? 키워드는 "기본" 그룹으로 옮겨져요.`))return;S.items.forEach(i=>{if(i.group===g)i.group='기본'});MG.groups=MG.groups.filter(x=>x!==g);delete MG.gmenus[g];render()}
 MANAGE.m_group=()=>groupCard();
 MANAGE.member=()=>`<div class="card"><h3>요금제 <span class="more">현재 ${S.plan==='free'?'무료':S.plan.toUpperCase()}</span></h3>${renderPlan().replace(/^<div class="card">/,'<div>')}</div>`+MANAGE.c_my();
@@ -1701,76 +1860,88 @@ Object.assign(CHAN,{sn_yt:'유튜브 검색 결과',sn_tt:'틱톡 검색 결과'
 const MONTHS=Array.from({length:12},(_,i)=>{const d=new Date();d.setMonth(d.getMonth()-11+i);return `${d.getMonth()+1}월`});
 const bars=(vals,lab,fmt=fmtN)=>{const mx=Math.max(...vals);return `<div class="bars">${vals.map((v,i)=>`<div><span style="height:${Math.max(4,v/mx*100)}%" title="${lab[i]} ${fmt(v)}"></span><i>${lab[i].replace('월','')}</i></div>`).join('')}</div>`};
 Object.assign(CFG,{
-  k_trend:{guide:['키워드를 넣으면 최근 12개월 월별 검색량과 많이 찾는 달(계절성)을 보여줘요.'],form:[{id:'kw',label:'키워드',req:true,def:'캠핑의자'}],btn:'추이 보기',limit:100,
-    run:v=>{const g=genVolume(v.kw),r=rng('tr'+v.kw),peak=Math.floor(r()*12);return {g,vals:MONTHS.map((m,i)=>Math.round(g.sum*(.55+.45*Math.cos((i-peak)/12*Math.PI*2))*(.9+r()*.2))),peak}},
-    view:(res,v)=>{const mx=res.vals.indexOf(Math.max(...res.vals)),mn=res.vals.indexOf(Math.min(...res.vals));
-      return `<div class="card"><h3>${esc(v.kw)} 월별 검색량</h3>${K([['최근 월',fmtN(res.vals[11])],['최고 달',MONTHS[mx]],['최저 달',MONTHS[mn]],['차이',Math.round(res.vals[mx]/res.vals[mn]*10)/10+'배']])}${bars(res.vals,MONTHS)}
-      <div class="small muted" style="margin-top:8px">${MONTHS[mx]} 전후로 검색이 가장 많아요. 그 1~2달 전부터 순위를 올려두면 좋아요.</div></div>`}},
   sn_tag:{guide:['해시태그를 넣으면 게시물 수 추이와 인기 게시물 경향을 보여줘요.'],form:[{id:'tag',label:'해시태그',req:true,def:'#강남맛집'}],btn:'추이 보기',limit:50,
     run:v=>{const r=rng('tg'+v.tag);let n=Math.floor(r()*900000+20000);const vals=MONTHS.map(()=>n=Math.round(n*(1.01+r()*.05)));return {vals,rel:['#강남역맛집','#고기맛집','#맛스타그램','#회식장소','#데이트'].map(t=>[t,Math.floor(r()*500000+10000)])}},
     view:(res,v)=>`<div class="card"><h3>${esc(v.tag)} 게시물 수</h3>${K([['현재',fmtN(res.vals[11])],['한 달 증가','+'+fmtN(res.vals[11]-res.vals[10])],['1년 증가',Math.round((res.vals[11]/res.vals[0]-1)*100)+'%'],['하루 평균','+'+fmtN(Math.round((res.vals[11]-res.vals[10])/30))]])}${bars(res.vals,MONTHS)}
       <h3 style="margin-top:14px">함께 많이 쓰는 해시태그</h3>${T(['해시태그','게시물 수'],res.rel.map(([t,n])=>[t,fmtN(n)]))}</div>`},
   l_map:{guide:['키워드와 업체를 넣으면 네이버 지도와 카카오맵에서 각각 몇 위인지 비교해요.'],form:[{id:'kw',label:'키워드',req:true,def:'강남역 고기집'},{id:'name',label:'업체명',req:true,def:'홍길동 숯불갈비'}],btn:'지도 순위 비교',limit:50,
-    run:v=>({rows:[v.kw,...SFX.slice(0,5).map(s=>v.kw.split(' ')[0]+' '+s)].map(kw=>{const r=rng('mp'+kw+v.name);return {kw,n:Math.floor(r()*30)+1,k:r()<.15?null:Math.floor(r()*30)+1}})}),
+    run:v=>({rows:[...new Set([v.kw,...SFX.slice(0,5).map(s=>v.kw.split(' ')[0]+' '+s)])].map(kw=>{const r=rng('mp'+kw+v.name);return {kw,n:Math.floor(r()*30)+1,k:r()<.15?null:Math.floor(r()*30)+1}})}),
     view:(res,v)=>`<div class="card"><h3>${esc(v.name)} · 네이버 지도 vs 카카오맵</h3>${T(['키워드','네이버 지도','카카오맵','차이'],res.rows.map(x=>[esc(x.kw),`<b>${x.n}위</b>`,x.k?`<b>${x.k}위</b>`:'순위 밖',x.k?(x.k<x.n?`<span class="up">카카오가 ${x.n-x.k}위 높음</span>`:x.k>x.n?`<span class="down">네이버가 ${x.k-x.n}위 높음</span>`:'같음'):'-']))}</div>`}});
-Object.assign(LOGIC,{k_trend:['검색광고 데이터의 월별 검색수(최근 12개월)를 불러와 막대로 보여주고, 가장 많은 달·적은 달로 계절성을 계산해요.'],
-  sn_tag:['인스타그램 해시태그 페이지의 게시물 수를 매일 기록해 월별 추이를 만들고, 인기 게시물에 함께 쓰인 해시태그를 모아요.'],
+Object.assign(LOGIC,{  sn_tag:['인스타그램 해시태그 페이지의 게시물 수를 매일 기록해 월별 추이를 만들고, 인기 게시물에 함께 쓰인 해시태그를 모아요.'],
   l_map:['같은 키워드로 네이버 지도와 카카오맵 검색 결과를 각각 읽어 업체 위치를 찾고 나란히 비교해요.']});
 
-/* 경쟁 업체 같이 추적 */
-const RIV={};
-MANAGE.p_rival=()=>{const mine=S.items.filter(i=>i.type==='place'&&!i.menu),sel=mine.find(i=>i.id===RIV.id)||mine[0];if(!sel)return '<div class="empty">추적 중인 플레이스가 없어요</div>';
-  const list=RIV[sel.id]||(RIV[sel.id]=topList(sel,5).filter(x=>!x.me).slice(0,2).map(x=>x.name));
-  const series=[{name:sel.name,h:sel.history,me:1},...list.map(n=>{const r=rng('rv'+n+sel.keyword);let x=Math.floor(r()*12)+1;return {name:n,h:Array.from({length:30},()=>x=Math.max(1,x+Math.round((r()-.5)*3)))}})];
-  const cols=['var(--pri)','#e5383b','#03a65a','#ff7a00'];
-  return `<div class="card"><label class="lb" style="margin-top:0">내 키워드</label><select class="input" onchange="RIV.id=this.value;render()">${mine.map(i=>`<option value="${i.id}" ${i===sel?'selected':''}>${esc(i.keyword)} · ${esc(i.name)}</option>`).join('')}</select>
-    <label class="lb">경쟁 업체 (최대 3곳)</label><div class="chips" style="flex-wrap:wrap">${list.map((n,i)=>`<span class="chip on">${esc(n)} <button style="color:inherit" onclick="RIV['${sel.id}'].splice(${i},1);render()">✕</button></span>`).join('')}</div>
-    ${list.length<3?`<div class="row" style="margin-top:8px"><select class="input grow" id="rvAdd">${topList(sel,10).filter(x=>!x.me&&!list.includes(x.name)).map(x=>`<option>${esc(x.name)}</option>`).join('')}</select><button class="btn sub" onclick="RIV['${sel.id}'].push($('#rvAdd').value);render()">추가</button></div>`:''}</div>
-  <div class="card"><h3>최근 30일 순위 비교</h3>${multiChart(series,cols)}
-    <div class="row tiny" style="gap:12px;flex-wrap:wrap;margin-top:6px">${series.map((s,i)=>`<span><i class="lg" style="background:${cols[i]}"></i> ${esc(s.name)}</span>`).join('')}</div></div>
-  <div class="card"><h3>지표 비교</h3>${T(['업체','오늘 순위','어제 대비','방문자리뷰','블로그리뷰','저장','7일 리뷰 증가'],series.map(s=>{const e=s.me?sel:ext('place','',s.name),r=s.h.at(-1);return [s.me?ME(esc(s.name)):esc(s.name),r+'위',dlt(r,s.h.at(-2)),fmtN(e.rv),fmtN(e.bl),fmtN(e.sv),'+'+(e.grow?.[0]||3)*7]}))}</div>`};
 function multiChart(series,cols){const W=320,H=150,P=26,all=series.flatMap(s=>s.h).filter(v=>v!=null),lo=Math.min(...all),hi=Math.max(...all,lo+1);
   const x=i=>P+i*((W-P-8)/29),y=v=>10+(v-lo)/(hi-lo)*(H-30);
   return `<svg viewBox="0 0 ${W} ${H}" width="100%">${[lo,Math.round((lo+hi)/2),hi].map(v=>`<line x1="${P}" x2="${W-8}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${P-5}" y="${y(v)+4}" font-size="10" text-anchor="end" fill="var(--sub)">${v}위</text>`).join('')}
     ${series.map((s,k)=>`<polyline points="${s.h.map((v,i)=>v==null?'':`${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ')}" fill="none" stroke="${cols[k]}" stroke-width="${s.me?2.6:1.6}"/>`).join('')}</svg>`}
 
-/* 리뷰 모니터링 */
-let RVF='전체',RVROWS=[];const RVR={}; // RVR: 리뷰 번호 → 등록한 답글
+/* 리뷰 모니터링(플레이스) · 리뷰 관리(쇼핑): 같은 화면 틀(reviewPage), 종류별 설정 RVK — 리뷰 id는 'p3'·'s3'처럼 종류 접두어 */
+const RVF={p:'전체',s:'전체'},RVP={p:'전체',s:'전체'},RVR={};let RVROWS=[]; // RVR: 리뷰 id → 등록한 답글
 const NEG=['불친절','위생','비싸','늦','별로','실망','냄새','기다'];
-MANAGE.p_review=()=>{const mine=[...new Set(S.items.filter(i=>i.type==='place'&&!i.menu).map(i=>i.name))],r=rng('rvw'+mine.join());
-  const T1=['고기 질이 정말 좋아요. 또 올게요','직원분들이 친절해요','회식 장소로 딱이에요','가격 대비 양이 많아요','웨이팅이 길어서 실망했어요','직원이 좀 불친절했어요','주차가 편해요','테이블 위생이 별로였어요','분위기 좋고 데이트하기 좋아요','음식이 늦게 나왔어요'];
-  const rows=Array.from({length:14},(_,i)=>{const t=pick(r,T1);return {pl:pick(r,mine),who:pick(r,['맛집러','kim**','하루','먹보','lee**','여행자']),t,src:r()<.7?'방문자':'블로그',star:NEG.some(n=>t.includes(n))?Math.floor(r()*2)+2:Math.floor(r()*2)+4,neg:NEG.some(n=>t.includes(n)),d:fmtD(daysAgo(Math.floor(i/2))),id:i}});RVROWS=rows;
-  const f=RVF==='부정만'?rows.filter(x=>x.neg):rows;
-  return `${K([['새 리뷰(7일)',rows.length+'개'],['부정 리뷰',rows.filter(x=>x.neg).length+'개'],['평균 별점',(rows.reduce((s,x)=>s+x.star,0)/rows.length).toFixed(1)],['답글 대기',rows.filter(x=>!RVR[x.id]).length+'개']])}
-  <div class="card"><div class="row" style="margin-bottom:10px"><div class="chips grow">${['전체','부정만'].map(l=>`<button class="chip ${RVF===l?'on':''}" onclick="RVF='${l}';render()">${l}</button>`).join('')}</div>
+const RVK={
+  p:{linked:()=>MG.linked,first:()=>linkFirst('리뷰'),bar:sel=>linkBar(sel),list:()=>SR.sel,unit:'업체',store:x=>x,owner:'사장님 답글',dest:'스마트플레이스 리뷰 답글',
+    neg:NEG,src:['방문자','블로그'],who:['맛집러','kim**','하루','먹보','lee**','여행자'],
+    texts:['고기 질이 정말 좋아요. 또 올게요','직원분들이 친절해요','회식 장소로 딱이에요','가격 대비 양이 많아요','웨이팅이 길어서 실망했어요','직원이 좀 불친절했어요','주차가 편해요','테이블 위생이 별로였어요','분위기 좋고 데이트하기 좋아요','음식이 늦게 나왔어요'],
+    praise:pl=>`앞으로도 ${pl}의 맛과 서비스를 지켜가겠습니다.`},
+  s:{linked:()=>SS.linked,first:()=>ssFirst(),bar:sel=>ssBar(sel),list:()=>SS.sel,unit:'상품',store:x=>SS.store[x]||'하이어캠프',owner:'판매자 답글',dest:'스마트스토어 상품 리뷰 답글',
+    neg:['배송','늦','불량','파손','작아','냄새','별로','실망','교환'],src:['포토','일반','한달사용'],who:['캠핑러버','park**','소소','choi**','주말캠퍼','jung**'],
+    texts:['생각보다 가볍고 튼튼해요','배송이 빨라서 좋았어요','가격 대비 품질 만족합니다','색상이 사진이랑 똑같아요','배송이 너무 늦게 왔어요','받자마자 불량이라 실망했어요','포장이 파손돼서 왔어요','사이즈가 생각보다 작아요','재구매 의사 있어요','새 제품 냄새가 좀 나요'],
+    praise:pl=>`앞으로도 ${pl} 품질과 빠른 배송으로 보답하겠습니다.`}};
+function reviewPage(k){const c=RVK[k];if(!c.linked()&&!PREVIEW)return c.first();
+  const mine=c.list();if(RVP[k]!=='전체'&&!mine.includes(RVP[k]))RVP[k]='전체';const r=rng('rvw'+k+mine.join());
+  const rows=Array.from({length:14},(_,i)=>{const t=pick(r,c.texts),neg=c.neg.some(n=>t.includes(n)),pl=pick(r,mine);return {k,pl,store:c.store(pl),who:pick(r,c.who),t,src:r()<.7?c.src[0]:pick(r,c.src.slice(1)),star:neg?Math.floor(r()*2)+2:Math.floor(r()*2)+4,neg,d:fmtD(daysAgo(Math.floor(i/2))),id:k+i}}).filter(x=>RVP[k]==='전체'||x.pl===RVP[k]);RVROWS=rows;
+  const f=RVF[k]==='부정만'?rows.filter(x=>x.neg):rows;
+  return `${c.bar(`<select class="input grow" style="height:36px" onchange="RVP.${k}=this.value;render()">${['전체',...mine].map(o=>`<option ${o===RVP[k]?'selected':''} value="${esc(o)}">${o==='전체'?`전체 ${c.unit} (${mine.length}${c.unit==='업체'?'곳':'개'})`:esc(o)}</option>`).join('')}</select>`)}
+  ${K([['새 리뷰(7일)',rows.length+'개'],['부정 리뷰',rows.filter(x=>x.neg).length+'개'],['평균 별점',rows.length?(rows.reduce((s,x)=>s+x.star,0)/rows.length).toFixed(1):'-'],['답글 대기',rows.filter(x=>!RVR[x.id]).length+'개']])}
+  <div class="card"><div class="row" style="margin-bottom:10px"><div class="chips grow">${['전체','부정만'].map(l=>`<button class="chip ${RVF[k]===l?'on':''}" onclick="RVF.${k}='${l}';render()">${l}</button>`).join('')}</div>
     <label class="row small" style="gap:6px">새 리뷰 알림 <span class="switch"><input type="checkbox" checked onchange="toast(this.checked?'새 리뷰가 오면 알려드려요':'리뷰 알림을 껐어요')"><span></span></span></label></div>
     ${f.map(x=>`<div class="list-row" style="display:block"><div class="row small"><b class="grow">${esc(x.pl)}</b><span class="tag">${x.src}</span><span class="tiny muted">${x.d}</span></div>
       <div class="small" style="margin-top:4px">${'★'.repeat(x.star)}<span class="muted">${'★'.repeat(5-x.star)}</span> · ${x.who}</div>
-      <div class="small" style="margin-top:4px">${NEG.reduce((t,n)=>t.replace(n,`<b class="up">${n}</b>`),esc(x.t))}</div>
-      ${RVR[x.id]?`<div class="small" style="margin-top:8px;padding:8px 10px;border-radius:10px;background:var(--pri-soft);white-space:pre-line"><b>사장님 답글</b> ${esc(RVR[x.id])}</div>`
-        :`<div class="row" style="justify-content:flex-end;margin-top:6px"><button class="btn sub sm" onclick="replySheet(${x.id})">${ic('spark',14)} AI 답글 초안</button></div>`}</div>`).join('')}</div>`};
+      <div class="small" style="margin-top:4px">${c.neg.reduce((t,n)=>t.replace(n,`<b class="up">${n}</b>`),esc(x.t))}</div>
+      ${RVR[x.id]?`<div class="small" style="margin-top:8px;padding:8px 10px;border-radius:10px;background:var(--pri-soft);white-space:pre-line"><b>${c.owner}</b> ${esc(RVR[x.id])}</div>`
+        :`<div class="row" style="justify-content:flex-end;margin-top:6px"><button class="btn sub sm" onclick="replySheet('${x.id}')">${ic('spark',14)} AI 답글 초안</button></div>`}</div>`).join('')||'<div class="empty">리뷰가 없어요</div>'}</div>`}
+MANAGE.p_review=()=>reviewPage('p');
+MANAGE.s_review=()=>reviewPage('s');
+/* 스마트스토어 판매자 계정 연동(리뷰 관리): 계정 → 상품, 리뷰를 볼 상품을 체크 */
+const SS={linked:false,ids:['higher_store'],prods:{higher_store:[...new Set(S.items.filter(i=>i.type==='shop'&&!i.menu).map(i=>i.name))]},sel:[],store:{}};SS.sel=SS.prods.higher_store.slice(0,1); // 예시: 추적 중인 쇼핑 상품 = 내 스토어 상품
+SS.ids.forEach(id=>SS.prods[id].forEach(n=>SS.store[n]='하이어캠프'));
+const ssPick=()=>`<div class="acList">${SS.ids.flatMap(id=>SS.prods[id].map(pl=>`<label class="listlink" style="cursor:pointer"><input type="checkbox" value="${esc(pl)}" ${SS.sel.includes(pl)?'checked':''} style="width:20px;height:20px;accent-color:var(--pri)"><span class="grow"><b>${esc(pl)}</b><div class="tiny muted">${esc(SS.store[pl])} · 판매자 계정 ${esc(id)}</div></span></label>`)).join('')}</div>
+  <div class="row" style="margin-top:12px;gap:8px"><button class="btn sub grow" onclick="ssSheet(1)">+ 계정 추가 연동</button><button class="btn grow" onclick="const a=[...this.closest('.card,.sheet').querySelectorAll('.acList input:checked')].map(e=>e.value);if(!a.length)return toast('상품을 하나 이상 골라주세요');SS.sel=a;SS.linked=true;closeSheet();render()">보기</button></div>`;
+const ssFirst=()=>SS.ids.length?`<div class="card"><h3>연동된 상품</h3><div class="small muted" style="margin-bottom:6px">리뷰를 볼 상품을 체크하고 보기를 눌러요.</div>${ssPick()}</div>`
+  :`<div class="card"><h3>스마트스토어 판매자 연동</h3><div class="small muted" style="margin-bottom:12px">판매자 계정을 연동하면 내 상품 리뷰를 매일 불러와요.</div><button class="btn block" onclick="ssSheet(1)">판매자 계정 연동하기</button></div>`;
+const ssBar=sel=>`<div class="card" style="padding:12px 16px"><div class="row" style="margin-bottom:8px"><span class="tag" style="background:var(--ok);color:#fff">연동됨</span><span class="small grow">상품 <b>${SS.sel.length}개</b> 보는 중 <span class="tiny muted">· 판매자 계정 ${SS.ids.length}개</span></span><button class="btn sub sm" onclick="ssSheet()">판매자 연동하기</button></div><div class="row">${sel}</div></div>`;
+function ssSheet(add){if(SS.ids.length&&!add)return sheet(`<h2>상품 선택</h2><div class="small muted" style="margin-bottom:8px">리뷰를 볼 상품을 체크하고 보기를 눌러요.</div>${ssPick()}`);
+  sheet(`<h2>스마트스토어 판매자 계정 ${SS.ids.length?'추가':'연동'}</h2><div class="small muted" style="margin-bottom:6px">스마트스토어센터 판매자 계정을 입력하면 내 상품 리뷰를 불러와요.</div>
+  <label class="lb">판매자 아이디</label><input class="input" id="ssId" autocomplete="off" placeholder="판매자 아이디">
+  <label class="lb">비밀번호</label><input class="input" id="ssPw" type="password" autocomplete="new-password" placeholder="비밀번호">
+  <div class="tiny muted" style="margin-top:8px">🔒 비밀번호는 연동할 때 한 번만 쓰고 저장하지 않아요. (예시 화면이라 실제로 로그인하지 않아요)</div>
+  <div class="row" style="margin-top:14px;gap:8px">${SS.ids.length?`<button class="btn ghost grow" onclick="ssSheet()">← 상품 목록</button>`:''}<button class="btn grow" onclick="const id=$('#ssId').value.trim();if(!id||!$('#ssPw').value)return toast('아이디와 비밀번호를 입력해주세요');$('#ssPw').value='';if(!SS.ids.includes(id)){SS.ids.push(id);SS.prods[id]=[id+' 대표 상품'];SS.store[id+' 대표 상품']=id+' 스토어'}SS.sel=[...new Set([...SS.sel,...SS.prods[id]])];SS.linked=true;closeSheet();render();toast(id+' 계정을 연동했어요 (예시)')">연동하기</button></div>`)}
 /* 리뷰 답글 AI 초안: 리뷰 내용(부정 단어·칭찬 포인트)과 말투로 답글을 써 줌 — 예시는 규칙 기반, 실서비스는 LLM */
-const RV_TONE={정중:['소중한 리뷰 남겨주셔서 진심으로 감사드립니다.','다음 방문 때도 만족하실 수 있도록 최선을 다하겠습니다.'],친근:['리뷰 남겨주셔서 정말 고마워요!','다음에 또 놀러 와 주세요 :)'],간결:['리뷰 감사합니다.','또 뵙겠습니다.']};
-const RV_FIX=[[/웨이팅|기다/,'오래 기다리게 해드려 죄송합니다. 예약·대기 안내를 개선해 기다리는 시간을 줄이겠습니다'],[/불친절/,'응대가 불편하셨다니 죄송합니다. 직원 응대 교육을 다시 꼼꼼히 진행하겠습니다'],
+const RV_TONE={정중:['소중한 리뷰 남겨주셔서 진심으로 감사드립니다.','다음에도 만족하실 수 있도록 최선을 다하겠습니다.'],친근:['리뷰 남겨주셔서 정말 고마워요!','다음에 또 찾아 주세요 :)'],간결:['리뷰 감사합니다.','또 뵙겠습니다.']};
+const RV_FIX={p:[[/웨이팅|기다/,'오래 기다리게 해드려 죄송합니다. 예약·대기 안내를 개선해 기다리는 시간을 줄이겠습니다'],[/불친절/,'응대가 불편하셨다니 죄송합니다. 직원 응대 교육을 다시 꼼꼼히 진행하겠습니다'],
   [/위생/,'위생 때문에 불편하셨다니 죄송합니다. 테이블과 매장 점검을 매일 더 철저히 하겠습니다'],[/늦/,'음식이 늦게 나와 죄송합니다. 더 빨리 나갈 수 있도록 주방 동선을 점검하겠습니다'],
   [/비싸/,'가격 대비 아쉬우셨다니 죄송합니다. 만족하실 수 있도록 구성을 다시 살펴보겠습니다'],[/냄새/,'불편을 드려 죄송합니다. 환기와 청소를 더 신경 쓰겠습니다'],
-  [/./,'기대에 못 미쳐 죄송합니다. 말씀해 주신 부분을 꼭 확인해 개선하겠습니다']];
-function replyDraft(x,tone,v=0){const [hi,bye]=RV_TONE[tone],fix=x.neg&&RV_FIX.find(([re])=>re.test(x.t))[1];
-  const mid=fix?[fix+'.',`말씀해 주신 내용은 직원들과 바로 공유했습니다. ${fix}.`][v%2]
-    :[`"${x.t}"라는 말씀에 저희 직원들 모두 힘이 났습니다.`,`좋게 봐주셔서 감사해요. 앞으로도 ${x.pl}의 맛과 서비스를 지켜가겠습니다.`][v%2];
-  return tone==='간결'?`${hi} ${fix?fix+'.':'좋게 봐주셔서 감사합니다.'} ${bye}`:`안녕하세요, ${x.pl}입니다. ${hi}
+  [/./,'기대에 못 미쳐 죄송합니다. 말씀해 주신 부분을 꼭 확인해 개선하겠습니다']],
+  s:[[/배송|늦/,'배송이 늦어 불편을 드려 죄송합니다. 출고 일정을 다시 점검해 더 빨리 보내드리겠습니다'],[/불량|교환/,'불량으로 불편을 드려 죄송합니다. 문의 주시면 교환·환불을 바로 도와드리겠습니다'],
+  [/파손/,'포장 파손으로 불편을 드려 죄송합니다. 완충 포장을 보강하고, 교환이 필요하시면 바로 도와드리겠습니다'],[/작아/,'사이즈가 기대와 달라 죄송합니다. 상세 페이지의 사이즈 안내를 더 자세히 보강하겠습니다'],
+  [/냄새/,'새 제품 냄새로 불편하셨다니 죄송합니다. 통풍되는 곳에 하루 정도 두시면 대부분 사라지고, 계속되면 교환해 드리겠습니다'],
+  [/./,'기대에 못 미쳐 죄송합니다. 말씀해 주신 부분을 꼭 확인해 개선하겠습니다']]};
+function replyDraft(x,tone,v=0){const [hi,bye]=RV_TONE[tone],fix=x.neg&&RV_FIX[x.k].find(([re])=>re.test(x.t))[1];
+  const mid=fix?[fix+'.',`말씀해 주신 내용은 바로 공유했습니다. ${fix}.`][v%2]
+    :[`"${x.t}"라는 말씀에 저희 모두 힘이 났습니다.`,`좋게 봐주셔서 감사해요. ${RVK[x.k].praise(x.pl)}`][v%2];
+  return tone==='간결'?`${hi} ${fix?fix+'.':'좋게 봐주셔서 감사합니다.'} ${bye}`:`안녕하세요, ${x.store}입니다. ${hi}
 ${mid}
 ${bye}`}
 let RVT={tone:'정중',v:0};
 function replySheet(id,keep){const x=RVROWS.find(r=>r.id===id);if(!keep)RVT.v=0;
   sheet(`<h2>AI 답글 초안</h2><div class="small muted">${esc(x.pl)} · ${x.who} · ${'★'.repeat(x.star)}</div>
     <div class="small" style="margin:10px 0;padding:10px 12px;border-radius:10px;background:var(--bg)">${esc(x.t)}</div>
-    <label class="lb">말투</label><div class="seg">${Object.keys(RV_TONE).map(t=>`<button class="${RVT.tone===t?'on':''}" onclick="RVT.tone='${t}';replySheet(${id},1)">${t}</button>`).join('')}</div>
-    <label class="lb">답글 <span class="tiny muted">${x.neg?'부정 리뷰 — 사과와 개선 약속 위주':'칭찬 리뷰 — 감사와 재방문 권유 위주'}</span></label>
+    <label class="lb">말투</label><div class="seg">${Object.keys(RV_TONE).map(t=>`<button class="${RVT.tone===t?'on':''}" onclick="RVT.tone='${t}';replySheet('${id}',1)">${t}</button>`).join('')}</div>
+    <label class="lb">답글 <span class="tiny muted">${x.neg?'부정 리뷰 — 사과와 개선 약속 위주':'칭찬 리뷰 — 감사와 재구매·재방문 권유 위주'}</span></label>
     <textarea class="input" id="rvTxt" rows="6">${esc(replyDraft(x,RVT.tone,RVT.v))}</textarea>
-    <div class="row" style="gap:8px;margin-top:12px"><button class="btn ghost grow" onclick="RVT.v++;replySheet(${id},1)">${ic('refresh',14)} 다시 쓰기</button><button class="btn sub grow" onclick="navigator.clipboard.writeText($('#rvTxt').value).then(()=>toast('답글을 복사했어요'))">복사</button>
-      <button class="btn grow" onclick="const t=$('#rvTxt').value.trim();if(!t)return toast('답글을 입력해주세요');RVR[${id}]=t;closeSheet();render();toast('답글을 등록했어요 (예시)')">답글 등록</button></div>
-    <div class="tiny muted" style="margin-top:8px">초안은 고쳐서 등록할 수 있어요. 실서비스에선 스마트플레이스 리뷰 답글로 바로 올라가요.</div>`,keep)}
+    <div class="row" style="gap:8px;margin-top:12px"><button class="btn ghost grow" onclick="RVT.v++;replySheet('${id}',1)">${ic('refresh',14)} 다시 쓰기</button><button class="btn sub grow" onclick="navigator.clipboard.writeText($('#rvTxt').value).then(()=>toast('답글을 복사했어요'))">복사</button>
+      <button class="btn grow" onclick="const t=$('#rvTxt').value.trim();if(!t)return toast('답글을 입력해주세요');RVR['${id}']=t;closeSheet();render();toast('답글을 등록했어요 (예시)')">답글 등록</button></div>
+    <div class="tiny muted" style="margin-top:8px">초안은 고쳐서 등록할 수 있어요. 실서비스에선 ${RVK[x.k].dest}로 바로 올라가요.</div>`,keep)}
 
 /* 정보 변경 감지 */
 MANAGE.p_change=()=>{const r=rng('chg'),names=[...new Set(S.items.filter(i=>i.type==='place'&&!i.menu).map(i=>i.name)),'숯불대장','한우명가 본점'];
@@ -1778,18 +1949,42 @@ MANAGE.p_change=()=>{const r=rng('chg'),names=[...new Set(S.items.filter(i=>i.ty
   const rows=Array.from({length:10},(_,i)=>{const k=pick(r,kinds),n=pick(r,names);return {n,mine:S.items.some(x=>x.name===n),k:k[0],t:k[1],d:fmtD(daysAgo(Math.floor(i*1.5)))}});
   return `<div class="card"><h3>최근 변경 내역 <span class="more">내 업체 + 경쟁 업체</span></h3>${T(['날짜','업체','항목','바뀐 내용'],rows.map(x=>[x.d,x.mine?ME(esc(x.n)):esc(x.n)+' <span class="tag">경쟁</span>',x.k,x.t]))}
     <div class="tiny muted" style="margin-top:8px">경쟁 업체가 사진·가격·소개글을 바꾸면 알림 예약으로 바로 알려드릴 수 있어요.</div></div>`};
-Object.assign(LOGIC,{p_rival:['내 키워드에 경쟁 업체를 묶어 두면, 매일 같은 검색 결과에서 경쟁 업체 위치·리뷰·저장도 함께 기록해요.','한 그래프에 겹쳐 그려 누가 오르고 내리는지 비교해요.'],
-  p_review:['내 업체의 방문자·블로그 리뷰를 매일 읽어 새로 달린 리뷰만 골라요.','불친절·위생·늦음 같은 부정 단어가 있으면 부정 리뷰로 표시하고 알림을 보내요.','AI 답글 초안은 리뷰 내용·별점·부정 단어와 고른 말투(정중·친근·간결)를 LLM에 넘겨 답글을 쓰고, 사장님이 고친 뒤 등록하면 스마트플레이스 답글로 올려요.'],
+/* 정보 변경 감지(쇼핑): 내 상품 + 같은 키워드 상위 경쟁 상품의 상세 정보 변경 */
+MANAGE.s_change=()=>{const r=rng('schg'),mine=S.items.filter(i=>i.type==='shop'&&!i.menu).map(i=>i.name),names=[...new Set(mine),'헬리녹스 캠핑의자 스탠다드 세트','코멧 캠핑의자 미니 라이트','모비가든 캠핑의자 접이식 체어'];
+  const kinds=[['가격','59,000원 → 52,900원'],['할인','즉시할인 10% 시작'],['배송비','3,000원 → 무료배송'],['상품명','상품명 앞에 "초경량" 키워드 추가'],['대표 이미지','대표 이미지 교체'],['옵션','색상 옵션 2개 추가'],['품절','일부 옵션 품절'],['리뷰 이벤트','포토 리뷰 적립금 1,000원 시작']];
+  const rows=Array.from({length:10},(_,i)=>{const k=pick(r,kinds),n=pick(r,names);return {n,mine:mine.includes(n),k:k[0],t:k[1],d:fmtD(daysAgo(Math.floor(i*1.5)))}});
+  return `<div class="card"><h3>최근 변경 내역 <span class="more">내 상품 + 경쟁 상품</span></h3>${T(['날짜','상품','항목','바뀐 내용'],rows.map(x=>[x.d,x.mine?ME(esc(x.n)):esc(x.n)+' <span class="tag">경쟁</span>',x.k,x.t]))}
+    <div class="tiny muted" style="margin-top:8px">경쟁 상품의 가격·할인·배송비가 바뀌면 알림 예약으로 바로 알려드릴 수 있어요.</div></div>`};
+Object.assign(LOGIC,{s_review:['스마트스토어 판매자 계정을 연동해(비밀번호는 로그인할 때만 쓰고 저장 안 함) 고른 상품의 포토·일반·한달사용 리뷰를 매일 읽어 새로 달린 리뷰만 골라요.','배송 지연·불량·파손·사이즈 같은 부정 단어가 있으면 부정 리뷰로 표시하고 알림을 보내요.','AI 답글 초안은 리뷰 내용·별점·부정 단어·말투를 LLM에 넘겨 쓰고(불량은 교환·환불 안내, 배송은 출고 점검 약속 등), 판매자가 고친 뒤 등록하면 상품 리뷰 답글로 올려요.'],
+  s_change:['내 상품과 같은 키워드 상위 경쟁 상품의 상세 정보(가격·할인·배송비·상품명·대표 이미지·옵션·품절·리뷰 이벤트)를 매일 저장해 어제와 다른 부분만 변경 내역으로 남겨요.'],
+  p_review:['플레이스 통계와 같은 스마트플레이스 계정 연동(같은 계정·선택 업체 공유)으로 관리 중인 업체의 방문자·블로그 리뷰를 매일 읽어 새로 달린 리뷰만 골라요.','불친절·위생·늦음 같은 부정 단어가 있으면 부정 리뷰로 표시하고 알림을 보내요.','AI 답글 초안은 리뷰 내용·별점·부정 단어와 고른 말투(정중·친근·간결)를 LLM에 넘겨 답글을 쓰고, 사장님이 고친 뒤 등록하면 스마트플레이스 답글로 올려요.'],
   p_change:['내 업체와 경쟁 업체의 상세 정보(영업시간·사진·메뉴·가격·편의시설·소개글)를 매일 저장해 어제와 다른 부분만 변경 내역으로 남겨요.']});
 
 /* 카카오톡 챗봇 조회 */
-const KB=[{me:0,t:'안녕하세요, 랭포미 챗봇이에요.\n"강남 맛집"처럼 키워드를 보내면 순위를 알려드려요.'}];
-MANAGE.kbot=()=>`<div class="card"><div class="small muted" style="margin-bottom:10px">카카오톡 채널 "랭포미"를 친구 추가하면 앱을 열지 않고 카톡으로 바로 순위를 물어볼 수 있어요(예시 화면).</div>
+const KB=[{me:0,t:'안녕하세요, 랭포미 챗봇이에요.\n랭포미 계정과 연결하면 "강남 맛집"처럼 키워드를 보내 순위를 바로 받을 수 있어요.\n\n연결하려면 "연결"이라고 보내주세요.'}];
+const KBC={linked:false,code:null}; // 카톡 ↔ 랭포미 계정 연결 상태(예시)
+const kbStep=(n,t,sub,done,act='')=>`<div class="row" style="gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line)"><b style="flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:12px;background:${done?'var(--ok)':'var(--pri-soft)'};color:${done?'#fff':'var(--pri)'}">${done?'✓':n}</b><div class="grow"><b class="small">${t}</b><div class="tiny muted" style="margin-top:2px">${sub}</div>${act}</div></div>`;
+MANAGE.kbot=()=>`<div class="card"><h3>카카오톡 연결 <span class="more">${KBC.linked?'<span style="color:var(--ok);font-weight:700">연결됨</span>':'연결 전'}</span></h3>
+  ${kbStep(1,'카카오톡 채널 "랭포미" 친구 추가','카카오톡 검색창에 "랭포미"를 검색하거나 아래 버튼으로 채널을 추가해요.',KBC.added||KBC.code||KBC.linked,KBC.added||KBC.code||KBC.linked?'':`<button class="btn sm" style="margin-top:8px;background:var(--kakao);color:#111" onclick="KBC.added=1;render();toast('채널을 추가했어요 (예시)')">채널 추가하기</button>`)}
+  ${kbStep(2,'채널 채팅방에 "연결" 보내기','챗봇이 6자리 인증 코드를 보내줘요. 코드는 10분 동안만 쓸 수 있어요.',KBC.code||KBC.linked)}
+  ${kbStep(3,'랭포미에 인증 코드 입력','받은 코드를 아래에 넣으면 이 카카오톡이 내 랭포미 계정과 연결돼요.',KBC.linked,KBC.linked?'':`<form class="row" style="margin-top:8px;gap:6px" onsubmit="event.preventDefault();kbLink()"><input class="input grow" id="kbCode" inputmode="numeric" maxlength="6" placeholder="6자리 코드" style="height:38px"><button class="btn sm">연결</button></form>`)}
+  ${KBC.linked?`<div class="row" style="margin-top:10px"><span class="small grow">연결된 카카오톡: <b>${esc(MG.me.name)}</b>님</span><button class="btn ghost sm" onclick="KBC.linked=false;KBC.code=null;KB.push({me:0,t:'연결을 해제했어요. 다시 쓰려면 \\'연결\\'이라고 보내주세요.'});render()">연결 해제</button></div>`:''}
+  <div class="tiny muted" style="margin-top:10px">연결하면 카톡으로 보낸 키워드는 내 추적 목록에서 찾아 답해요. 팀원은 각자 자기 카카오톡을 연결해요.</div></div>
+  <div class="card"><h3>카톡 미리보기 <span class="more">예시</span></h3>
   <div class="kakao" style="min-height:260px">${KB.map(m=>m.me?`<div class="kme">${esc(m.t)}</div>`:`<div class="bub" style="margin-bottom:8px"><div class="b">${m.t}</div></div>`).join('')}</div>
-  <form class="row" style="margin-top:10px" onsubmit="event.preventDefault();kbSend()"><input class="input grow" id="kbIn" placeholder="예: 강남 맛집"><button class="btn" style="background:var(--kakao);color:#111">전송</button></form></div>`;
-function kbSend(){const t=$('#kbIn').value.trim();if(!t)return;KB.push({me:1,t});const hit=S.items.filter(i=>t.replace(/\s/g,'').includes(i.keyword.replace(/\s/g,'')));
-  KB.push({me:0,t:hit.length?hit.slice(0,3).map(i=>`${esc(i.keyword)} · ${esc(i.name)}\n→ ${fmtRank(cur(i))} ${dTxt(delta(i))}`).join('\n\n'):'추적 중인 키워드가 아니에요. 랭포미 앱에서 먼저 등록해주세요.'});render()}
-LOGIC.kbot=['카카오톡 채널 챗봇(오픈빌더)으로 받은 말을 랭포미 서버로 넘겨, 그 사용자의 추적 키워드에서 찾아 최신 순위를 답해요.'];
+  <div class="chips" style="margin-top:10px">${['연결','강남 맛집','순위','떨어진 키워드','도움말'].map(c=>`<button class="chip" onclick="$('#kbIn').value='${c}';kbSend()">${c}</button>`).join('')}</div>
+  <form class="row" style="margin-top:8px" onsubmit="event.preventDefault();kbSend()"><input class="input grow" id="kbIn" placeholder="예: 강남 맛집"><button class="btn" style="background:var(--kakao);color:#111">전송</button></form></div>`;
+function kbLink(){const v=$('#kbCode').value.trim();if(!KBC.code)return toast('먼저 카톡 채팅방에 "연결"을 보내 코드를 받아주세요');if(v!==KBC.code)return toast('인증 코드가 맞지 않아요');
+  KBC.linked=true;KBC.code=null;KB.push({me:0,t:`✅ ${esc(MG.me.name)}님 랭포미 계정과 연결됐어요.\n이제 키워드를 보내면 순위를 알려드려요.`});render();toast('카카오톡을 연결했어요')}
+function kbSend(){const t=$('#kbIn').value.trim();if(!t)return;KB.push({me:1,t});let r;
+  if(/^연결/.test(t)){if(KBC.linked)r='이미 연결돼 있어요.';else{KBC.code=String(Math.floor(Math.random()*900000+100000));r=`인증 코드: <b>${KBC.code}</b>\n랭포미 > 카카오톡 챗봇 조회 화면에 이 코드를 넣어주세요. (10분 유효)`}}
+  else if(/도움|help/i.test(t))r='이렇게 보내보세요:\n• 키워드 — "강남 맛집"\n• "순위" — 추적 중인 키워드 요약\n• "떨어진 키워드" — 어제보다 떨어진 키워드\n• "연결" — 랭포미 계정 연결';
+  else if(!KBC.linked)r='먼저 랭포미 계정과 연결해주세요. "연결"이라고 보내면 인증 코드를 드려요.';
+  else if(/떨어|하락/.test(t)){const d=S.items.filter(i=>delta(i)<0);r=d.length?`어제보다 떨어진 키워드 ${d.length}개\n\n`+d.slice(0,5).map(i=>`${esc(i.keyword)} · ${fmtRank(cur(i))} ${dTxt(delta(i))}`).join('\n'):'떨어진 키워드가 없어요 👍'}
+  else if(/^순위|요약/.test(t))r=`추적 중인 키워드 ${S.items.length}개\n\n`+S.items.slice(0,6).map(i=>`${esc(i.keyword)} · ${fmtRank(cur(i))} ${dTxt(delta(i))}`).join('\n')+(S.items.length>6?`\n외 ${S.items.length-6}개`:'');
+  else{const hit=S.items.filter(i=>t.replace(/\s/g,'').includes(i.keyword.replace(/\s/g,'')));r=hit.length?hit.slice(0,3).map(i=>`${esc(i.keyword)} · ${esc(i.name)}\n→ ${fmtRank(cur(i))} ${dTxt(delta(i))}`).join('\n\n'):'추적 중인 키워드가 아니에요. 랭포미 앱에서 먼저 등록해주세요.'}
+  KB.push({me:0,t:r});render()}
+LOGIC.kbot=['연결: 사용자가 카카오톡 채널 "랭포미"에 "연결"을 보내면, 챗봇(카카오 i 오픈빌더 스킬)이 랭포미 서버에서 6자리 인증 코드(10분 유효)를 받아 답해요. 사용자가 랭포미 화면에 코드를 넣으면 카카오 사용자 키(botUserKey)와 랭포미 계정을 묶어 저장해요.','조회: 이후 채널로 받은 말은 스킬 서버가 그 사용자 키로 계정을 찾아, 그 계정의 추적 키워드에서 최신 순위를 답해요. "순위"·"떨어진 키워드"·"도움말" 같은 명령어도 처리해요.','연결 해제하면 사용자 키 매핑을 지워 더 이상 순위를 답하지 않아요. 팀원은 각자 자기 카카오톡을 연결해요.'];
 
 /* 마이페이지: 팀원·리포트 공유·결제 내역 */
 const SHARE=[];
@@ -1802,11 +1997,12 @@ function reportView(g,p){const its=S.items.filter(i=>i.group===g),up=its.filter(
     ${K([['키워드',its.length+'개'],['평균 순위',avg.length?(avg.reduce((s,i)=>s+cur(i),0)/avg.length).toFixed(1)+'위':'-'],['상승',up+'개'],['TOP10',its.filter(i=>cur(i)!=null&&cur(i)<=10).length+'개']])}
     ${T(['키워드','대상','순위','변동','30일 최고'],its.map(i=>[esc(i.keyword),esc(i.name),fmtRank(cur(i)),dHtml(delta(i)),Math.min(...i.history.filter(v=>v!=null))+'위']))}
     <button class="btn block" style="margin-top:14px" onclick="window.print()">PDF로 저장 (인쇄)</button>`)}
-MANAGE.m_pay=()=>MANAGE.c_point()+`<div class="card"><h3>결제 내역</h3>${T(['결제일','상품','금액','수단','영수증'],[['2026.10.01','PRO 1개월','9,900원','카드','<a class="lnk" onclick="toast(\'영수증 (예시)\')">보기</a>'],['2026.09.15','포인트 10,000P','10,000원','계좌이체','<a class="lnk" onclick="toast(\'영수증 (예시)\')">보기</a>'],['2026.09.01','PRO 1개월','9,900원','카드','<a class="lnk" onclick="toast(\'영수증 (예시)\')">보기</a>']])}</div>
-  <div class="card"><h3>세금계산서</h3><input class="input" placeholder="사업자등록번호" style="margin-bottom:8px"><input class="input" placeholder="상호" style="margin-bottom:8px"><input class="input" placeholder="받을 이메일">
-    <button class="btn block" style="margin-top:10px" onclick="toast('세금계산서 정보를 저장했어요. 다음 결제부터 자동 발행돼요 (예시)')">저장</button></div>`;
+// 포인트 충전(예시): 금액 = 포인트, 1,000원 단위·최대 100만 원
+function ptCharge(n){if(!n||n<1000)return toast('1,000원 이상 입력해주세요');if(n>1000000)return toast('한 번에 1,000,000원까지 충전할 수 있어요');if(n%1000)return toast('1,000원 단위로 입력해주세요');
+  const d=new Date();MG.point+=n;MG.uses.unshift([`${d.getMonth()+1}/${d.getDate()}`,'포인트 충전 (예시)',n]);render();toast(`${fmtN(n)}P 충전했어요 (예시)`)}
+MANAGE.m_pay=()=>MANAGE.c_point()+`<div class="card"><h3>결제 내역</h3>${T(['결제일','상품','금액','수단','영수증'],[['2026.10.01','PRO 1개월','9,900원','카드','<a class="lnk" onclick="toast(\'영수증 (예시)\')">보기</a>'],['2026.09.15','포인트 10,000P','10,000원','계좌이체','<a class="lnk" onclick="toast(\'영수증 (예시)\')">보기</a>'],['2026.09.01','PRO 1개월','9,900원','카드','<a class="lnk" onclick="toast(\'영수증 (예시)\')">보기</a>']])}</div>`;
 Object.assign(LOGIC,{m_report:['그룹(광고주)을 고르면 그 그룹 키워드만 담은 읽기 전용 페이지 주소를 만들어요. 로그인 없이 열 수 있고 열람 수를 세요.','월간 리포트는 기간 동안의 평균 순위·상승 수·TOP10 수를 정리해 PDF로 저장해요.'],
-  m_pay:['결제·포인트 충전 내역과 영수증을 보관하고, 세금계산서 정보를 저장하면 결제 때 자동 발행해요.']});
+  m_pay:['결제·포인트 충전 내역과 영수증을 보관해요.']});
 
 /* 오늘 할 일(홈 맨 위) */
 let TODO_OFF=false;
@@ -1850,25 +2046,40 @@ function reseedDemo(){const list=IND[DEMO_IND],type=DEMO_IND==='쇼핑몰'?'shop
 const _T=T;
 T=(cols,rows)=>innerWidth<700&&cols.length>=7?`<div class="tcards">${rows.map(r=>`<div class="tcard">${r.map((c,i)=>cols[i]&&!/^<input/.test(String(cols[i]))?`<div><span>${cols[i]}</span><b>${c}</b></div>`:`<div class="tchk">${c}</div>`).join('')}</div>`).join('')}</div>`:_T(cols,rows);
 /* ===== 도구 (예시 데이터) ===== */
-const TL={cmb:{w:['강남\n역삼\n선릉','','고기집\n회식','맛집\n추천'],pos:['any','any','any','3'],must:[false,false,false,false],n:100,out:[]},btag:null,kw:null};
-const CMB_L=['지역','업체명','메뉴','의도'];
+const TL={cmb:{url:'https://m.place.naver.com/restaurant/1938472610',name:'',w:['홍길동 숯불갈비','강남\n역삼\n선릉','고기집\n회식','맛집\n추천'],pos:['any','any','any','3'],must:[false,false,false,false],n:100,out:[]},btag:null,kw:null};
+const CMB_L=['업체명','위치','메뉴','의도'];
 MANAGE.t_combine=()=>{const c=TL.cmb;
-  return `<div class="cmbgrid">${CMB_L.map((l,i)=>`<div class="card" style="margin:0"><div class="row" style="margin-bottom:8px"><b class="grow">${i+1}. ${l}</b>
-      <select class="input" style="height:32px;width:auto;font-size:12.5px;padding:0 6px" onchange="TL.cmb.pos[${i}]=this.value">${[['any','랜덤 위치'],['0','1번 고정'],['1','2번 고정'],['2','3번 고정'],['3','4번 고정']].map(([v,t])=>`<option value="${v}" ${c.pos[i]===v?'selected':''}>${t}</option>`).join('')}</select>
-      <label class="small" style="display:flex;gap:4px;align-items:center;color:var(--up);font-weight:700"><input type="checkbox" ${c.must[i]?'checked':''} onchange="TL.cmb.must[${i}]=this.checked">필수</label></div>
-      <textarea class="input" rows="4" placeholder="${l} 단어를 줄바꿈으로" oninput="TL.cmb.w[${i}]=this.value">${esc(c.w[i])}</textarea></div>`).join('')}</div>
-    <div class="card" style="margin-top:12px"><div class="row"><span class="grow small">추출 수량</span><input class="input" type="number" style="width:100px" value="${c.n}" oninput="TL.cmb.n=+this.value||100"></div>
+  return `<div class="card"><label class="lb" style="margin-top:0">플레이스 URL 또는 ID</label><div class="row" style="gap:8px"><input class="input grow" id="cmbUrl" value="${esc(c.url)}" oninput="TL.cmb.url=this.value"><button class="btn" onclick="cmbAuto()">${ic('spark',16)} AI 자동 생성</button></div>
+      <div class="tiny muted" style="margin-top:6px">${c.name?`<b>${esc(c.name)}</b> 정보로 아래 칸을 채웠어요. 단어를 고쳐 다시 조합할 수 있어요.`:'URL을 넣으면 AI가 아래 업체명·위치·메뉴·의도 칸을 채우고 키워드를 만들어요.'}</div></div>
+    <div class="cmbgrid">${CMB_L.map((l,i)=>`<div class="card"><div class="row" style="margin-bottom:6px"><b class="grow small">${i+1}. ${l}</b>
+      <label class="tiny" style="display:flex;gap:3px;align-items:center;color:var(--up);font-weight:700"><input type="checkbox" ${c.must[i]?'checked':''} onchange="TL.cmb.must[${i}]=this.checked">필수</label></div>
+      <select class="input" style="height:30px;font-size:12px;padding:0 6px;margin-bottom:6px" onchange="TL.cmb.pos[${i}]=this.value">${[['any','랜덤 위치'],['0','1번째 고정'],['1','2번째 고정'],['2','3번째 고정'],['3','4번째 고정']].map(([v,t])=>`<option value="${v}" ${c.pos[i]===v?'selected':''}>${t}</option>`).join('')}</select>
+      <textarea class="input" rows="3" style="font-size:13px" placeholder="${l} 단어를 줄바꿈으로" oninput="TL.cmb.w[${i}]=this.value">${esc(c.w[i])}</textarea></div>`).join('')}</div>
+    <div class="card" style="margin-top:12px"><div class="row"><span class="grow small">추출 수량</span><input class="input" inputmode="numeric" style="width:100px" value="${c.n}" oninput="this.value=this.value.replace(/[^0-9]/g,'');TL.cmb.n=+this.value||100"></div>
       <button class="btn block" style="margin-top:10px" onclick="cmbRun()">${ic('spark',18)} 키워드 조합 생성</button></div>
-    ${c.out.length?`<div class="card"><h3>생성 결과 <span class="more">${c.out.length}개</span></h3>
-      <div class="row" style="margin-bottom:8px;gap:6px;flex-wrap:wrap"><label class="small" style="display:flex;gap:6px;align-items:center"><input type="checkbox" onclick="document.querySelectorAll('.cmbk').forEach(e=>e.checked=this.checked)"> 전체 선택</label><span class="grow"></span>
-        <button class="btn sub sm" onclick="cmbCopy(true)">선택 복사</button><button class="btn ghost sm" onclick="cmbCopy(false)">전체 복사</button></div>
-      <div class="cmbout">${c.out.map((k,i)=>`<label class="list-row" style="padding:8px 0"><input type="checkbox" class="cmbk" value="${esc(k)}"><span class="num tiny muted">${i+1}</span><span class="grow">${esc(k)}</span></label>`).join('')}</div></div>`:''}`};
-function cmbRun(){const c=TL.cmb,g=c.w.map((w,i)=>({d:w.split('\n').map(s=>s.trim()).filter(Boolean),must:c.must[i],pos:c.pos[i]}));const pool=[];
+    ${c.out.length?`<div class="card" id="anRes"><div class="row" style="margin-bottom:12px;gap:6px;flex-wrap:wrap"><h3 class="grow" style="margin:0;white-space:nowrap">생성 결과 <span class="tiny muted" style="font-weight:500">${c.out.length}개</span></h3>
+        <button class="btn sub sm" onclick="cmbCopy(true)">선택 복사</button><button class="btn ghost sm" onclick="cmbCopy(false)">전체 복사</button><button class="btn sm" onclick="cmbSave()">저장하기</button></div>
+      <div class="tiny muted" style="margin:-6px 0 8px">${MG.cmbSaved?`<b style="color:var(--pri)">저장된 키워드 ${MG.cmbSaved.kws.length}개</b> · `:''}저장하기: 체크한 키워드(없으면 전체)를 저장해 키워드 순위 조회 > 직접 입력에서 불러와요.</div>
+      ${T([allChk,'키워드','월 검색량','경쟁','추천 이유'],c.out.map(x=>[`<input type="checkbox" class="sel cmbk" value="${esc(x.kw)}" data-kw="${esc(x.kw)}" data-name="${esc(c.name||'내 업체')}">`,`<b>${esc(x.kw)}</b>`,fmtN(x.sum),x.comp,x.why||'-']))}</div>`:''}`};
+function cmbRun(quiet){const c=TL.cmb,g=c.w.map((w,i)=>({d:w.split('\n').map(s=>s.trim()).filter(Boolean),must:c.must[i],pos:c.pos[i]}));const pool=[];
   const build=(i,cur)=>{if(i===4){if(g.some((x,j)=>x.must&&!cur.some(c=>c.gid===j))||!cur.length)return;const res=Array(cur.length).fill(null),flex=[];
       cur.forEach(it=>{const p=g[it.gid].pos;p!=='any'&&+p<res.length?res[+p]=it.v:flex.push(it.v)});for(let k=0;k<res.length;k++)if(!res[k])res[k]=flex.shift();pool.push(res.join(' '));return}
     g[i].d.forEach(w=>build(i+1,[...cur,{gid:i,v:w}]));if(!g[i].must)build(i+1,cur)};
-  build(0,[]);c.out=[...new Set(pool)].sort(()=>Math.random()-.5).slice(0,c.n);render();toast(`${c.out.length}개 키워드를 만들었어요`)}
-function cmbCopy(sel){const a=sel?[...document.querySelectorAll('.cmbk:checked')].map(e=>e.value):TL.cmb.out;if(!a.length)return toast('복사할 키워드를 선택하세요');navigator.clipboard.writeText(a.join('\n')).then(()=>toast(a.length+'개 복사했어요'))}
+  build(0,[]);c.out=[...new Set(pool)].sort(()=>Math.random()-.5).slice(0,c.n).map(kw=>{const g=genVolume(kw),r=rng('ai'+kw);return {kw,sum:g.sum,comp:g.comp,why:g.comp==='낮음'||r()<.25?pick(r,['검색량 대비 경쟁 낮음','상위 업체 리뷰 수가 적음','최근 검색량 증가','대표 키워드와 연관도 높음']):''}}).sort((a,b)=>b.sum-a.sum);if(quiet)return;render();toast(`${c.out.length}개 키워드를 만들었어요`)}
+// 저장하기: 체크한 키워드(없으면 전체)를 저장 → 키워드 순위 조회 > 직접 입력 "불러오기"
+function cmbSave(){const c=TL.cmb,sel=[...document.querySelectorAll('.cmbk:checked')].map(e=>e.value),kws=sel.length?sel:c.out.map(x=>x.kw);
+  MG.cmbSaved={url:c.url,name:c.name,kws};render();toast(`${kws.length}개 키워드를 저장했어요. 키워드 순위 조회 > 직접 입력에서 불러올 수 있어요`)}
+// 키워드 순위 조회 > 직접 입력: 조합기에서 마지막으로 저장한 키워드(앞 50개)와 그 URL을 불러옴
+function hidLoad(){const sv=MG.cmbSaved;if(!sv)return toast('키워드 조합기에서 키워드를 만들고 저장하기를 눌러주세요');
+  const v=AN.p_hidden.v,kws=sv.kws.slice(0,50).join('\n');v.kws=kws;$('#f_p_hidden_kws').value=kws;if(sv.url){v.url=sv.url;$('#f_p_hidden_url').value=sv.url}
+  toast(`조합기 키워드 ${Math.min(50,sv.kws.length)}개를 불러왔어요${sv.kws.length>50?' (앞 50개)':''}`)}
+/* AI 자동 생성: URL → 업체 정보로 칸 채우기(예시는 규칙 기반, 실서비스는 업체 상세를 LLM에 넘겨 단어 추천) → 바로 조합 */
+function cmbAuto(url,quiet){const v=(url??$('#cmbUrl')?.value??'').trim(),u=parseUrl(v);if(!u||u.type!=='place')return toast('플레이스 URL 또는 ID를 넣어주세요');
+  const r=rng('cmb'+u.mid),area=pick(r,['강남','역삼','선릉','신논현','논현']),e=ext('place','',u.name),cat=e.cat||'';
+  const menu=/고기|구이|갈비/.test(cat+u.name)?['고기집','갈비','소고기','숯불구이']:/카페|디저트/.test(cat)?['카페','디저트','베이커리']:/이탈리아|파스타/.test(cat+u.name)?['파스타','이탈리안','와인바']:['한식','밥집','식당'];
+  const intent=/카페|디저트/.test(cat)?['데이트','분위기 좋은','작업하기 좋은']:['맛집','회식','데이트','점심','단체석'];
+  Object.assign(TL.cmb,{url:v,name:u.name,w:[u.name,[area,area+'역',area+'동'].join('\n'),menu.join('\n'),intent.join('\n')],must:[false,true,false,false],pos:['any','0','any','any']});cmbRun(quiet);if(!quiet)setTimeout(()=>$('#anRes')?.scrollIntoView({behavior:'smooth',block:'start'}),50)}
+function cmbCopy(sel){const a=sel?[...document.querySelectorAll('.cmbk:checked')].map(e=>e.value):TL.cmb.out.map(x=>x.kw);if(!a.length)return toast('복사할 키워드를 선택하세요');navigator.clipboard.writeText(a.join('\n')).then(()=>toast(a.length+'개 복사했어요'))}
 
 /* 블로그 태그 검색 */
 function btagData(kw){const r=rng('bt'+kw),base=kw.replace(/\s/g,''),extra=['추천','내돈내산','솔직후기','가성비','데이트','주차','웨이팅','맛스타그램','일상','서울맛집'];
@@ -1949,7 +2160,7 @@ function tourSteps(){const m=$('#main'),q=x=>m.querySelector(x),st=[],key=curKey
     }else if(q('#anRes')){const cf=CFG[key];
       (cf?.form||[]).forEach(f=>add($('#f_'+key+'_'+f.id),f.label,f.type==='select'?'조회 조건을 골라요. 선택지: '+f.opts.slice(0,4).join(', ')+(f.opts.length>4?' …':''):'조회할 내용을 넣어요.'+(f.ph?' 예: '+f.ph:''),f.hint));
       add(q('button[onclick^=runAnalyze]'),cf?.btn||'조회','누르면 예시 결과가 나와요. 무료 요금제는 결과 전에 광고가 먼저 나와요.',cf?.limit?'하루 '+cf.limit+'회까지 쓸 수 있어요.':null);
-      const r=q('#anRes');if(r.children.length)add(r,'결과','조회 결과예요. 아래 버튼으로 추적 등록하거나 엑셀로 받아요.');
+      const r=q('#anRes');if(r.children.length)add(r,'결과','조회 결과예요. 버튼으로 추적 등록하거나 리스트를 다운로드해요.');
     }else{const g=GUIDE[key]||[];[...m.querySelectorAll('.card')].filter(c=>c!==head&&c.querySelector('h3')).slice(0,6).forEach((c,i)=>add(c,c.querySelector('h3').firstChild.textContent.trim(),g[i+1]||g[i]||'이 화면에서 쓰는 영역이에요.'));
       const out=e=>e&&!head?.contains(e)?e:null,inp=[...m.querySelectorAll('input.input,textarea.input')].find(out),btn=[...m.querySelectorAll('.btn:not(.sub):not(.ghost)')].find(out);
       if(inp)add(inp,'입력',(g[1]||'여기에 조회할 내용을 넣어요.')+(inp.placeholder?' 예: '+inp.placeholder:''));if(btn)add(btn,btn.textContent.trim()||'실행','누르면 예시 결과가 나와요.')}
@@ -2013,7 +2224,7 @@ async function copyNotes(){
     await navigator.clipboard.writeText('# 랭포미 메뉴별 전달된 기획\n\n'+txt);toast('전달된 기획을 모두 복사했어요')}
   catch(e){toast('복사하지 못했어요')}}
 function cycleTheme(){S.theme={auto:'light',light:'dark',dark:'auto'}[S.theme];render()}
-const WLABEL={todo:'오늘 할 일',summary:'순위 요약',fav:'즐겨찾기',next:'다음 순위 알림',nnotice:'네이버 공지 모아보기',quick:'바로 조회',movers:'변동 큰 키워드',notice:'공지사항'};
+const WLABEL={todo:'오늘 할 일',summary:'순위 요약',fav:'즐겨찾기',next:'다음 순위 알림',nnotice:'네이버 공지 모아보기',quick:'N 바로 조회',movers:'변동 큰 키워드',notice:'공지사항'};
 function renderMenuEdit(){
   // 실제 하단 탭과 같은 기준: 켜진 메뉴 중 위에서부터 모바일 4개 · PC 7개 + 설정(고정), 나머지는 ☰ 전체 메뉴
   const n=S.menus.filter(x=>x.on).length,lim=innerWidth>=900?7:4,on=S.menus.filter(x=>x.on),shownK=on.slice(0,lim).map(x=>x.k);let cnt=0;
@@ -2028,7 +2239,7 @@ function renderMenuEdit(){
     <div class="tiny muted" style="margin-top:8px"><span class="nbadge" style="position:static;display:inline-grid">3</span> 탭의 빨간 숫자 = 어제보다 순위가 떨어진 키워드 수</div></div>
     <div class="card"><h3>하위 메뉴</h3><div class="small muted" style="margin-bottom:6px">메뉴마다 위쪽 탭과 ☰ 전체 메뉴에 보일 하위 메뉴를 골라요. ≡ 를 끌어서 순서를 바꿔요. 메뉴마다 1개 이상은 켜져 있어야 해요.</div>
       ${TREE.filter(g=>!g.set&&g.items.length>1).map(g=>{const on=vis(g).length;return `<details class="grp" style="border-bottom:1px solid var(--line)" ${SUBOPEN[g.k]?'open':''} ontoggle="SUBOPEN['${g.k}']=this.open"><summary class="listlink" style="border:0"><span class="ico">${ic(g.i,18)}</span><span class="grow">${g.g}</span><span class="small muted">${on}/${g.items.length}</span></summary>
-        <div style="padding:0 0 8px 8px" data-grp="${g.k}">${g.items.map((it,i)=>`<div class="menu-row drow" data-i="${i}" style="padding:8px 0"><span class="dhandle" onpointerdown="dragStart(event)">${ic('menu',18)}</span><span class="grow small" style="font-weight:600">${it.t}</span><label class="switch"><input type="checkbox" ${S.subOff[it.k]?'':'checked'} ${!S.subOff[it.k]&&on<=1?'disabled':''} onchange="S.subOff['${it.k}']=!this.checked;render()"><span></span></label></div>`).join('')}</div></details>`}).join('')}</div>
+        <div style="padding:0 0 8px 8px" data-grp="${g.k}">${g.items.map((it,i,a)=>(secH(a,i)?`<div class="sech">${secH(a,i)}</div>`:'')+`<div class="menu-row drow" data-i="${i}" style="padding:8px 0"><span class="dhandle" onpointerdown="dragStart(event)">${ic('menu',18)}</span><span class="grow small" style="font-weight:600">${it.t}</span><label class="switch"><input type="checkbox" ${S.subOff[it.k]?'':'checked'} ${!S.subOff[it.k]&&on<=1?'disabled':''} onchange="S.subOff['${it.k}']=!this.checked;render()"><span></span></label></div>`).join('')}</div></details>`}).join('')}</div>
     <div class="card"><h3>홈 화면 위젯</h3>
     <div class="small muted" style="margin-bottom:6px">≡ 를 끌어서 홈에 나오는 순서를 바꿔요.</div><div id="wList" data-arr="wOrder">${S.wOrder.map(k=>[k,WLABEL[k]]).map(([k,v],i)=>`<div class="menu-row drow" data-i="${i}"><span class="dhandle" onpointerdown="dragStart(event)">${ic('menu',20)}</span><span class="grow" style="font-weight:600">${v}</span><label class="switch"><input type="checkbox" ${S.widgets[k]?'checked':''} onchange="S.widgets.${k}=this.checked"><span></span></label></div>`).join('')}</div>
     <div class="menu-row"><span class="grow" style="font-weight:600">AI 플로팅 버튼</span><label class="switch"><input type="checkbox" ${S.fab?'checked':''} onchange="S.fab=this.checked;render()"><span></span></label></div></div>`}
@@ -2040,11 +2251,11 @@ function dragStart(e){
     if(over&&over!==row&&over.parentNode===list){const r=over.getBoundingClientRect();list.insertBefore(row,ev.clientY<r.top+r.height/2?over:over.nextSibling)}};
   const end=()=>{removeEventListener('pointermove',move);removeEventListener('pointerup',end);removeEventListener('pointercancel',end);
     const order=[...list.children].filter(el=>el.dataset.i!=null).map(el=>+el.dataset.i),[o,key]=list.dataset.grp?[TREE.find(g=>g.k===list.dataset.grp),'items']:[S,list.dataset.arr]; // 하위 메뉴는 TREE 그룹 순서 자체를 바꿈
-    o[key]=order.map(i=>o[key][i]);render()};
+    const so=[...new Set(o[key].map(x=>x.s))];o[key]=order.map(i=>o[key][i]);if(list.dataset.grp)o[key].sort((a,b)=>so.indexOf(a.s)-so.indexOf(b.s));render()};
   addEventListener('pointermove',move);addEventListener('pointerup',end);addEventListener('pointercancel',end)}
 function renderPlan(){
   const P=[['free','무료','0원'],['pro','PRO','9,900원'],['biz','BIZ (대행사)','29,000원']];
-  const rows=[['추적 키워드','5개 광고 없이<div class="tiny muted">6번째부터 등록은 되고 볼 때마다 광고</div>','300개','무제한'],['매일 자동 기록','O','O','O'],['조회 시 광고','있음','없음','없음'],['알림 예약','2개','무제한','무제한'],['앱 푸시 알림','O','O','O'],['카톡·문자 알림','-','월 300건','월 3,000건'],['AI 비서 질문','일 10회','무제한','무제한'],['순위 기록 보관','30일','1년','무제한'],['엑셀 일괄 등록','-','O','O'],['순위 체크(플레이스·쇼핑·블로그)·키워드 도구','O','O','O'],['플레이스 분석·감시(비교·추세·경쟁·리뷰 등)','-','O','O'],['블로그 지수·세부 순위(인플루언서·카페 등)','-','O','O'],['오픈마켓·SNS·지역 순위','-','O','O'],['검색량 추이·AI 키워드·파워링크','-','O','O'],['종합 리포트·유입 통계·블로그 대량 분석','-','-','O'],['월보장 관리·카톡 챗봇','-','-','O'],['광고주별 리포트 공유','-','-','O'],['팀원·권한 관리','-','-','O']];
+  const rows=[['추적 키워드','5개 광고 없이<div class="tiny muted">6번째부터 등록은 되고 볼 때마다 광고</div>','300개','무제한'],['매일 자동 기록','O','O','O'],['조회 시 광고','있음','없음','없음'],['알림 예약','2개','무제한','무제한'],['앱 푸시 알림','O','O','O'],['카톡·문자 알림','-','월 300건','월 3,000건'],['AI 비서 질문','일 10회','무제한','무제한'],['순위 기록 보관','30일','1년','무제한'],['엑셀 일괄 등록','-','O','O'],['순위 체크(플레이스·쇼핑·블로그)·키워드 도구','O','O','O'],['플레이스 분석·감시(비교·추세·경쟁·리뷰 등)','-','O','O'],['블로그 지수·세부 순위(인플루언서·카페 등)','-','O','O'],['오픈마켓·SNS·포털·지도 순위','-','O','O'],['검색량 추이·AI 키워드·파워링크','-','O','O'],['플레이스 통계·블로그 대량 분석','-','-','O'],['월보장 관리·카톡 챗봇','-','-','O'],['광고주별 리포트 공유','-','-','O'],['팀원·권한 관리','-','-','O']];
   return `<div class="card"><table class="plan"><tr><th></th>${P.map(p=>`<th>${p[1]}<div class="tiny muted">${p[2]}/월</div></th>`).join('')}</tr>
     ${rows.map(r=>`<tr>${r.map((c,i)=>`<td>${c}</td>`).join('')}</tr>`).join('')}</table></div>
     ${P.map(p=>`<button class="btn block ${S.plan===p[0]?'ghost':''}" style="margin-bottom:8px" ${S.plan===p[0]?'disabled':''} onclick="S.plan='${p[0]}';render();toast('${p[1]} 요금제로 변경 (데모)')">${S.plan===p[0]?'현재 이용 중: '+p[1]:p[1]+'로 변경'}</button>`).join('')}
@@ -2052,7 +2263,7 @@ function renderPlan(){
 
 function renderSpec(){
   const pt=k=>({pro:' <span class="tiny muted">PRO</span>',biz:' <span class="tiny muted">BIZ</span>'}[needPlan(k)]||'');
-  const grp=TREE.map(g=>`<li><b>${g.g}</b>${g.set?' (설정 안)':''} — ${g.items.map(i=>i.t+pt(i.k)).join(', ')}</li>`).join('');
+  const grp=TREE.map(g=>`<li><b>${g.g}</b>${g.set?' (설정 안)':''} — ${g.items.map((i,n,a)=>(secH(a,n)?`[${secH(a,n)}] `:'')+i.t+pt(i.k)).join(', ')}</li>`).join('');
   return `<div class="card spec"><h3>랭포미 기획 요약</h3>
   <h4>1. 대상 · 핵심 가치</h4><ul><li>자영업자·스토어 셀러·블로거·마케팅 대행사</li><li>폰에서 바로 내 순위 확인 + 정해진 시간에 알아서 알려줌 + 날짜별 순위 변동을 한눈에</li><li>모바일 우선, 홈 화면에 앱처럼 설치(PWA)</li></ul>
   <h4>2. 화면 구조</h4><ul><li>PC·모바일 모두 하단 탭(모바일 4개, PC 7개 + 설정), 탭의 빨간 숫자 = 어제보다 떨어진 키워드 수. 하위 메뉴는 상단 밑줄 탭, 전체 메뉴는 헤더 왼쪽 버튼</li>
@@ -2060,17 +2271,17 @@ function renderSpec(){
     <li>메뉴마다 헤더 카드: 그룹·기획 중 배지, 설명, 참고 사이트, 사용 방법 · 작동 방식, 기획 전달 버튼</li>
     <li>AI 활용하기: 버튼 위로 바로 열리는 대화창(AI 비서와 같은 대화)</li>
     <li>메뉴·홈 편집: 하단 탭·하위 메뉴 켜고 끄기와 순서, 홈 위젯 켜고 끄기와 순서</li></ul>
-  <h4>3. 홈</h4><ul><li>오늘 할 일(하락·목표 이탈·새 리뷰·경쟁 업체 변경) → 순위 요약 → 즐겨찾기 → 다음 순위 알림 → 네이버 공지 모아보기 → 바로 조회 → 변동 큰 키워드(플레이스·쇼핑, 전체 이용자 기준) → 공지사항</li><li>처음 방문: 둘러보기(화면 영역을 하나씩 짚는 단계별 안내)</li></ul>
+  <h4>3. 홈</h4><ul><li>오늘 할 일(하락·목표 이탈·새 리뷰·경쟁 업체 변경) → 순위 요약 → 즐겨찾기 → 다음 순위 알림 → 네이버 공지 모아보기 → N 바로 조회 → 변동 큰 키워드(플레이스·쇼핑, 전체 이용자 기준) → 공지사항</li><li>처음 방문: 둘러보기(화면 영역을 하나씩 짚는 단계별 안내)</li></ul>
   <h4>4. 메뉴 구성 <span class="tiny muted">(표시 없음 = 무료)</span></h4><ul>${grp}</ul>
   <h4>5. 화면 틀</h4><ul><li>추적형: 키워드+URL 등록 → 매일 기록 목록(그룹·순위 구간·검색·정렬, 내보내기·일괄등록·재조회) → 보기 4종(리스트 = 날짜별 순위표·기본, 카드, 표, 차트) → 상세(30일 그래프·목표 순위·작업 메모·변동 원인·최근 7일 기록·상위 경쟁)</li>
     <li>분석형: 입력 → 실행(무료는 광고 후) → 결과 표 → 추적 등록·엑셀, 오늘 사용 횟수 한도</li>
     <li>관리형: 월보장·그룹·삭제 키워드·포인트·결제·회원 정보·팀원·리포트 공유·FAQ·1:1 문의</li></ul>
-  <h4>6. AI</h4><ul><li>AI 비서: URL·키워드로 자동 등록, 순위 질문, 자연어 알림 예약</li><li>AI 플레이스 피드백, AI 키워드 생성, 리뷰 답글 AI 초안(말투 선택·고쳐서 등록), 카카오톡 챗봇 조회</li></ul>
+  <h4>6. AI</h4><ul><li>AI 비서: URL·키워드로 자동 등록, 순위 질문, 자연어 알림 예약, 메뉴 기능 실행(검색량·연관검색어·자동완성·상위 업체·쇼핑 상위·AI 분석·블로그 지수·태그·입찰가·해시태그·조합기·노출 키워드·포스팅 노출·찜 조회·글자 수), 관리 현황(리뷰·유입·알림·포인트·그룹·추적 수), 메뉴 설명·이동</li><li>AI 분석(플레이스·쇼핑), 키워드 조합기 AI 자동 생성(URL → 키워드), 리뷰 답글 AI 초안(말투 선택·고쳐서 등록), 카카오톡 챗봇 조회</li></ul>
   <h4>7. 알림</h4><ul><li>시간(여러 개)·요일·조건(매번/변동/하락/N위 밖/목표 이탈) × 앱 푸시·카톡 알림톡(10P)·문자(40P), 테스트 발송, 발송·포인트 차감 내역</li><li>리뷰·정보 변경·연관검색어 노출 등 메뉴별 감시 알림</li></ul>
   <h4>8. 요금제 · 수익 모델</h4><ul><li>메뉴는 숨기지 않고 🔒 표시, 잠긴 메뉴는 흐린 예시 + 요금제 안내</li>
-    <li>무료: 기본 순위 체크·바로 조회·키워드 도구. 추적 키워드는 먼저 등록한 5개만 광고 없이, 6번째부터는 볼 때마다 광고</li>
-    <li>PRO(가안 9,900원/월): 광고 없음, 분석·감시·오픈마켓·SNS·지역 메뉴, 카톡·문자 포함 수량</li>
-    <li>BIZ(가안 29,000원/월, 대행사): 종합 리포트·유입 통계·대량 분석·챗봇·월보장 관리·리포트 공유·팀원 관리(계정마다 볼 그룹·메뉴·권한 지정)</li></ul>
+    <li>무료: 기본 순위 체크·N 바로 조회·키워드 도구. 추적 키워드는 먼저 등록한 5개만 광고 없이, 6번째부터는 볼 때마다 광고</li>
+    <li>PRO(가안 9,900원/월): 광고 없음, 분석·감시·오픈마켓·SNS·포털·지도 메뉴, 카톡·문자 포함 수량</li>
+    <li>BIZ(가안 29,000원/월, 대행사): 플레이스 통계·대량 분석·챗봇·월보장 관리·리포트 공유·팀원 관리(계정마다 볼 그룹·메뉴·권한 지정)</li></ul>
   <h4>9. 이 프로토타입의 원칙</h4><ul><li>기획 단계라 모든 데이터는 예시(실제 외부 조회·서버 연결 없음), 새로고침하면 예시 처음 상태</li><li>기획 의견은 메뉴·홈의 "기획 전달"로 저장 → 모두가 보고 수정·삭제, 설정 > 전달된 기획 모아보기</li><li>새 버전이 배포되면 업데이트 내용과 함께 새로고침 안내</li></ul>
   <h4>10. 실서비스 전환 시 정할 것</h4><ul><li>네이버 수집 방식·차단 대응·조회 단가, 알림톡 템플릿 심사·문자 단가, 광고 네트워크 정책, 결제(PG)·로그인(카카오), 서버·DB 스택, AI(LLM) 연동</li>
     <li>보안: 권한·요금제 잠금은 서버에서 강제, 네이버 계정 비밀번호 저장 금지, 공유 링크 만료·폐기, 무료 다계정 방지(휴대폰 인증), 개인정보 동의·삭제, 발송 비용 한도, 기획 전달 저장소를 회사 Firebase와 분리</li></ul></div>`}
