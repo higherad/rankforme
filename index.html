@@ -552,10 +552,9 @@ function summaryCard(){const d=new Date(),open=S.items.filter(i=>canSee(i)&&canU
     return `<button class="listlink" style="padding:10px 0" onclick="openMenu('${b.menu}')"><span class="tag ${b.type}" style="flex:none">${esc((ALL.find(x=>x.k===b.menu)||{}).t?.replace(/^N |\s*순위 체크$/g,'')||TYPES[b.type].t)}</span>
       <span class="grow" style="min-width:0"><b class="small" style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(b.name)}</b><span class="tiny muted">키워드 ${b.its.length}개 · 최고 ${best?best+'위':'순위 밖'}</span></span>
       <span class="small" style="flex:none">${u?`<span class="up">▲${u}</span> `:''}${dn?`<span class="down">▼${dn}</span>`:''}${!u&&!dn?'<span class="muted">-</span>':''}</span><span class="muted">›</span></button>`};
-  const grp=S.plan==='biz'&&new Set(biz.map(b=>b.its[0].group)).size>1;
   return `<div class="card"><h3>${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} 순위 요약<span class="more">어제 대비</span></h3>
     <div class="stats"><div onclick="go('mytrack')" style="cursor:pointer"><b>${biz.length}</b><span>등록 업체 ›</span></div><div><b class="up">${ups}</b><span>상승</span></div><div><b class="down">${downs}</b><span>하락</span></div><div><b>${its.filter(i=>cur(i)!=null&&cur(i)<=10).length}</b><span>TOP10</span></div></div>
-    ${biz.length?(grp?[...new Set(biz.map(b=>b.its[0].group))].map(g=>`<div class="sech">${esc(g)}</div>${biz.filter(b=>b.its[0].group===g).map(row).join('')}`).join(''):biz.map(row).join('')):'<div class="muted small" style="margin-top:8px">등록된 업체가 없어요</div>'}
+    ${biz.length?biz.map(row).join(''):'<div class="muted small" style="margin-top:8px">등록된 업체가 없어요</div>'}
     ${all.length>biz.length?`<div class="tiny muted" style="margin-top:8px">무료는 먼저 등록한 ${lim}곳까지 요약해요. 나머지 ${all.length-biz.length}곳은 PRO부터 · <a class="lnk" onclick="go('plan')">요금제 보기</a></div>`:''}</div>`}
 const quickCard=()=>`<div class="card"><h3>${ic('refresh',18)} N 바로 조회</h3>
     <div class="seg" style="margin-bottom:10px">${Object.entries(TYPES).map(([k,v])=>`<button class="${qType===k?'on':''}" onclick="qType='${k}';render()">${v.t}</button>`).join('')}</div>
@@ -2307,7 +2306,7 @@ function renderPlan(){
   const P=[['free','무료','0원'],['pro','PRO','9,900원'],['biz','BIZ (대행사)','29,000원']];
   const rows=[['추적 키워드','5개 광고 없이<div class="tiny muted">6번째부터 등록은 되고 볼 때마다 광고</div>','300개','무제한'],['매일 자동 기록','O','O','O'],['조회 시 광고','있음','없음','없음'],
     ['분석 메뉴 하루 사용','메뉴당 10회','메뉴별 30~100회','무제한'],['알림 예약','2개','무제한','무제한'],['앱 푸시 알림','O','O','O'],['카톡·문자 알림','-','월 300건','월 3,000건'],
-    ['AI 비서 질문','일 1회','일 10회','무제한'],['홈 바로가기','1개','4개','8개'],['홈 순위 요약','업체 5곳','전체','전체 + 그룹별'],['순위 기록 보관','30일','1년','무제한'],['엑셀 일괄 등록','-','O','O'],
+    ['AI 비서 질문','일 1회','일 10회','무제한'],['홈 바로가기','1개','4개','8개'],['홈 순위 요약','업체 5곳','전체','전체'],['순위 기록 보관','30일','1년','무제한'],['엑셀 일괄 등록','-','O','O'],
     ['순위 체크(플레이스·쇼핑·블로그)·N 바로 조회','O','O','O'],['키워드 도구(검색량·월별 추이·연관검색어·자동완성·조합기·태그·찜·글자 수)','O','O','O'],
     ['플레이스: 키워드 순위 변동·숙소·통계·리뷰·정보 변경·키워드 순위 조회','-','O','O'],['쇼핑: 스마트스토어·비교분석·리뷰 관리·정보 변경','-','O','O'],
     ['블로그: 포스팅 노출·탭별 순위·지수 분석','-','O','O'],['오픈마켓·SNS·포털·지도 순위','-','O','O'],['통합검색 노출·파워링크','-','O','O'],
@@ -2328,7 +2327,7 @@ function renderSpec(){
     <li>AI 활용하기: 버튼 위로 바로 열리는 대화창(AI 비서와 같은 대화)</li>
     <li>메뉴·홈 편집: 하단 탭·하위 메뉴 켜고 끄기와 순서(하위 메뉴는 같은 묶음 안에서만 이동), 홈 위젯 켜고 끄기와 순서</li>
     <li>모든 메뉴 입력칸에 예시값이 들어 있어 버튼만 눌러도 결과 확인</li></ul>
-  <h4>3. 홈</h4><ul><li>바로가기(메뉴를 골라 무료 1 · PRO 4 · BIZ 8개, 내 등급에서 쓸 수 있는 메뉴만) → 순위 요약(등록 업체별, 등급에 열린 메뉴만·무료 5곳, BIZ는 그룹별) → 즐겨찾기 → 다음 순위 알림 → 네이버 공지 모아보기 → N 바로 조회 → 변동 큰 키워드(플레이스·쇼핑, 전체 이용자 기준) → 공지사항</li><li>처음 방문: 둘러보기(화면 영역을 하나씩 짚는 단계별 안내)</li></ul>
+  <h4>3. 홈</h4><ul><li>바로가기(메뉴를 골라 무료 1 · PRO 4 · BIZ 8개, 내 등급에서 쓸 수 있는 메뉴만) → 순위 요약(등록 업체별, 등급에 열린 메뉴만·무료 5곳) → 즐겨찾기 → 다음 순위 알림 → 네이버 공지 모아보기 → N 바로 조회 → 변동 큰 키워드(플레이스·쇼핑, 전체 이용자 기준) → 공지사항</li><li>처음 방문: 둘러보기(화면 영역을 하나씩 짚는 단계별 안내)</li></ul>
   <h4>4. 메뉴 구성 <span class="tiny muted">(표시 없음 = 무료)</span></h4><ul>${grp}</ul>
   <h4>5. 화면 틀</h4><ul><li>추적형: 키워드+URL 등록 → 매일 기록 목록(그룹·순위 구간·검색·정렬, 내보내기·일괄등록·재조회) → 보기 4종(리스트 = 날짜별 순위표·기본, 카드, 표, 차트) → 상세(30일 그래프·목표 순위·작업 메모·변동 원인·최근 7일 기록·상위 경쟁)</li>
     <li>분석형: 입력 → 실행(무료는 광고 후) → 결과 표 → 리스트 다운로드(CSV)·복사, 오늘 사용 횟수 한도. 키워드 찾기 메뉴(검색량·연관검색어·자동완성·키워드 순위 조회·조합기)는 추적 등록 없이 복사만</li>
