@@ -384,6 +384,11 @@ function applyTheme(){const dark=S.theme==='dark'||(S.theme==='auto'&&matchMedia
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change',applyTheme);
 
 /* 무료 플랜: 조회 결과 전에 광고 → 닫으면 결과 표시 */
+/* AI 기능(AI 분석·조합기 AI 자동 생성·리뷰 AI 답글·카톡 챗봇)은 BIZ 전용: 메뉴는 BIZ_MENUS, 메뉴 안 AI 버튼은 bizOnly. AI 비서는 등급별 하루 질문 수(AI_DAY) */
+function bizLock(name){sheet(`<div style="text-align:center;padding:6px 0 4px"><div style="font-size:40px">🔒</div><h2 style="margin:6px 0">${name}</h2>
+  <div class="small muted" style="margin-bottom:14px">AI 기능은 <b>BIZ 멤버십</b>에서 쓸 수 있어요.</div>
+  <button class="btn block" onclick="closeSheet();go('plan')">요금제 보기</button></div>`)}
+const bizOnly=(name,fn)=>S.plan==='biz'?fn():bizLock(name);
 function gate(fn){
   if(S.plan!=='free')return fn();
   const ads=[['🏕️ 가을 캠핑 대전','최대 60% 할인'],['☕ 신규 오픈 카페','첫 방문 아메리카노 무료'],['📈 플레이스 마케팅','상위노출 무료 진단']];
@@ -889,9 +894,13 @@ function drawChat(){
   if(p){p.innerHTML=chatMsgs();p.scrollTop=p.scrollHeight;const i=$('#aiInputP');i.value='';i.focus()}
   else if(route==='ai')render()}
 function scrollChat(){requestAnimationFrame(()=>scrollTo(0,document.body.scrollHeight))}
+const AI_DAY={free:1,pro:10,biz:Infinity},aiUse={d:'',n:0}; // AI 비서 하루 질문 수(등급별)
 function aiSend(t){
   t=(t||'').trim();if(!t)return;
-  S.chat.push({me:true,h:esc(t)});drawChat();
+  S.chat.push({me:true,h:esc(t)});
+  const day=new Date().toDateString();if(aiUse.d!==day)Object.assign(aiUse,{d:day,n:0});
+  if(aiUse.n>=AI_DAY[S.plan]){S.chat.push({me:false,h:`오늘 AI 비서 질문을 다 썼어요 (${S.plan==='free'?'무료 하루 1회':'PRO 하루 10회'}).\n${S.plan==='free'?'PRO는 하루 10회, ':''}BIZ는 무제한으로 물어볼 수 있어요.\n${aB('요금제 보기',"go('plan')")}`});drawChat();return}
+  aiUse.n++;drawChat();
   const c=$('#chatP')||$('#chat');
   if(c){const ty=document.createElement('div');ty.className='msg bot typing';ty.innerHTML='<span></span><span></span><span></span>';c.append(ty);$('#chatP')?c.scrollTop=c.scrollHeight:scrollChat()}
   setTimeout(()=>{S.chat.push({me:false,h:aiReply(t)});S.chat=S.chat.slice(-60);drawChat()},550)}
@@ -918,10 +927,14 @@ function aiReply(t){
     return `📊 오늘 순위 요약\n\n`+Object.entries(TYPES).map(([k,v])=>{const a=b(k);return `<b>${v.t}</b> ${a.length}개 · 상승 ${a.filter(i=>delta(i)>0).length} · 하락 ${a.filter(i=>delta(i)<0).length} · 순위 밖 ${a.filter(i=>cur(i)==null).length}`}).join('\n')+
     `\n\n가장 많이 오른 키워드: ${(()=>{const x=[...it].sort((a,b)=>delta(b)-delta(a))[0];return x&&delta(x)>0?`${esc(x.keyword)} ${dHtml(delta(x))}`:'없음'})()}`}
   if(/등록|추가/.test(t))return '등록할 <b>플레이스·스마트스토어·블로그 URL</b>을 키워드와 함께 보내주세요.\n예) https://m.place.naver.com/restaurant/1234567 강남 맛집, 역삼 맛집';
-  if(/광고|무료|요금|pro|biz|결제|멤버십/i.test(t))return `요금제는 3가지예요. 지금은 <b>${S.plan==='free'?'무료':S.plan.toUpperCase()}</b>를 쓰고 있어요.\n\n• <b>무료</b> — 기본 순위 체크·N 바로 조회·키워드 도구. 추적 키워드 5개까지 광고 없이, 6번째부터 볼 때마다 광고\n• <b>PRO</b> (월 9,900원) — 광고 없음, 분석·감시·오픈마켓·SNS·포털·지도 메뉴, 카톡·문자 알림 월 300건\n• <b>BIZ</b> (월 29,000원, 대행사) — 플레이스 통계·대량 분석·챗봇·월보장 관리·리포트 공유·팀원 관리\n${aB('요금제 비교 보기',"go('plan')")}`;
+  if(/광고|무료|요금|pro|biz|결제|멤버십/i.test(t))return `요금제는 3가지예요. 지금은 <b>${S.plan==='free'?'무료':S.plan.toUpperCase()}</b>를 쓰고 있어요.\n\n• <b>무료</b> — 기본 순위 체크·N 바로 조회·키워드 도구. 추적 키워드 5개까지 광고 없이, 6번째부터 볼 때마다 광고\n• <b>PRO</b> (월 9,900원) — 광고 없음, 분석·감시·오픈마켓·SNS·포털·지도 메뉴, 카톡·문자 알림 월 300건\n• <b>BIZ</b> (월 29,000원, 대행사) — AI 분석·AI 키워드 자동 생성·리뷰 AI 답글·AI 비서 무제한·플레이스 통계·대량 분석·챗봇·월보장 관리·리포트 공유·팀원 관리\n${aB('요금제 비교 보기',"go('plan')")}`;
   if(/엑셀|csv|일괄|대량/i.test(t))return '각 목록 위 <b>일괄등록</b> 버튼에서 CSV(유형,키워드,대상,MID,그룹)를 올리면 한 번에 등록돼요.';
   return `제가 할 수 있는 일이에요. 이렇게 물어보세요:\n\n<b>순위</b>\n• "캠핑의자 몇 위야?" · "떨어진 키워드" · "오늘 순위 요약"\n<b>분석·키워드 도구</b>\n• "강남 맛집 검색량" · "강남 맛집 연관검색어" · "강남 맛집 자동완성"\n• "강남 맛집 상위 업체" · "캠핑의자 쇼핑 상위 상품" · "강남 맛집 AI 분석해줘"\n• "블로그 지수 hi_foodie" · "강남 맛집 블로그 태그" · "강남 고기집 입찰가"\n• "#강남맛집 게시물 수" · "글자 수 세줘 '문장'"\n• 플레이스 URL + "키워드 만들어줘" / "노출 키워드 찾아줘"\n<b>관리</b>\n• "부정 리뷰 보여줘" · "유입 통계" · "알림 목록" · "포인트 얼마야" · "추적 몇 개야"\n<b>등록·알림</b>\n• URL + 키워드로 등록 · "평일 9시, 18시에 카톡으로 보내줘"\n<b>메뉴 안내</b>\n• "키워드 조합기 뭐야?" · "리뷰 모니터링 열어줘" · "기능 뭐 있어?"`}
 /* AI 비서 도구: 질문을 메뉴 기능으로 연결 — 예시는 규칙 기반(각 메뉴의 run 로직을 그대로 호출), 실서비스는 LLM이 의도·인자를 뽑아 같은 함수를 호출 */
+// 등급 확인: 쓸 수 없는 메뉴면 결과 대신 잠금 안내(등록·실행 안 함)
+const planNm=p=>p==='biz'?'BIZ':p==='pro'?'PRO':'무료';
+const aiNeed=k=>canUse(k)?'':`🔒 <b>${esc((ALL.find(x=>x.k===k)||{}).t||k)}</b> — ${planNm(needPlan(k))} 멤버십부터 쓸 수 있어요. (지금: ${planNm(S.plan)})\n${aB('요금제 보기',"go('plan')")}`;
+const aiNeedBiz=name=>S.plan==='biz'?'':`🔒 <b>${name}</b> — BIZ 멤버십에서 쓸 수 있어요. (지금: ${planNm(S.plan)})\n${aB('요금제 보기',"go('plan')")}`;
 const aB=(l,js,c='sub')=>`<button class="btn ${c} sm" style="margin:6px 4px 0 0" onclick="${js}">${l}</button>`;
 const aOpen=(k,v)=>`${v?`AN.${k}={v:${esc(JSON.stringify(v))},res:null};`:''}${ALL.find(x=>x.k===k)?.go||`go('m','${k}')`}`; // 메뉴 열기(입력값 채워서)
 const AI_ALIAS={'검색량':'k_volume','연관검색어':'k_related','자동완성':'k_auto','조합기':'t_combine','키워드조합':'t_combine','순위변동':'p_compare','키워드순위조회':'p_hidden','히든':'p_hidden','리뷰관리':'s_review','리뷰모니터링':'p_review','플레이스통계':'p_stats','유입통계':'p_stats','정보변경':'p_change','포스팅':'b_check','블로그지수':'b_level','입찰가':'k_power','파워링크':'k_power','글자수':'t_count','바로조회':'once','챗봇':'kbot','리포트공유':'m_report','월보장':'m_project','삭제한키워드':'m_trash','그룹관리':'m_group','팀원':'m_team','포인트':'m_pay','결제내역':'m_pay','알림예약':'alert','알림설정':'alert','알림기록':'alert','알림받는곳':'alert','받는곳':'alert','태그검색':'t_btag','찜조회':'t_kwish','해시태그':'sn_tag','카카오맵':'l_map','당근':'l_karrot','통합검색':'k_total','회원정보':'member','자주묻는':'c_faq','문의':'c_ask'};
@@ -936,14 +949,14 @@ function aiKw(t,re){const q=t.match(/['"“”‘’]([^'"“”‘’]+)['"“�
 const aiList=(a,f)=>a.map((x,i)=>`${i+1}. ${f(x)}`).join('\n');
 // URL이 있는 도구(등록보다 먼저): 조합기·키워드 순위 조회·포스팅 노출·찜 조회
 function aiUrlTool(t,u){
-  if(/gift\.kakao\.com\/product\/\d+/.test(t)){const rows=[...t.matchAll(/https?:\/\/gift\.kakao\.com\/product\/\d+/g)].map(m=>kwishData(m[0]));
+  if(/gift\.kakao\.com\/product\/\d+/.test(t)){const _l=aiNeed('t_kwish');if(_l)return _l;const rows=[...t.matchAll(/https?:\/\/gift\.kakao\.com\/product\/\d+/g)].map(m=>kwishData(m[0]));
     return `🎁 카카오 선물하기 찜 조회\n\n`+rows.map(x=>`<b>${esc(x.name)}</b> (${esc(x.store)})\n찜 ${fmtN(x.wish)} · ⭐ ${x.rating} · 리뷰 ${fmtN(x.rv)} · ${fmtN(x.price)}원`).join('\n\n')+`\n${aB('카카오 찜 조회 열기',"go('m','t_kwish')")}`}
   if(!u)return null;
-  if(u.type==='place'&&/조합|키워드\s*(를\s*)?(만들|생성|뽑)/.test(t)){cmbAuto(t.match(/https?:\/\/\S+|\b\d{7,}\b/)[0],1);const o=TL.cmb.out;
+  if(u.type==='place'&&/조합|키워드\s*(를\s*)?(만들|생성|뽑)/.test(t)){const _l=aiNeedBiz('AI 키워드 자동 생성');if(_l)return _l;cmbAuto(t.match(/https?:\/\/\S+|\b\d{7,}\b/)[0],1);const o=TL.cmb.out;
     return `🧩 <b>${esc(u.name)}</b> 정보로 키워드 ${o.length}개를 만들었어요. 월 검색량 상위 10개예요.\n\n`+aiList(o.slice(0,10),x=>`${esc(x.kw)} · ${fmtN(x.sum)}회 · 경쟁 ${x.comp}`)+`\n${aB('키워드 조합기에서 전체 보기',"go('m','t_combine')")}`}
-  if(u.type==='place'&&/노출|숨은|히든|어떤\s*키워드|키워드\s*찾/.test(t)){const url=t.match(/https?:\/\/\S+|\b\d{7,}\b/)[0],res=_hidRun({url,range:'20위 이내'}),k=res.kws.filter(x=>x.rank<=20);
+  if(u.type==='place'&&/노출|숨은|히든|어떤\s*키워드|키워드\s*찾/.test(t)){const _l=aiNeed('p_hidden');if(_l)return _l;const url=t.match(/https?:\/\/\S+|\b\d{7,}\b/)[0],res=_hidRun({url,range:'20위 이내'}),k=res.kws.filter(x=>x.rank<=20);
     return `🔍 <b>${esc(res.name)}</b>가 20위 안에 노출되는 키워드 ${k.length}개예요.\n\n`+aiList(k.slice(0,10),x=>`${esc(x.kw)} · <b>${x.rank}위</b> · 월 ${fmtN(x.vol)}회`)+`\n${aB('키워드 순위 조회에서 보기',`HM='자동 찾기';${aOpen('p_hidden',{url,range:'20위 이내'})}`)}`}
-  if(u.type==='blog'&&/노출|몇\s*위|순위\s*확인/.test(t)){const url=t.match(/https?:\/\/\S+/)[0],kws=t.replace(url,'').replace(/노출|몇\s*위(야|인지)?|순위|확인|해\s*줘|알려\s*줘|[?？]/g,'').split(/[,\n]/).map(x=>x.trim()).filter(Boolean);
+  if(u.type==='blog'&&/노출|몇\s*위|순위\s*확인/.test(t)){const _l=aiNeed('b_check');if(_l)return _l;const url=t.match(/https?:\/\/\S+/)[0],kws=t.replace(url,'').replace(/노출|몇\s*위(야|인지)?|순위|확인|해\s*줘|알려\s*줘|[?？]/g,'').split(/[,\n]/).map(x=>x.trim()).filter(Boolean);
     if(!kws.length)return '확인할 키워드를 같이 보내주세요. 예) 블로그 글 주소 + 강남 맛집, 강남 회식 노출 확인해줘';
     const res=CFG.b_check.run({url,kw:kws.join('\n')});
     return `📝 포스팅 노출 확인 (${res.rows.filter(x=>x.rank).length}/${res.rows.length}개 노출)\n\n`+res.rows.map(x=>`• ${esc(x.kw)} → ${x.rank?`<b>${x.rank}위</b>`:'미노출'}`).join('\n')+`\n${aB('포스팅 노출 확인 열기',aOpen('b_check',{url,kw:kws.join('\n')}))}`}
@@ -951,51 +964,54 @@ function aiUrlTool(t,u){
 // 일반 도구·안내
 function aiTool(t,hit){const n=t.replace(/\s/g,'');
   if(/기능.*(뭐|목록|알려|있)|뭐\s*할\s*수|할\s*수\s*있는|메뉴.*(뭐|목록|전체)|도움말|^help/i.test(t))
-    return `랭포미 메뉴예요. 궁금한 메뉴는 "○○ 뭐야?", 바로 가려면 "○○ 열어줘"라고 하세요.\n\n`+TREE.filter(g=>!g.set).map(g=>`<b>${g.g}</b>\n${vis(g).map(x=>x.t).join(' · ')}`).join('\n\n')+`\n\n설정 안: 알림 · AI · 관리(월보장·그룹·삭제한 키워드) · 마이페이지 · 고객센터`;
+    return `랭포미 메뉴예요. 궁금한 메뉴는 "○○ 뭐야?", 바로 가려면 "○○ 열어줘"라고 하세요.\n\n`+TREE.filter(g=>!g.set).map(g=>`<b>${g.g}</b>\n${vis(g).map(x=>x.t+(canUse(x.k)?'':` 🔒${planNm(needPlan(x.k))}`)).join(' · ')}`).join('\n\n')+`\n\n설정 안: 알림 · AI · 관리(월보장·그룹·삭제한 키워드) · 마이페이지 · 고객센터`;
   const m=aiMenu(t);
-  if(m&&/뭐야|뭐예요|뭔가요|뭔데|뭐하는|무슨\s*기능|설명|어떻게\s*(써|사용|해|하)|사용법|쓰는\s*법/.test(t)){const g=CFG[m.k]?.guide,lg=LOGIC[m.k];
-    return `<b>${esc(m.t)}</b> <span class="tiny muted">${esc(m.g)}</span>\n${esc(m.d||'')}\n\n`+(g?g.map(x=>'• '+x).join('\n'):lg?'• '+lg[0]:'')+`\n${aB(m.t+' 열기',aOpen(m.k))}`}
+  if(m&&/뭐야|뭐예요|뭔가요|뭔데|뭐하는|무슨\s*기능|설명|어떻게\s*(써|사용|해|하)|사용법|쓰는\s*법/.test(t)){if(!canUse(m.k))return `<b>${esc(m.t)}</b> <span class="tiny muted">${esc(m.g)}</span>
+${esc(m.d||'')}
+
+`+aiNeed(m.k);const g=CFG[m.k]?.guide,lg=LOGIC[m.k];
+    return `<b>${esc(m.t)}</b> <span class="tiny muted">${esc(m.g)}</span>${canUse(m.k)?'':`\n🔒 ${planNm(needPlan(m.k))} 멤버십부터 쓸 수 있는 메뉴예요.`}\n${esc(m.d||'')}\n\n`+(g?g.map(x=>'• '+x).join('\n'):lg?'• '+lg[0]:'')+`\n${aB(m.t+' 열기',aOpen(m.k))}`}
   if(m&&/열어|이동|가\s*줘|가자|들어가|켜\s*줘|화면/.test(t)){setTimeout(()=>{aiPanel&&$('#aiBox')&&aiPanel();eval(aOpen(m.k))},600);return `<b>${esc(m.t)}</b> 화면으로 이동할게요.`}
-  if(/검색량|검색\s*수/.test(t)){const kw=aiKw(t,/검색량|검색\s*수/);if(!kw)return '검색량을 볼 키워드를 알려주세요. 예) 캠핑의자 검색량';
+  if(/검색량|검색\s*수/.test(t)){const _l=aiNeed('k_volume');if(_l)return _l;const kw=aiKw(t,/검색량|검색\s*수/);if(!kw)return '검색량을 볼 키워드를 알려주세요. 예) 캠핑의자 검색량';
     const g=genVolume(kw),r=rng('tr'+kw),peak=Math.floor(r()*12);
     return `📈 <b>${esc(kw)}</b> 월간 검색량 (최근 30일)\n\n• PC ${fmtN(g.pc)} · 모바일 ${fmtN(g.mo)} · <b>합계 ${fmtN(g.sum)}</b>\n• 월평균 클릭 PC ${g.cpc} · 모바일 ${g.cmo}\n• 경쟁도 ${g.comp}\n• 많이 찾는 달: ${MONTHS[peak]} 전후\n${aB('키워드 검색량 조회에서 보기',aOpen('k_volume',{kw}))}`}
-  if(/연관\s*검색어|연관\s*키워드/.test(t)){const kw=aiKw(t,/연관\s*검색어|연관\s*키워드/);if(!kw)return '키워드를 같이 알려주세요. 예) 강남 맛집 연관검색어';
+  if(/연관\s*검색어|연관\s*키워드/.test(t)){const _l=aiNeed('k_related');if(_l)return _l;const kw=aiKw(t,/연관\s*검색어|연관\s*키워드/);if(!kw)return '키워드를 같이 알려주세요. 예) 강남 맛집 연관검색어';
     const res=CFG.k_related.run({kw},{});return `🔗 <b>${esc(kw)}</b> 연관검색어\n\n${res.list.map(x=>'• '+esc(x)).join('\n')}\n${aB('연관검색어 조회에서 보기',aOpen('k_related',{kw}))}`}
-  if(/자동\s*완성/.test(t)){const kw=aiKw(t,/자동\s*완성/);if(!kw)return '키워드를 같이 알려주세요. 예) 캠핑의자 자동완성';
+  if(/자동\s*완성/.test(t)){const _l=aiNeed('k_auto');if(_l)return _l;const kw=aiKw(t,/자동\s*완성/);if(!kw)return '키워드를 같이 알려주세요. 예) 캠핑의자 자동완성';
     const l=acList(kw);return l.length?`⌨️ <b>${esc(kw)}</b> 자동완성 ${l.length}개\n\n${l.map(x=>'• '+esc(x)).join('\n')}\n${aB('자동완성 체크에서 보기',aOpen('k_auto',{kw}))}`:`<b>${esc(kw)}</b>은(는) 자동완성이 뜨지 않아요.`}
-  if(/입찰가|파워링크/.test(t)){const kw=aiKw(t,/입찰가|파워링크/);if(!kw)return '키워드를 같이 알려주세요. 예) 강남 고기집 입찰가';
+  if(/입찰가|파워링크/.test(t)){const _l=aiNeed('k_power');if(_l)return _l;const kw=aiKw(t,/입찰가|파워링크/);if(!kw)return '키워드를 같이 알려주세요. 예) 강남 고기집 입찰가';
     const x=CFG.k_power.run({kw}).rows[0];return `💰 <b>${esc(kw)}</b> 파워링크 예상 입찰가\n\n• PC 1·2·3위: ${x.pc.map(v=>fmtN(v)+'원').join(' · ')}\n• 모바일 1·2·3위: ${x.mob.map(v=>fmtN(v)+'원').join(' · ')}\n• 월 검색 ${fmtN(x.sum)} · 경쟁률 ${x.ratio} · 평균 광고 ${x.ads}개\n${aB('파워링크 순위·입찰가 열기',aOpen('k_power',{kw}))}`}
-  const tag=t.match(/#[^\s#]+/);if(tag||/해시태그/.test(t)){const tg=tag?tag[0]:'#'+aiKw(t,/해시태그/).replace(/\s/g,'');const res=CFG.sn_tag.run({tag:tg});
+  const tag=t.match(/#[^\s#]+/);if(tag||/해시태그/.test(t)){const _l=aiNeed('sn_tag');if(_l)return _l;const tg=tag?tag[0]:'#'+aiKw(t,/해시태그/).replace(/\s/g,'');const res=CFG.sn_tag.run({tag:tg});
     return `#️⃣ <b>${esc(tg)}</b> 게시물 ${fmtN(res.vals[11])}개 (한 달 +${fmtN(res.vals[11]-res.vals[10])})\n함께 많이 쓰는 태그: ${res.rel.map(x=>x[0]).join(' ')}\n${aB('인스타 해시태그 추이 열기',aOpen('sn_tag',{tag:tg}))}`}
-  if(/블로그\s*(지수|등급)/.test(t)){const id=(t.match(/blog\.naver\.com\/([\w-]+)/)||t.match(/\b([a-z][\w-]{2,})\b/i)||[])[1];if(!id)return '블로그 아이디를 같이 알려주세요. 예) 블로그 지수 hi_foodie';
+  if(/블로그\s*(지수|등급)/.test(t)){const _l=aiNeed('b_level');if(_l)return _l;const id=(t.match(/blog\.naver\.com\/([\w-]+)/)||t.match(/\b([a-z][\w-]{2,})\b/i)||[])[1];if(!id)return '블로그 아이디를 같이 알려주세요. 예) 블로그 지수 hi_foodie';
     const b=CFG.b_level.run({id},{}).info;return `📒 <b>${esc(b.title)}</b> (${esc(b.id)})\n\n• 지수(추정) <b>${b.grade}</b>\n• 총 방문 ${fmtN(b.visit)} · 오늘 ${fmtN(b.today)} · 이웃 ${fmtN(b.nb)}\n• 게시물 ${fmtN(b.posts)}개 · 운영 ${b.period}\n${aB('블로그 지수 분석 열기',aOpen('b_level',{id}))}`}
-  if(/블로그\s*태그|태그\s*추천/.test(t)){const kw=aiKw(t,/블로그\s*태그|태그\s*추천/);if(!kw)return '키워드를 같이 알려주세요. 예) 강남 맛집 블로그 태그';
+  if(/블로그\s*태그|태그\s*추천/.test(t)){const _l=aiNeed('t_btag');if(_l)return _l;const kw=aiKw(t,/블로그\s*태그|태그\s*추천/);if(!kw)return '키워드를 같이 알려주세요. 예) 강남 맛집 블로그 태그';
     const d=btagData(kw),cnt={};d.forEach(x=>x.tags.forEach(g=>cnt[g]=(cnt[g]||0)+1));const top=Object.entries(cnt).sort((a,b)=>b[1]-a[1]).slice(0,10);
     return `🏷️ <b>${esc(kw)}</b> 상위 블로그 글이 많이 쓴 태그\n\n${top.map(([g,c])=>`#${esc(g)} (${c})`).join(' ')}\n${aB('블로그 태그 검색 열기',"go('m','t_btag')")}`}
-  if(/블로그.*(상위|분석)|상위\s*블로그/.test(t)){const kw=aiKw(t,/상위\s*블로그|블로그/);if(!kw)return '키워드를 같이 알려주세요. 예) 강남 맛집 상위 블로그';
+  if(/블로그.*(상위|분석)|상위\s*블로그/.test(t)){const _l=aiNeed('b_bulk');if(_l)return _l;const kw=aiKw(t,/상위\s*블로그|블로그/);if(!kw)return '키워드를 같이 알려주세요. 예) 강남 맛집 상위 블로그';
     const r=CFG.b_bulk.run({kw}).rows.slice(0,5);return `✍️ <b>${esc(kw)}</b> 블로그 상위 5개 글\n\n`+aiList(r,x=>`${esc(x.title)} · ${esc(x.name)} (글자 ${fmtN(x.chars)} · 이미지 ${x.img})`)+`\n${aB('블로그 키워드 대량 분석 열기',aOpen('b_bulk',{kw}))}`}
-  if(/카카오\s*맵|지도\s*비교/.test(t)){const kw=aiKw(t,/카카오\s*맵|지도\s*비교/)||hit[0]?.keyword;if(!kw)return '키워드를 같이 알려주세요. 예) 강남역 고기집 카카오맵 비교';
+  if(/카카오\s*맵|지도\s*비교/.test(t)){const _l=aiNeed('l_map');if(_l)return _l;const kw=aiKw(t,/카카오\s*맵|지도\s*비교/)||hit[0]?.keyword;if(!kw)return '키워드를 같이 알려주세요. 예) 강남역 고기집 카카오맵 비교';
     const name=(hit.find(i=>i.type==='place')||S.items.find(i=>i.type==='place'&&!i.menu)||{}).name||'홍길동 숯불갈비',x=CFG.l_map.run({kw,name}).rows[0];
     return `🗺️ <b>${esc(name)}</b> · ${esc(kw)}\n네이버 지도 <b>${x.n}위</b> · 카카오맵 <b>${x.k?x.k+'위':'순위 밖'}</b>\n${aB('네이버 지도 vs 카카오맵 열기',aOpen('l_map',{kw,name}))}`}
-  if(/글자\s*수/.test(t)){const q=t.match(/['"“”‘’]([^'"“”‘’]+)['"“”‘’]/)||t.match(/[:：]\s*(.+)$/);if(!q)return '셀 문장을 따옴표나 콜론 뒤에 넣어주세요. 예) 글자 수 세줘: 강남역 고기 맛집 BEST 5';
+  if(/글자\s*수/.test(t)){const _l=aiNeed('t_count');if(_l)return _l;const q=t.match(/['"“”‘’]([^'"“”‘’]+)['"“”‘’]/)||t.match(/[:：]\s*(.+)$/);if(!q)return '셀 문장을 따옴표나 콜론 뒤에 넣어주세요. 예) 글자 수 세줘: 강남역 고기 맛집 BEST 5';
     const v=q[1];return `✏️ 공백 포함 <b>${v.length}</b>자 · 공백 제외 <b>${v.replace(/\s/g,'').length}</b>자 · ${new Blob([v]).size} byte`}
   // 키워드가 들어간 분석
   const kw0=(hit[0]||{}).keyword;
-  if(/분석|진단|피드백|올리(려면|는\s*법)|어떻게\s*하면/.test(t)&&hit.length){const it=hit[0],shop=it.type==='shop';if(it.type==='blog')return `블로그는 "블로그 지수 ○○" 또는 "포스팅 노출 확인"으로 물어봐 주세요.`;
+  if(/분석|진단|피드백|올리(려면|는\s*법)|어떻게\s*하면/.test(t)&&hit.length){const it=hit[0],shop=it.type==='shop';{const _l=it.type==='blog'?'':aiNeed(shop?'s_feedback':'p_feedback');if(_l)return _l}if(it.type==='blog')return `블로그는 "블로그 지수 ○○" 또는 "포스팅 노출 확인"으로 물어봐 주세요.`;
     const r=shop?sfbAnalyze(CFG.s_compare.run({kw:it.keyword,n:'상위 50개'}),it):fbAnalyze(CFG.p_compare.run({kw:it.keyword,n:'상위 50개'}),it),k=shop?'s_feedback':'p_feedback';
     return `🤖 <b>${esc(it.keyword)}</b> · ${esc(it.name)} AI 분석\n\n<b>진단</b>\n${r.diag.slice(0,3).map(d=>'• '+d).join('\n')}\n\n<b>먼저 할 일</b>\n`+aiList(r.rec.slice(0,3),x=>`<b>${x.t}</b> — ${x.d}`)+`\n${aB('AI 분석에서 전체 보기',aOpen(k,{t:`${it.keyword} · ${it.name}`}))}`}
-  if(/쇼핑|가격\s*비교|상품/.test(t)&&/상위|1위|순위\s*변동|최저가|경쟁/.test(t)){const kw=aiKw(t,/쇼핑|가격\s*비교|상위\s*상품|상품/)||kw0;if(!kw)return '쇼핑 키워드를 같이 알려주세요. 예) 캠핑의자 쇼핑 상위 상품';
+  if(/쇼핑|가격\s*비교|상품/.test(t)&&/상위|1위|순위\s*변동|최저가|경쟁/.test(t)){const _l=aiNeed('s_compare');if(_l)return _l;const kw=aiKw(t,/쇼핑|가격\s*비교|상위\s*상품|상품/)||kw0;if(!kw)return '쇼핑 키워드를 같이 알려주세요. 예) 캠핑의자 쇼핑 상위 상품';
     const r=CFG.s_compare.run({kw,n:'상위 20개'}).rows;return `🛒 <b>${esc(kw)}</b> 가격비교 상위 5개 (최저가 ${fmtN(Math.min(...r.map(x=>x.price)))}원)\n\n`+aiList(r.slice(0,5),x=>`${x.me?'<b>':''}${esc(x.name)}${x.me?'</b> (내 상품)':''} · ${fmtN(x.price)}원 · ${x.kind}`)+`\n${aB('가격비교 비교분석 열기',aOpen('s_compare',{kw,n:'상위 20개'}))}`}
-  if(/상위\s*업체|1위\s*(는|가|누구)|누가\s*1위|경쟁\s*업체|순위\s*변동/.test(t)){const kw=aiKw(t,/상위\s*업체|1위|누가|경쟁\s*업체|순위\s*변동/)||kw0;if(!kw)return '키워드를 같이 알려주세요. 예) 강남 맛집 상위 업체';
+  if(/상위\s*업체|1위\s*(는|가|누구)|누가\s*1위|경쟁\s*업체|순위\s*변동/.test(t)){const _l=aiNeed('p_compare');if(_l)return _l;const kw=aiKw(t,/상위\s*업체|1위|누가|경쟁\s*업체|순위\s*변동/)||kw0;if(!kw)return '키워드를 같이 알려주세요. 예) 강남 맛집 상위 업체';
     const res=CFG.p_compare.run({kw,n:'상위 20개'}),r=res.rows,me=r.find(x=>x.me),lead=cmpCols(res)[0][0].name,keep=cmpCols(res).findIndex(c=>c[0].name!==lead);
     return `🏆 <b>${esc(kw)}</b> 플레이스 상위 5곳\n\n`+aiList(r.slice(0,5),x=>`${x.me?'<b>':''}${esc(x.name)}${x.me?'</b> (내 업체)':''} · 방문자리뷰 ${fmtN(x.rv)} · 저장 ${fmtN(x.sv)}`)+`\n\n1위 ${esc(lead)} — ${keep<0?30:keep}일 연속 1위예요.${me?` 내 업체는 <b>${me.rank}위</b>예요.`:''}\n${aB('키워드 순위 변동 열기',aOpen('p_compare',{kw,n:'상위 20개'}))}`}
   // 관리·현황
-  if(/리뷰/.test(t)){const k=/상품|쇼핑|스토어/.test(t)?'s':'p',c=RVK[k];if(!c.linked())return `${k==='s'?'스마트스토어 판매자':'스마트플레이스'} 계정을 먼저 연동해야 리뷰를 볼 수 있어요.\n${aB('예시 계정 연동하고 다시 보기',`${k==='s'?'SS':'MG'}.linked=true;aiSend(${esc(JSON.stringify(t))})`,'')}${aB('연동 화면으로',`go('m','${k}_review')`)}`;
+  if(/리뷰/.test(t)){const k=/상품|쇼핑|스토어/.test(t)?'s':'p',c=RVK[k];{const _l=aiNeed(k+'_review');if(_l)return _l}if(!c.linked())return `${k==='s'?'스마트스토어 판매자':'스마트플레이스'} 계정을 먼저 연동해야 리뷰를 볼 수 있어요.\n${aB('예시 계정 연동하고 다시 보기',`${k==='s'?'SS':'MG'}.linked=true;aiSend(${esc(JSON.stringify(t))})`,'')}${aB('연동 화면으로',`go('m','${k}_review')`)}`;
     reviewPage(k);const rows=RVROWS,neg=rows.filter(x=>x.neg),list=/부정|나쁜|안\s*좋/.test(t)?neg:rows;
     return `💬 최근 7일 새 리뷰 ${rows.length}개 · 부정 ${neg.length}개 · 답글 대기 ${rows.filter(x=>!RVR[x.id]).length}개\n\n`+list.slice(0,5).map(x=>`${'★'.repeat(x.star)} <b>${esc(x.pl)}</b>\n"${esc(x.t)}"`).join('\n\n')+`\n${aB(k==='s'?'리뷰 관리 열기':'리뷰 모니터링 열기',`go('m','${k}_review')`)}`}
-  if(/유입|통계/.test(t)){if(!MG.linked)return `스마트플레이스 계정을 연동하면 유입 통계를 볼 수 있어요.\n${aB('예시 계정 연동하고 다시 보기',`MG.linked=true;aiSend(${esc(JSON.stringify(t))})`,'')}${aB('플레이스 통계 열기',"go('m','p_stats')")}`;
+  if(/유입|통계/.test(t)){const _l=aiNeed('p_stats');if(_l)return _l;if(!MG.linked)return `스마트플레이스 계정을 연동하면 유입 통계를 볼 수 있어요.\n${aB('예시 계정 연동하고 다시 보기',`MG.linked=true;aiSend(${esc(JSON.stringify(t))})`,'')}${aB('플레이스 통계 열기',"go('m','p_stats')")}`;
     const d=statsData();return `📊 <b>${esc(SR.place)}</b> 이번 주 플레이스 유입 ${d.ct}회 (지난주 대비 ${d.pct>=0?'+':''}${d.pct}%)\n• 가장 많이 들어온 곳: ${d.ch[0][0]}\n• 가장 많이 검색한 키워드: ${esc(d.kw[0][0])}\n${aB('플레이스 통계 열기',"go('m','p_stats')")}`}
-  if(/정보\s*변경|변경\s*감지|바뀐\s*(곳|정보|내용)/.test(t)){const shop=/상품|쇼핑/.test(t);return `${shop?'내·경쟁 상품의 가격·할인·배송비·상품명':'내·경쟁 업체의 영업시간·사진·메뉴·가격'} 변경 내역을 매일 모아 보여드려요.\n${aB('정보 변경 감지 열기',`go('m','${shop?'s':'p'}_change')`)}`}
+  if(/정보\s*변경|변경\s*감지|바뀐\s*(곳|정보|내용)/.test(t)){const shop=/상품|쇼핑/.test(t);{const _l=aiNeed((shop?'s':'p')+'_change');if(_l)return _l}return `${shop?'내·경쟁 상품의 가격·할인·배송비·상품명':'내·경쟁 업체의 영업시간·사진·메뉴·가격'} 변경 내역을 매일 모아 보여드려요.\n${aB('정보 변경 감지 열기',`go('m','${shop?'s':'p'}_change')`)}`}
   if(/알림/.test(t)&&/목록|뭐|있|확인|예약된|몇/.test(t))return S.schedules.length?`⏰ 예약된 알림 ${S.schedules.length}개\n\n`+S.schedules.map(x=>`• <b>${esc(x.name)}</b> ${x.on?'':'(꺼짐)'}\n  ${x.times.join(', ')} · ${x.days.length===7?'매일':x.days.length===5?'평일':'주말'} · ${chLabel(x).join(', ')}`).join('\n')+`\n${aB('알림 예약 보기',"go('alert')")}`:`예약된 알림이 없어요. "평일 9시에 카톡으로 보내줘"처럼 말하면 바로 예약해요.`;
   if(/포인트|잔액/.test(t))return `💳 보유 포인트 <b>${fmtN(MG.point)}P</b>\n문자 1건 40P · 알림톡 1건 10P · 앱 알림 무료\n${aB('포인트 · 결제 내역',"go('m','m_pay')")}`;
   if(/그룹/.test(t))return `📁 그룹 ${groupList().length}개\n\n`+groupList().map(([g,c])=>`• ${esc(g)} — 키워드 ${c}개`).join('\n')+`\n${aB('그룹 관리',"go('m','m_group')")}`;
@@ -1014,11 +1030,13 @@ function makeSchedule(t,hit){
   const th=t.match(/(\d+)\s*위\s*(밖|아래|이하|밑)/);
   const cond=th?'out':/떨어|하락/.test(t)?'drop':/변동|바뀌|변하/.test(t)?'change':'always';
   const type=/플레이스/.test(t)?'place':/쇼핑|스토어/.test(t)?'shop':/블로그/.test(t)?'blog':'all';
-  const ch={push:true,kakao:/카톡|카카오/.test(t),sms:/문자|sms/i.test(t)};
+  if(S.plan==='free'&&S.schedules.length>=2)return `🔒 무료는 알림 예약을 2개까지 만들 수 있어요. 지금 ${S.schedules.length}개예요.\nPRO부터 무제한으로 예약해요.\n${aB('요금제 보기',"go('plan')")}`;
+  const want={kakao:/카톡|카카오/.test(t),sms:/문자|sms/i.test(t)},free=S.plan==='free',ch={push:true,kakao:want.kakao&&!free,sms:want.sms&&!free}; // 무료는 카톡·문자 알림 없음
   const s={id:uid(),name:hit.length?hit[0].keyword+' 알림':(type==='all'?'순위':TYPES[type].t)+' 알림',type:hit.length?'all':type,ids:hit.map(i=>i.id),times,days,cond,th:th?+th[1]:10,ch,on:true};
   S.schedules.push(s);
   const miss=['kakao','sms'].filter(k=>ch[k]&&!S.ch[k]);
   return `⏰ 알림을 예약했어요\n\n• 시간: ${times.join(', ')} (${days.length===7?'매일':days.length===5?'평일':'주말'})\n• 대상: ${hit.length?hit.map(i=>esc(i.keyword)).join(', '):(type==='all'?'전체 키워드':TYPES[type].t)}\n• 조건: ${cond==='out'?s.th+'위 밖으로 밀리면':COND[cond]}\n• 받는 곳: ${chLabel(s).join(', ')}\n\n미리보기:\n<span class="small muted">${esc(msgFor(s)||'(현재는 조건에 맞는 변동 없음)').split('\n').slice(0,3).join('\n')}</span>`+
+    (free&&(want.kakao||want.sms)?`\n\n🔒 카카오톡·문자 알림은 PRO부터예요. 이번 예약은 앱 알림으로만 보내요.`:'')+
     (miss.length?`\n\n⚠️ ${miss.map(k=>k==='kakao'?'카카오톡':'문자').join('·')} 번호가 아직 연결되지 않았어요.\n<button class="btn sm" onclick="chSheet()">받는 곳 연결하기</button>`:`\n<button class="btn sub sm" onclick="go('alert')">알림 예약 보기</button>`)}
 function recommend(t,hit){
   const base=hit[0]||S.items.find(i=>i.type==='place'),word=(t.match(/([가-힣]+?)(?:\s*(?:키워드|지역))?\s*(?:관련\s*)?추천/)||[])[1];
@@ -1136,7 +1154,7 @@ function seedTrk(k){if(SEEDED[k])return;SEEDED[k]=1;const c=TRK[k];
 TREE.forEach(g=>{let s;g.items.forEach(it=>it.s=s=it.s||s)}); // s = 하위 메뉴 소제목, 첫 항목에만 적고 아래로 이어짐
 const secH=(a,i)=>a[i].s&&a[i].s!==a[i-1]?.s?a[i].s:''; // 소제목이 바뀌는 첫 항목이면 소제목
 const ALL=TREE.flatMap(g=>g.items.map(it=>({...it,g:g.g,gk:g.k})));
-const FREE_MENUS=['once','t_count','place','shop','blog','t_btag','t_kwish','k_volume','k_related','k_auto','t_combine'],BIZ_MENUS=['p_stats','b_bulk','kbot','m_project','m_report','m_team'];
+const FREE_MENUS=['once','t_count','place','shop','blog','t_btag','t_kwish','k_volume','k_related','k_auto','t_combine'],BIZ_MENUS=['p_stats','b_bulk','kbot','m_project','m_report','m_team','p_feedback','s_feedback'];
 const needPlan=k=>BIZ_MENUS.includes(k)?'biz':FREE_MENUS.includes(k)||TREE.some(g=>(g.set||g.k==='help')&&g.items.some(x=>x.k===k))?'free':'pro';
 const canUse=k=>['free','pro','biz'].indexOf(S.plan)>=['free','pro','biz'].indexOf(needPlan(k));
 const lockTag=k=>canUse(k)?'':needPlan(k)==='biz'?' <span class="tag" style="background:linear-gradient(90deg,#3b5bfd,#a74bff);color:#fff">🔒 BIZ</span>':' <span class="tag" style="background:var(--pri-soft);color:var(--pri)">🔒 PRO</span>'; // PRO=연파랑, BIZ=보라 그라데이션
@@ -1899,7 +1917,7 @@ function reviewPage(k){const c=RVK[k];if(!c.linked()&&!PREVIEW)return c.first();
       <div class="small" style="margin-top:4px">${'★'.repeat(x.star)}<span class="muted">${'★'.repeat(5-x.star)}</span> · ${x.who}</div>
       <div class="small" style="margin-top:4px">${c.neg.reduce((t,n)=>t.replace(n,`<b class="up">${n}</b>`),esc(x.t))}</div>
       ${RVR[x.id]?`<div class="small" style="margin-top:8px;padding:8px 10px;border-radius:10px;background:var(--pri-soft);white-space:pre-line"><b>${c.owner}</b> ${esc(RVR[x.id])}</div>`
-        :`<div class="row" style="justify-content:flex-end;margin-top:6px"><button class="btn sub sm" onclick="replySheet('${x.id}')">${ic('spark',14)} AI 답글 초안</button></div>`}</div>`).join('')||'<div class="empty">리뷰가 없어요</div>'}</div>`}
+        :`<div class="row" style="justify-content:flex-end;margin-top:6px"><button class="btn sub sm" onclick="bizOnly('리뷰 AI 답글 초안',()=>replySheet('${x.id}'))">${ic('spark',14)} AI 답글 초안${S.plan==='biz'?'':' 🔒'}</button></div>`}</div>`).join('')||'<div class="empty">리뷰가 없어요</div>'}</div>`}
 MANAGE.p_review=()=>reviewPage('p');
 MANAGE.s_review=()=>reviewPage('s');
 /* 스마트스토어 판매자 계정 연동(리뷰 관리): 계정 → 상품, 리뷰를 볼 상품을 체크 */
@@ -2049,7 +2067,7 @@ T=(cols,rows)=>innerWidth<700&&cols.length>=7?`<div class="tcards">${rows.map(r=
 const TL={cmb:{url:'https://m.place.naver.com/restaurant/1938472610',name:'',w:['홍길동 숯불갈비','강남\n역삼\n선릉','고기집\n회식','맛집\n추천'],pos:['any','any','any','3'],must:[false,false,false,false],n:100,out:[]},btag:null,kw:null};
 const CMB_L=['업체명','위치','메뉴','의도'];
 MANAGE.t_combine=()=>{const c=TL.cmb;
-  return `<div class="card"><label class="lb" style="margin-top:0">플레이스 URL 또는 ID</label><div class="row" style="gap:8px"><input class="input grow" id="cmbUrl" value="${esc(c.url)}" oninput="TL.cmb.url=this.value"><button class="btn" onclick="cmbAuto()">${ic('spark',16)} AI 자동 생성</button></div>
+  return `<div class="card"><label class="lb" style="margin-top:0">플레이스 URL 또는 ID</label><div class="row" style="gap:8px"><input class="input grow" id="cmbUrl" value="${esc(c.url)}" oninput="TL.cmb.url=this.value"><button class="btn" onclick="bizOnly('AI 키워드 자동 생성',()=>cmbAuto())">${ic('spark',16)} AI 자동 생성${S.plan==='biz'?'':' 🔒'}</button></div>
       <div class="tiny muted" style="margin-top:6px">${c.name?`<b>${esc(c.name)}</b> 정보로 아래 칸을 채웠어요. 단어를 고쳐 다시 조합할 수 있어요.`:'URL을 넣으면 AI가 아래 업체명·위치·메뉴·의도 칸을 채우고 키워드를 만들어요.'}</div></div>
     <div class="cmbgrid">${CMB_L.map((l,i)=>`<div class="card"><div class="row" style="margin-bottom:6px"><b class="grow small">${i+1}. ${l}</b>
       <label class="tiny" style="display:flex;gap:3px;align-items:center;color:var(--up);font-weight:700"><input type="checkbox" ${c.must[i]?'checked':''} onchange="TL.cmb.must[${i}]=this.checked">필수</label></div>
@@ -2255,7 +2273,7 @@ function dragStart(e){
   addEventListener('pointermove',move);addEventListener('pointerup',end);addEventListener('pointercancel',end)}
 function renderPlan(){
   const P=[['free','무료','0원'],['pro','PRO','9,900원'],['biz','BIZ (대행사)','29,000원']];
-  const rows=[['추적 키워드','5개 광고 없이<div class="tiny muted">6번째부터 등록은 되고 볼 때마다 광고</div>','300개','무제한'],['매일 자동 기록','O','O','O'],['조회 시 광고','있음','없음','없음'],['알림 예약','2개','무제한','무제한'],['앱 푸시 알림','O','O','O'],['카톡·문자 알림','-','월 300건','월 3,000건'],['AI 비서 질문','일 10회','무제한','무제한'],['순위 기록 보관','30일','1년','무제한'],['엑셀 일괄 등록','-','O','O'],['순위 체크(플레이스·쇼핑·블로그)·키워드 도구','O','O','O'],['플레이스 분석·감시(비교·추세·경쟁·리뷰 등)','-','O','O'],['블로그 지수·세부 순위(인플루언서·카페 등)','-','O','O'],['오픈마켓·SNS·포털·지도 순위','-','O','O'],['검색량 추이·AI 키워드·파워링크','-','O','O'],['플레이스 통계·블로그 대량 분석','-','-','O'],['월보장 관리·카톡 챗봇','-','-','O'],['광고주별 리포트 공유','-','-','O'],['팀원·권한 관리','-','-','O']];
+  const rows=[['추적 키워드','5개 광고 없이<div class="tiny muted">6번째부터 등록은 되고 볼 때마다 광고</div>','300개','무제한'],['매일 자동 기록','O','O','O'],['조회 시 광고','있음','없음','없음'],['알림 예약','2개','무제한','무제한'],['앱 푸시 알림','O','O','O'],['카톡·문자 알림','-','월 300건','월 3,000건'],['AI 비서 질문','일 1회','일 10회','무제한'],['AI 분석·AI 키워드 자동 생성·리뷰 AI 답글','-','-','O'],['순위 기록 보관','30일','1년','무제한'],['엑셀 일괄 등록','-','O','O'],['순위 체크(플레이스·쇼핑·블로그)·키워드 도구','O','O','O'],['플레이스 분석·감시(비교·추세·경쟁·리뷰 등)','-','O','O'],['블로그 지수·세부 순위(인플루언서·카페 등)','-','O','O'],['오픈마켓·SNS·포털·지도 순위','-','O','O'],['검색량 추이·AI 키워드·파워링크','-','O','O'],['플레이스 통계·블로그 대량 분석','-','-','O'],['월보장 관리·카톡 챗봇','-','-','O'],['광고주별 리포트 공유','-','-','O'],['팀원·권한 관리','-','-','O']];
   return `<div class="card"><table class="plan"><tr><th></th>${P.map(p=>`<th>${p[1]}<div class="tiny muted">${p[2]}/월</div></th>`).join('')}</tr>
     ${rows.map(r=>`<tr>${r.map((c,i)=>`<td>${c}</td>`).join('')}</tr>`).join('')}</table></div>
     ${P.map(p=>`<button class="btn block ${S.plan===p[0]?'ghost':''}" style="margin-bottom:8px" ${S.plan===p[0]?'disabled':''} onclick="S.plan='${p[0]}';render();toast('${p[1]} 요금제로 변경 (데모)')">${S.plan===p[0]?'현재 이용 중: '+p[1]:p[1]+'로 변경'}</button>`).join('')}
@@ -2281,7 +2299,7 @@ function renderSpec(){
   <h4>8. 요금제 · 수익 모델</h4><ul><li>메뉴는 숨기지 않고 🔒 표시, 잠긴 메뉴는 흐린 예시 + 요금제 안내</li>
     <li>무료: 기본 순위 체크·N 바로 조회·키워드 도구. 추적 키워드는 먼저 등록한 5개만 광고 없이, 6번째부터는 볼 때마다 광고</li>
     <li>PRO(가안 9,900원/월): 광고 없음, 분석·감시·오픈마켓·SNS·포털·지도 메뉴, 카톡·문자 포함 수량</li>
-    <li>BIZ(가안 29,000원/월, 대행사): 플레이스 통계·대량 분석·챗봇·월보장 관리·리포트 공유·팀원 관리(계정마다 볼 그룹·메뉴·권한 지정)</li></ul>
+    <li>BIZ(가안 29,000원/월, 대행사): AI 분석·AI 키워드 자동 생성·리뷰 AI 답글 초안·카톡 챗봇·AI 비서 무제한·플레이스 통계·대량 분석·월보장 관리·리포트 공유·팀원 관리(계정마다 볼 그룹·메뉴·권한 지정)</li></ul>
   <h4>9. 이 프로토타입의 원칙</h4><ul><li>기획 단계라 모든 데이터는 예시(실제 외부 조회·서버 연결 없음), 새로고침하면 예시 처음 상태</li><li>기획 의견은 메뉴·홈의 "기획 전달"로 저장 → 모두가 보고 수정·삭제, 설정 > 전달된 기획 모아보기</li><li>새 버전이 배포되면 업데이트 내용과 함께 새로고침 안내</li></ul>
   <h4>10. 실서비스 전환 시 정할 것</h4><ul><li>네이버 수집 방식·차단 대응·조회 단가, 알림톡 템플릿 심사·문자 단가, 광고 네트워크 정책, 결제(PG)·로그인(카카오), 서버·DB 스택, AI(LLM) 연동</li>
     <li>보안: 권한·요금제 잠금은 서버에서 강제, 네이버 계정 비밀번호 저장 금지, 공유 링크 만료·폐기, 무료 다계정 방지(휴대폰 인증), 개인정보 동의·삭제, 발송 비용 한도, 기획 전달 저장소를 회사 Firebase와 분리</li></ul></div>`}
