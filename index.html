@@ -338,7 +338,7 @@ function seed(){
   it[0].fav=it[5].fav=it[8].fav=true;it[0].memo='점심 광고 진행중';
   return {items:it,plan:'free',theme:'auto',fab:true,
     menus:null,
-    widgets:{todo:true,summary:true,fav:true,next:true,nnotice:true,quick:true,movers:true,notice:true},wOrder:['todo','summary','fav','next','nnotice','quick','movers','notice'],
+    shortcuts:['once','place','shop','k_volume'],widgets:{todo:true,summary:true,fav:true,next:true,nnotice:true,quick:true,movers:true,notice:true},wOrder:['todo','summary','fav','next','nnotice','quick','movers','notice'],
     ch:{push:false,kakao:'',sms:''},
     schedules:[
       {id:uid(),name:'아침 순위 브리핑',type:'all',ids:[],times:['09:00'],days:[1,2,3,4,5],cond:'always',th:10,ch:{push:true,kakao:true,sms:false},on:true},
@@ -531,8 +531,7 @@ let qType='place';
 function renderHome(){
   const its=S.items.filter(canSee),ups=its.filter(i=>delta(i)>0).length,downs=its.filter(i=>delta(i)<0).length,w=S.widgets;
   const d=new Date(),P={};let h='';
-  if(w.summary)P.summary=`<div class="card"><h3>${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} 순위 요약<span class="more">어제 대비</span></h3>
-    <div class="stats"><div onclick="go('mytrack')" style="cursor:pointer"><b>${its.length}</b><span>추적 중 ›</span></div><div><b class="up">${ups}</b><span>상승</span></div><div><b class="down">${downs}</b><span>하락</span></div><div><b>${its.filter(i=>cur(i)!=null&&cur(i)<=10).length}</b><span>TOP10</span></div></div></div>`;
+  if(w.summary)P.summary=summaryCard();
   if(w.fav){const fv=its.filter(i=>i.fav);P.fav=`<div class="card"><h3><span style="color:#f5b400">★</span> 즐겨찾기</h3>${fv.length?fv.map(itemCard).join(''):'<div class="muted small">키워드 상세에서 ☆를 눌러 추가하세요</div>'}</div>`}
   if(w.next){const n=nextFire();P.next=`<div class="card" onclick="go('alert')" style="cursor:pointer"><h3>${ic('bell',18)} 다음 순위 알림<span class="more">관리 ›</span></h3>
     ${n?`<div class="row"><div style="font-size:26px;font-weight:800">${n.time}</div><div class="grow small muted">${n.label} · ${esc(n.s.name)}<br>${chLabel(n.s).join(' · ')}로 발송</div></div>`:'<div class="muted small">예약된 알림이 없어요. 알림을 예약하면 정해진 시간에 순위를 보내드려요.</div>'}</div>`}
@@ -544,6 +543,19 @@ function renderHome(){
   h=S.wOrder.map(k=>P[k]||'').join('');
   if(!Object.values(w).some(Boolean))h='<div class="empty">홈 위젯이 모두 꺼져 있어요.<br><button class="btn sub sm" style="margin-top:12px" onclick="go(\'menuedit\')">홈 편집</button></div>';
   return h}
+/* 순위 요약: 등록된 업체(상품·블로그) 기준 — 내 등급에서 열린 메뉴의 항목만, 무료는 먼저 등록한 5곳까지 */
+function summaryCard(){const d=new Date(),open=S.items.filter(i=>canSee(i)&&canUse(i.menu||i.type)),by=new Map();
+  [...open].sort((a,b)=>a.created-b.created).forEach(i=>{const k=(i.menu||i.type)+'|'+i.name;if(!by.has(k))by.set(k,{name:i.name,type:i.type,menu:i.menu||i.type,its:[]});by.get(k).its.push(i)});
+  const all=[...by.values()],lim=S.plan==='free'?5:Infinity,biz=all.slice(0,lim),its=biz.flatMap(b=>b.its),ups=its.filter(i=>delta(i)>0).length,downs=its.filter(i=>delta(i)<0).length;
+  const row=b=>{const rs=b.its.map(cur).filter(r=>r!=null),best=rs.length?Math.min(...rs):null,u=b.its.filter(i=>delta(i)>0).length,dn=b.its.filter(i=>delta(i)<0).length;
+    return `<button class="listlink" style="padding:10px 0" onclick="openMenu('${b.menu}')"><span class="tag ${b.type}" style="flex:none">${esc((ALL.find(x=>x.k===b.menu)||{}).t?.replace(/^N |\s*순위 체크$/g,'')||TYPES[b.type].t)}</span>
+      <span class="grow" style="min-width:0"><b class="small" style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(b.name)}</b><span class="tiny muted">키워드 ${b.its.length}개 · 최고 ${best?best+'위':'순위 밖'}</span></span>
+      <span class="small" style="flex:none">${u?`<span class="up">▲${u}</span> `:''}${dn?`<span class="down">▼${dn}</span>`:''}${!u&&!dn?'<span class="muted">-</span>':''}</span><span class="muted">›</span></button>`};
+  const grp=S.plan==='biz'&&new Set(biz.map(b=>b.its[0].group)).size>1;
+  return `<div class="card"><h3>${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} 순위 요약<span class="more">어제 대비</span></h3>
+    <div class="stats"><div onclick="go('mytrack')" style="cursor:pointer"><b>${biz.length}</b><span>등록 업체 ›</span></div><div><b class="up">${ups}</b><span>상승</span></div><div><b class="down">${downs}</b><span>하락</span></div><div><b>${its.filter(i=>cur(i)!=null&&cur(i)<=10).length}</b><span>TOP10</span></div></div>
+    ${biz.length?(grp?[...new Set(biz.map(b=>b.its[0].group))].map(g=>`<div class="sech">${esc(g)}</div>${biz.filter(b=>b.its[0].group===g).map(row).join('')}`).join(''):biz.map(row).join('')):'<div class="muted small" style="margin-top:8px">등록된 업체가 없어요</div>'}
+    ${all.length>biz.length?`<div class="tiny muted" style="margin-top:8px">무료는 먼저 등록한 ${lim}곳까지 요약해요. 나머지 ${all.length-biz.length}곳은 PRO부터 · <a class="lnk" onclick="go('plan')">요금제 보기</a></div>`:''}</div>`}
 const quickCard=()=>`<div class="card"><h3>${ic('refresh',18)} N 바로 조회</h3>
     <div class="seg" style="margin-bottom:10px">${Object.entries(TYPES).map(([k,v])=>`<button class="${qType===k?'on':''}" onclick="qType='${k}';render()">${v.t}</button>`).join('')}</div>
     <input class="input" id="qKw" placeholder="검색 키워드 (예: 강남 맛집)" style="margin-bottom:8px">
@@ -2022,14 +2034,28 @@ MANAGE.m_pay=()=>MANAGE.c_point()+`<div class="card"><h3>결제 내역</h3>${T([
 Object.assign(LOGIC,{m_report:['그룹(광고주)을 고르면 그 그룹 키워드만 담은 읽기 전용 페이지 주소를 만들어요. 로그인 없이 열 수 있고 열람 수를 세요.','월간 리포트는 기간 동안의 평균 순위·상승 수·TOP10 수를 정리해 PDF로 저장해요.'],
   m_pay:['결제·포인트 충전 내역과 영수증을 보관해요.']});
 
-/* 오늘 할 일(홈 맨 위) */
+/* 바로가기(홈 맨 위): 메뉴 바로가기, 사용자가 골라 순서대로 — 내 등급에서 쓸 수 있는 메뉴만 후보·표시 */
 let TODO_OFF=false;
+const SC_MAX={free:1,pro:4,biz:8}; // 바로가기 개수: 무료 1 · PRO 4 · BIZ 8
+const scOn=()=>S.shortcuts.filter(scOk).slice(0,SC_MAX[S.plan]); // 지금 등급에서 실제로 보이는 바로가기
+const scAll=()=>ALL.filter(x=>!TREE.find(g=>g.k===x.gk).set).map(x=>x.k);
+const scOk=k=>ALL.some(x=>x.k===k)&&canUse(k);
+const scLabel=k=>(ALL.find(x=>x.k===k)||{}).t||k;
+const scGo=k=>(ALL.find(x=>x.k===k)||{}).go||`openMenu('${k}')`;
 function todoCard(){const h=new Date().getHours(),hi=h<11?'좋은 아침이에요':h<17?'좋은 오후예요':'오늘도 수고하셨어요';
-  const down=S.items.filter(i=>delta(i)<0).length,goal=S.items.filter(i=>i.goal&&(cur(i)==null||cur(i)>i.goal)).length;
-  const L=(t,n,fn)=>`<button class="listlink" style="padding:10px 0" onclick="${fn}"><span class="grow">${t}</span><b class="up">${n}</b><span class="muted">›</span></button>`;
-  return `<div class="card"><div class="row"><div class="grow" style="font-size:17px;font-weight:800">${hi}, ${esc(MG.me.name)}님</div><button class="btn sub sm" onclick="noteSheet('home')">${ic('doc',16)} 기획 전달</button></div><div class="small muted" style="margin:2px 0 6px">오늘 확인할 것</div>
-    ${L('순위가 떨어진 키워드',down+'개',"MTF='all';go('mytrack')")}${L('목표 순위를 벗어난 키워드',goal+'개',"go('mytrack')")}${L('새 리뷰 (부정 포함)','14개',"go('m','p_review')")}${L('경쟁 업체 정보 변경','3건',"go('m','p_change')")}
+  const sel=scOn();
+  const L=k=>`<button class="listlink" style="padding:10px 0" onclick="${scGo(k)}"><span class="grow">${scLabel(k)}</span><span class="muted">›</span></button>`;
+  return `<div class="card"><div class="row"><div class="grow" style="font-size:17px;font-weight:800">${hi}, ${esc(MG.me.name)}님</div><button class="btn sub sm" onclick="noteSheet('home')">${ic('doc',16)} 기획 전달</button></div>
+    <div class="row" style="margin:2px 0 6px"><span class="small muted grow">바로가기</span><button class="btn ghost sm" style="height:28px" onclick="scEdit()">편집</button></div>
+    ${sel.length?sel.map(L).join(''):'<div class="muted small" style="padding:8px 0">편집을 눌러 자주 쓰는 메뉴를 추가하세요</div>'}
     ${TODO_OFF?'':`<div class="row" style="margin-top:10px;padding:10px 12px;background:var(--pri-soft);border-radius:12px"><span class="grow small"><b>처음이세요?</b> 예시 화면으로 기능을 하나씩 둘러보세요</span><button class="btn sm" onclick="tour()">둘러보기</button><button class="iconbtn" onclick="TODO_OFF=true;render()">✕</button></div>`}</div>`}
+// 바로가기 편집: 내 등급에서 쓸 수 있는 것만 후보, 켜고 끄기(등급별 개수 SC_MAX)
+function scEdit(keep){const sel=S.shortcuts,cand=scAll().filter(scOk);
+  sheet(`<h2>바로가기 편집</h2><div class="small muted" style="margin-bottom:8px">홈에 보일 바로가기를 켜고 꺼요. 켠 순서대로 보여요.<br><b>${planNm(S.plan)}은 ${SC_MAX[S.plan]}개까지</b> (무료 1 · PRO 4 · BIZ 8)${S.plan==='biz'?'':' · 지금 등급에서 쓸 수 있는 메뉴만 나와요'}</div>
+    ${cand.map((k,i,a)=>{const g=(ALL.find(x=>x.k===k)||{}).g,pg=i&&(ALL.find(x=>x.k===a[i-1])||{}).g;return (g!==pg?`<div class="sech">${esc(g)}</div>`:'')+scRow(k)}).join('')}
+    <button class="btn block" style="margin-top:14px" onclick="closeSheet();render()">완료</button>`,keep)}
+const scRow=k=>`<div class="menu-row" style="padding:8px 0"><span class="grow small" style="font-weight:600">${scLabel(k)}</span><label class="switch"><input type="checkbox" ${scOn().includes(k)?'checked':''} onchange="scToggle('${k}',this.checked)"><span></span></label></div>`;
+function scToggle(k,on){S.shortcuts=scOn();if(on){if(S.shortcuts.length>=SC_MAX[S.plan]){toast(`${planNm(S.plan)}은 바로가기 ${SC_MAX[S.plan]}개까지예요. 다른 걸 끄고 켜주세요`);return scEdit(1)}S.shortcuts=[...S.shortcuts.filter(x=>x!==k),k]}else S.shortcuts=S.shortcuts.filter(x=>x!==k);render();scEdit(1)}
 
 /* 온보딩 3단계 */
 const OB={};
@@ -2242,7 +2268,7 @@ async function copyNotes(){
     await navigator.clipboard.writeText('# 랭포미 메뉴별 전달된 기획\n\n'+txt);toast('전달된 기획을 모두 복사했어요')}
   catch(e){toast('복사하지 못했어요')}}
 function cycleTheme(){S.theme={auto:'light',light:'dark',dark:'auto'}[S.theme];render()}
-const WLABEL={todo:'오늘 할 일',summary:'순위 요약',fav:'즐겨찾기',next:'다음 순위 알림',nnotice:'네이버 공지 모아보기',quick:'N 바로 조회',movers:'변동 큰 키워드',notice:'공지사항'};
+const WLABEL={todo:'바로가기',summary:'순위 요약',fav:'즐겨찾기',next:'다음 순위 알림',nnotice:'네이버 공지 모아보기',quick:'N 바로 조회',movers:'변동 큰 키워드',notice:'공지사항'};
 function renderMenuEdit(){
   // 실제 하단 탭과 같은 기준: 켜진 메뉴 중 위에서부터 모바일 4개 · PC 7개 + 설정(고정), 나머지는 ☰ 전체 메뉴
   const n=S.menus.filter(x=>x.on).length,lim=innerWidth>=900?7:4,on=S.menus.filter(x=>x.on),shownK=on.slice(0,lim).map(x=>x.k);let cnt=0;
@@ -2290,7 +2316,7 @@ function renderSpec(){
     <li>AI 활용하기: 버튼 위로 바로 열리는 대화창(AI 비서와 같은 대화)</li>
     <li>메뉴·홈 편집: 하단 탭·하위 메뉴 켜고 끄기와 순서(하위 메뉴는 같은 묶음 안에서만 이동), 홈 위젯 켜고 끄기와 순서</li>
     <li>모든 메뉴 입력칸에 예시값이 들어 있어 버튼만 눌러도 결과 확인</li></ul>
-  <h4>3. 홈</h4><ul><li>오늘 할 일(하락·목표 이탈·새 리뷰·경쟁 업체 변경) → 순위 요약 → 즐겨찾기 → 다음 순위 알림 → 네이버 공지 모아보기 → N 바로 조회 → 변동 큰 키워드(플레이스·쇼핑, 전체 이용자 기준) → 공지사항</li><li>처음 방문: 둘러보기(화면 영역을 하나씩 짚는 단계별 안내)</li></ul>
+  <h4>3. 홈</h4><ul><li>바로가기(메뉴를 골라 무료 1 · PRO 4 · BIZ 8개, 내 등급에서 쓸 수 있는 메뉴만) → 순위 요약(등록 업체별, 등급에 열린 메뉴만·무료 5곳, BIZ는 그룹별) → 즐겨찾기 → 다음 순위 알림 → 네이버 공지 모아보기 → N 바로 조회 → 변동 큰 키워드(플레이스·쇼핑, 전체 이용자 기준) → 공지사항</li><li>처음 방문: 둘러보기(화면 영역을 하나씩 짚는 단계별 안내)</li></ul>
   <h4>4. 메뉴 구성 <span class="tiny muted">(표시 없음 = 무료)</span></h4><ul>${grp}</ul>
   <h4>5. 화면 틀</h4><ul><li>추적형: 키워드+URL 등록 → 매일 기록 목록(그룹·순위 구간·검색·정렬, 내보내기·일괄등록·재조회) → 보기 4종(리스트 = 날짜별 순위표·기본, 카드, 표, 차트) → 상세(30일 그래프·목표 순위·작업 메모·변동 원인·최근 7일 기록·상위 경쟁)</li>
     <li>분석형: 입력 → 실행(무료는 광고 후) → 결과 표 → 리스트 다운로드(CSV)·복사, 오늘 사용 횟수 한도. 키워드 찾기 메뉴(검색량·연관검색어·자동완성·키워드 순위 조회·조합기)는 추적 등록 없이 복사만</li>
