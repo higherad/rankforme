@@ -337,7 +337,7 @@ function seed(){
     mkItem('blog','다이어트 도시락','한 달 도시락 정기배송 후기, 5곳 맛·가격 비교',223598123344,null,'체험단',{blogName:'오늘도 건강',blogId:'daily_fit'})];
   it.forEach((x,i)=>x.created=Date.now()-864e5*30+([0,1,5,6,8].includes(i)?i:100+i)); // 예시: 먼저 등록한 5개(플레이스2·쇼핑2·블로그1)
   it[0].fav=it[5].fav=it[8].fav=true;it[0].memo='점심 광고 진행중';
-  return {items:it,plan:'biz',theme:'auto',fab:true,
+  return {items:it,plan:'free',theme:'auto',fab:true,
     menus:null,
     shortcuts:['once','place','shop','k_volume'],widgets:{todo:true,summary:true,fav:true,next:true,nnotice:true,quick:false,movers:true,notice:true},wOrder:['todo','summary','fav','next','nnotice','quick','movers','notice'],
     ch:{push:false,kakao:'',sms:''},
