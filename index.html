@@ -116,11 +116,11 @@ label.lb{display:block;font-size:13px;font-weight:700;margin:14px 0 6px}.seg{dis
 @keyframes slide{from{transform:translateY(100%)}}
 @keyframes fade{from{opacity:0}}
 .toast{position:fixed;left:50%;bottom:calc(140px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:80;background:#1c2130;color:#fff;padding:12px 18px;border-radius:14px;font-size:14px;max-width:calc(100% - 32px);white-space:pre-line;animation:fade .2s;box-shadow:0 8px 30px rgba(0,0,0,.25)}
-.adwrap{position:fixed;inset:0;z-index:90;background:rgba(5,8,15,.85);display:grid;place-items:center;padding:16px;animation:fade .2s}
-.adbox{width:100%;max-width:380px;background:var(--card);border-radius:20px;overflow:hidden;text-align:center}
-.adimg{height:260px;display:grid;place-items:center;background:linear-gradient(135deg,#ffcf5c,#ff7a59);color:#fff;font-size:22px;font-weight:800;position:relative;padding:20px}
-.adimg .adtag{position:absolute;top:10px;left:10px;font-size:11px;background:rgba(0,0,0,.35);padding:2px 7px;border-radius:5px}
-.adbox .in{padding:16px}
+.pmwrap{position:fixed;inset:0;z-index:90;background:rgba(5,8,15,.85);display:grid;place-items:center;padding:16px;animation:fade .2s}
+.pmbox{width:100%;max-width:380px;background:var(--card);border-radius:20px;overflow:hidden;text-align:center}
+.pmimg{height:260px;display:grid;place-items:center;background:linear-gradient(135deg,#ffcf5c,#ff7a59);color:#fff;font-size:22px;font-weight:800;position:relative;padding:20px}
+.pmimg .pmtag{position:absolute;top:10px;left:10px;font-size:11px;background:rgba(0,0,0,.35);padding:2px 7px;border-radius:5px}
+.pmbox .in{padding:16px}
 .bar{height:4px;background:var(--line);border-radius:2px;overflow:hidden;margin:10px 0 14px}
 .bar i{display:block;height:100%;background:var(--pri);width:0;transition:width 1s linear}
 .chat{display:flex;flex-direction:column;gap:10px;padding-bottom:150px}
@@ -401,17 +401,17 @@ function gate(fn){
   if(S.plan!=='free')return fn();
   const ads=[['🏕️ 가을 캠핑 대전','최대 60% 할인'],['☕ 신규 오픈 카페','첫 방문 아메리카노 무료'],['📈 플레이스 마케팅','상위노출 무료 진단']];
   const a=ads[Math.floor(Math.random()*ads.length)];
-  const el=document.createElement('div');el.className='adwrap';
-  el.innerHTML=`<div class="adbox"><div class="adimg"><span class="adtag">AD · 광고</span><div>${a[0]}<div style="font-size:15px;font-weight:600;margin-top:8px;opacity:.9">${a[1]}</div></div></div>
+  const el=document.createElement('div');el.className='pmwrap';
+  el.innerHTML=`<div class="pmbox"><div class="pmimg"><span class="pmtag">AD · 광고</span><div>${a[0]}<div style="font-size:15px;font-weight:600;margin-top:8px;opacity:.9">${a[1]}</div></div></div>
     <div class="in"><div class="small muted">무료 버전은 조회할 때 광고가 표시돼요</div><div class="bar"><i></i></div>
-    <button class="btn block" id="adx" disabled>5초 후 결과 보기</button>
-    <button class="btn block ghost" style="margin-top:8px" id="adpro">광고 없이 쓰기 (PRO)</button></div></div>`;
+    <button class="btn block" id="pmx" disabled>5초 후 결과 보기</button>
+    <button class="btn block ghost" style="margin-top:8px" id="pmpro">광고 없이 쓰기 (PRO)</button></div></div>`;
   document.body.append(el);
-  const b=el.querySelector('#adx');let n=5;requestAnimationFrame(()=>el.querySelector('.bar i').style.width='100%');
+  const b=el.querySelector('#pmx');let n=5;requestAnimationFrame(()=>el.querySelector('.bar i').style.width='100%');
   el.querySelector('.bar i').style.transitionDuration='5s';
   const t=setInterval(()=>{n--;if(n>0)b.textContent=n+'초 후 결과 보기';else{clearInterval(t);b.disabled=false;b.textContent='광고 닫고 결과 보기 ✕'}},1000);
   b.onclick=()=>{el.remove();fn()};
-  el.querySelector('#adpro').onclick=()=>{clearInterval(t);el.remove();go('m','member')}}
+  el.querySelector('#pmpro').onclick=()=>{clearInterval(t);el.remove();go('m','member')}}
 
 function spark(h,w=84,ht=30){
   const vals=h.map(v=>v??Math.max(...h.filter(x=>x!=null),1)+5),lo=Math.min(...vals),hi=Math.max(...vals);
@@ -2386,8 +2386,8 @@ async function checkVersion(){
   try{const r=await fetch(`index.html?v=${Date.now()}`,{method:'HEAD',cache:'no-store'});outdated=Date.parse(r.headers.get('Last-Modified'))>loadedAt}catch(e){}}
 function showReloadNotice(){
   if($('#reload-notice'))return;
-  const el=document.createElement('div');el.id='reload-notice';el.className='adwrap';
-  el.innerHTML=`<div class="adbox" style="padding:26px 22px"><div style="font-size:18px;font-weight:800">새 버전이 나왔어요</div>
+  const el=document.createElement('div');el.id='reload-notice';el.className='pmwrap';
+  el.innerHTML=`<div class="pmbox" style="padding:26px 22px"><div style="font-size:18px;font-weight:800">새 버전이 나왔어요</div>
     <div class="small muted" style="margin:8px 0 14px">최신 기능을 쓰려면 새로고침해 주세요.</div>
     <button class="btn block" onclick="location.replace(location.pathname+'?v='+Date.now()+location.hash)">새로고침</button></div>`;
   document.body.append(el)}
