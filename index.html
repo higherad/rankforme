@@ -59,6 +59,7 @@ details.grp[open] summary h3:after{content:"▾"}
 .card{background:var(--card);border-radius:18px;padding:16px;box-shadow:var(--shadow);margin-bottom:12px}
 .card h3{margin:0 0 12px;font-size:16px;display:flex;align-items:center;gap:6px}
 .card h3 .more{margin-left:auto;font-size:13px;color:var(--sub);font-weight:500}
+.card h3>.btn{flex:none;margin-left:auto}.card h3:has(>.btn) .more{margin-left:0}
 .muted{color:var(--sub)}.small{font-size:13px}.tiny{font-size:11px}
 .row{display:flex;align-items:center;gap:8px}
 .grow{flex:1;min-width:0}
@@ -1371,11 +1372,11 @@ const CFG={
     btn:'조회',limit:50,
     run:v=>({rows:genPlaces(v.kw,parseInt(v.n.replace(/\D/g,'')),v.base)}),
     view:(res,v,k)=>{const r=res.rows,avg=f=>fmtN(Math.round(r.reduce((s,x)=>s+x[f],0)/r.length));
-      return `<div class="card"><h3>${esc(v.kw)} 상위 ${r.length}곳 <span class="more">${v.base} 대비</span></h3>
+      return `<div class="card"><h3>${esc(v.kw)} 상위 ${r.length}곳 <span class="more">${v.base} 대비</span>${xlsxBtn(k)}</h3>
       ${K([['평균 방문자리뷰',avg('rv')],['평균 블로그리뷰',avg('bl')],['평균 저장',avg('sv')],['1위 방문자리뷰',fmtN(r[0].rv)]])}
       ${T(['순위','이력','상호명','카테고리','방문자리뷰','블로그리뷰','저장','주소',''],r.map(x=>[x.rank,dlt(x.rank,x.prev),x.me?ME(esc(x.name)):esc(x.name),x.cat,fmtN(x.rv),fmtN(x.bl),fmtN(x.sv),x.addr,
         x.me?'<span class="tag">추적 중</span>':`<button class="btn ghost sm" style="height:28px" onclick="trackAdd('place','${esc(v.kw)}','${esc(x.name)}')">추적</button>`]))}
-      <div class="row" style="margin-top:12px">${xlsxBtn(k)}</div></div>`},
+      </div>`},
     csv:(res,st)=>[['순위','이전순위','상호명','카테고리','방문자리뷰','블로그리뷰','저장','주소'],...res.rows.map(x=>[x.rank,x.prev,x.name,x.cat,x.rv,x.bl,x.sv,x.addr])]},
 
   /* 키워드 순위 조회(히든 키워드) — 애드로그 naver_place_hidden_keyword */
@@ -1388,9 +1389,9 @@ const CFG={
       return {name:u.name,mid:u.mid,cat:e.cat,rv:e.rv,bl:e.bl,sv:e.sv,addr:`서울 강남구 ${pick(r,STREETS)} ${Math.floor(r()*300+1)}`,kws}},
     view:(res,v,k)=>{const lim=parseInt(v.range),kws=res.kws.filter(x=>x.rank<=lim);
       return `<div class="card"><h3>기본 정보</h3>${T(['업체명','카테고리','방문자리뷰','블로그리뷰','저장','주소'],[[`<b>${esc(res.name)}</b>`,res.cat,fmtN(res.rv),fmtN(res.bl),fmtN(res.sv),res.addr]])}</div>
-      <div class="card"><h3>노출 키워드 <span class="more">${v.range} ${kws.length}개</span></h3>
+      <div class="card"><h3>노출 키워드 <span class="more">${v.range} ${kws.length}개</span>${xlsxBtn(k)}</h3>
       ${kws.length?T([allChk,'키워드','순위','월 검색량','업체 수'],kws.map(x=>[`<input type="checkbox" class="sel" data-kw="${esc(x.kw)}" data-name="${esc(res.name)}" data-rank="${x.rank}">`,esc(x.kw),`<b>${x.rank}위</b>`,fmtN(x.vol),fmtN(x.stores)])):'<div class="muted small">이 범위 안에 드는 키워드가 없어요. 범위를 넓혀보세요.</div>'}
-      <div class="row" style="margin-top:12px;gap:6px"><button class="btn sub sm" onclick="selCopy()">선택 키워드 복사</button>${xlsxBtn(k)}</div></div>`},
+      <div class="row" style="margin-top:12px;gap:6px"><button class="btn sub sm" onclick="selCopy()">선택 키워드 복사</button></div></div>`},
     csv:res=>[['키워드','순위','월검색량','업체수'],...res.kws.map(x=>[x.kw,x.rank,x.vol,x.stores])]},
 
   /* 쇼핑 비교분석 — 셀러닷컴 s_comparison, 애드로그 naver_shopping_list */
@@ -1401,37 +1402,36 @@ const CFG={
       return {rows:Array.from({length:n},(_,i)=>{const b=pick(r,brands);return {rank:i+1,prev:Math.max(1,i+1+Math.round((r()-.5)*8)),name:`${b} ${v.kw} ${pick(r,['경량','프리미엄','접이식','릴렉스','미니','스탠다드'])} ${pick(r,['체어','세트','2024','플러스','라이트'])}`,
         cat:shopCat(v.kw),mall:pick(r,[...MALLS,'네이버 가격비교']),brand:b,kind:r()<.4?'가격비교':'단독',price:Math.floor(r()*120+15)*1000-Math.floor(r()*9)*100,pid:String(Math.floor(r()*9e9+1e9))}})}},
     view:(res,v,k)=>{const g=genVolume(v.kw),pc=Math.floor(rng(v.kw)()*180000+3000);return `<div class="card"><h3>${esc(v.kw)} 키워드</h3>${K([['월 검색량',fmtN(g.sum)],['상품 수',fmtN(pc)],['경쟁 강도',g.comp],['상품당 검색',(g.sum/pc).toFixed(2)]])}</div>
-      <div class="card"><h3>${esc(v.kw)} 상위 ${res.rows.length}개 <span class="more">${v.base} 대비</span></h3>
+      <div class="card"><h3>${esc(v.kw)} 상위 ${res.rows.length}개 <span class="more">${v.base} 대비</span>${xlsxBtn(k)}</h3>
       ${K([['최저가',fmtN(Math.min(...res.rows.map(x=>x.price)))+'원'],['평균가',fmtN(Math.round(res.rows.reduce((s,x)=>s+x.price,0)/res.rows.length))+'원'],['가격비교 상품',res.rows.filter(x=>x.kind==='가격비교').length+'개'],['단독 상품',res.rows.filter(x=>x.kind==='단독').length+'개']])}
       ${T(['순위','변동','상품명','카테고리','판매처','브랜드','유형','가격','제품ID',''],res.rows.map(x=>[x.rank,dlt(x.rank,x.prev),esc(x.name),x.cat.split(' > ').pop(),esc(x.mall),x.brand,x.kind,fmtN(x.price)+'원',x.pid,`<button class="btn ghost sm" style="height:28px" onclick="trackAdd('shop','${esc(v.kw)}','${esc(x.name)}')">추적</button>`]))}
-      <div class="row" style="margin-top:12px">${xlsxBtn(k)}</div></div>`},
+      </div>`},
     csv:res=>[['순위','이전순위','상품명','카테고리','판매처','브랜드','유형','가격','제품ID'],...res.rows.map(x=>[x.rank,x.prev,x.name,x.cat,x.mall,x.brand,x.kind,x.price,x.pid])]},
 
   /* 블로그 지수 분석 — 애드로그 naver_blog_level, naver_blog_bbs_index_check */
-  b_level:{guide:['블로그 ID 또는 블로그 주소(https://blog.naver.com/아이디)를 넣으면 블로그 기본 정보와 최근 글 노출 상태를 보여줘요.','조회한 블로그는 아래 조회 내역에 쌓여요.','하루 30회까지 무료로 쓸 수 있어요.'],
+  b_level:{guide:['블로그 ID 또는 블로그 주소(https://blog.naver.com/아이디)를 넣으면 블로그 기본 정보와 최근 글 노출 상태를 보여줘요.','하루 30회까지 무료로 쓸 수 있어요.'],
     form:[{id:'id',label:'블로그 ID 또는 주소',ph:'예: hi_foodie 또는 https://blog.naver.com/hi_foodie',req:true,def:'hi_foodie'}],btn:'블로그 분석',limit:30,
     run:(v,st)=>{const id=(v.id.match(/blog\.naver\.com\/([\w-]+)/)||[,v.id])[1],r=rng('bl'+id),made=daysAgo(Math.floor(r()*2500+200)),first=new Date(made.getTime()+Math.floor(r()*60)*864e5);
       const days=Math.floor((Date.now()-first)/864e5),info={id,nick:pick(r,BLOGGERS)[0],title:`${pick(r,['맛있는','소소한','오늘의','하이의'])} ${pick(r,['일상','기록','맛집 일기','여행노트'])}`,made:fmtD(made),first:fmtD(first),
         period:`${Math.floor(days/365)}년 ${Math.floor(days%365/30)}개월`,visit:Math.floor(r()*900000+5000),today:Math.floor(r()*3000+20),posts:Math.floor(r()*1800+30),scrap:Math.floor(r()*500),nb:Math.floor(r()*5000+10),
         grade:pick(r,['최적화 1','준최적화 4','준최적화 3','준최적화 2','일반']),at:fmtD(new Date())};
       const recent=Array.from({length:6},(_,i)=>({title:`${pick(r,['강남','성수','제주','부산'])} ${pick(r,['맛집','카페','숙소','데이트'])} ${pick(r,['솔직후기','내돈내산','BEST 5','추천'])}`,date:fmtD(daysAgo(i*3+1)),cm:Math.floor(r()*30),like:Math.floor(r()*90),exp:r()<.8}));
-      const hist=[info,...(st.res?.hist||[]).filter(h=>h.id!==id)].slice(0,20);return {info,recent,hist}},
-    view:(res,v,k)=>{const b=res.info;return `<div class="card"><h3>${esc(b.title)} <span class="more">${esc(b.id)}</span></h3>
+      return {info,recent}},
+    view:(res,v,k)=>{const b=res.info;return `<div class="card"><h3>${esc(b.title)} <span class="more">${esc(b.id)}</span>${xlsxBtn(k)}</h3>
       ${K([['블로그 지수',b.grade],['전체 방문자',fmtN(b.visit)],['오늘',fmtN(b.today)],['이웃',fmtN(b.nb)]])}
-      ${T(['닉네임','생성일','첫 글','운영 기간','게시물','스크랩'],[[esc(b.nick),b.made,b.first,b.period,fmtN(b.posts),fmtN(b.scrap)]])}</div>
-      <div class="card"><h3>최근 글 노출</h3>${T(['제목','작성일','댓글','공감','검색 노출'],res.recent.map(x=>[esc(x.title),x.date,x.cm,x.like,x.exp?'<span class="up">노출</span>':'<span class="down">누락</span>']))}</div>
-      <div class="card"><h3>조회 내역 <span class="more">${res.hist.length}건</span></h3>${T(['블로그ID','닉네임','방문자','게시물','이웃','조회일'],res.hist.map(h=>[esc(h.id),esc(h.nick),fmtN(h.visit),fmtN(h.posts),fmtN(h.nb),h.at]))}
-      <div class="row" style="margin-top:12px">${xlsxBtn(k)}</div></div>`},
-    csv:res=>[['블로그ID','닉네임','생성일','첫글','운영기간','방문자','오늘','게시물','스크랩','이웃','지수','조회일'],...res.hist.map(h=>[h.id,h.nick,h.made,h.first,h.period,h.visit,h.today,h.posts,h.scrap,h.nb,h.grade,h.at])]},
+      ${T(['닉네임','생성일','첫 글','운영 기간','게시물','스크랩'],[[esc(b.nick),b.made,b.first,b.period,fmtN(b.posts),fmtN(b.scrap)]])}
+      </div>
+      <div class="card"><h3>최근 글 노출</h3>${T(['제목','작성일','댓글','공감','검색 노출'],res.recent.map(x=>[esc(x.title),x.date,x.cm,x.like,x.exp?'<span class="up">노출</span>':'<span class="down">누락</span>']))}</div>`},
+    csv:res=>[['블로그ID','닉네임','생성일','첫글','운영기간','방문자','오늘','게시물','스크랩','이웃','지수','조회일'],...[res.info].map(h=>[h.id,h.nick,h.made,h.first,h.period,h.visit,h.today,h.posts,h.scrap,h.nb,h.grade,h.at])]},
 
   /* 파워링크 입찰가 — 애드로그 naver_keyword_bid, 셀러닷컴 keyword_analysis */
   k_power:{guide:['키워드를 줄바꿈으로 최대 10개 넣으면 검색량과 PC·모바일 순위별 파워링크 입찰가를 보여줘요.','입찰가는 1~3위에 노출되기 위한 예상 클릭당 비용(원)이에요.','조회 결과는 리스트 다운로드로 받을 수 있어요.'],
     form:[{id:'kw',label:'키워드',hint:'줄바꿈으로 최대 10개',type:'textarea',rows:4,ph:'강남 고기집\n강남역 회식\n역삼 소갈비',req:true}],btn:'입찰가 조회',limit:50,
     run:v=>({rows:v.kw.split(/[,\n]/).map(s=>s.trim()).filter(Boolean).slice(0,10).map(kw=>{const g=genVolume(kw),r=rng('bid'+kw),base=Math.floor(r()*2500+150);
       return {...g,ratio:+(r()*15+1).toFixed(1),ads:Math.floor(r()*14+1),pc:[base*2.1,base*1.4,base].map(Math.round),mob:[base*2.6,base*1.7,base*1.2].map(Math.round)}})}),
-    view:(res,v,k)=>`<div class="card"><h3>입찰가 조회 결과 <span class="more">${res.rows.length}개</span></h3>
+    view:(res,v,k)=>`<div class="card"><h3>입찰가 조회 결과 <span class="more">${res.rows.length}개</span>${xlsxBtn(k)}</h3>
       ${T(['키워드','PC 검색','MO 검색','합계','PC 클릭','MO 클릭','경쟁률','평균 광고수','PC 1위','PC 2위','PC 3위','MO 1위','MO 2위','MO 3위'],res.rows.map(x=>[`<b>${esc(x.kw)}</b>`,fmtN(x.sum-x.mo),fmtN(x.mo),fmtN(x.sum),x.cpc,x.cmo,x.ratio,x.ads,...x.pc.map(n=>fmtN(n)+'원'),...x.mob.map(n=>fmtN(n)+'원')]))}
-      <div class="row" style="margin-top:12px;gap:6px">${xlsxBtn(k)}<button class="btn sub sm" onclick="go('m','t_combine')">키워드 조합기로 키워드 만들기</button></div></div>`,
+      <div class="row" style="margin-top:12px;gap:6px"><button class="btn sub sm" onclick="go('m','t_combine')">키워드 조합기로 키워드 만들기</button></div></div>`,
     csv:res=>[['키워드','PC검색','MO검색','합계','PC클릭','MO클릭','경쟁률','평균광고수','PC1위','PC2위','PC3위','MO1위','MO2위','MO3위'],...res.rows.map(x=>[x.kw,x.sum-x.mo,x.mo,x.sum,x.cpc,x.cmo,x.ratio,x.ads,...x.pc,...x.mob])]},
 };
 /* 남은 메뉴 예시 기능 (모두 예시 데이터 — 실제 조회 없음) */
@@ -1457,33 +1457,31 @@ Object.assign(CFG,{
   b_check:{guide:['키워드를 한 줄에 하나씩(최대 20개) 넣고 확인할 블로그 글 주소를 넣으면, 키워드마다 블로그 탭 몇 위에 노출되는지 확인해요.','노출된 키워드는 체크해서 한 번에 매일 순위 추적으로 등록할 수 있어요.'],
     form:[{id:'kw',label:'키워드',hint:'줄바꿈으로 최대 20개',type:'textarea',rows:3,req:true,def:'강남 맛집\n강남역 고기집\n강남 회식'},{id:'url',label:'블로그 글 주소',req:true,def:'https://blog.naver.com/hi_foodie/223456789012'}],btn:'노출 확인',limit:100,
     run:v=>({url:v.url.trim(),rows:v.kw.split('\n').map(x=>x.trim()).filter(Boolean).slice(0,20).map(kw=>({kw,rank:fakeRank('blog',kw,v.url.trim())}))}),
-    view:(res,v,k)=>`<div class="card"><h3>포스팅 노출 확인 <span class="more">${res.rows.filter(x=>x.rank).length}/${res.rows.length}개 노출</span></h3><div class="tiny muted" style="margin-bottom:8px;word-break:break-all">${esc(res.url)}</div>
+    view:(res,v,k)=>`<div class="card"><h3>포스팅 노출 확인 <span class="more">${res.rows.filter(x=>x.rank).length}/${res.rows.length}개 노출</span>${xlsxBtn(k)}</h3><div class="tiny muted" style="margin-bottom:8px;word-break:break-all">${esc(res.url)}</div>
       ${T([allChk,'키워드','블로그 탭 순위','노출'],res.rows.map(x=>[`<input type="checkbox" class="sel" data-kw="${esc(x.kw)}" data-name="${esc(res.url)}" data-rank="${x.rank||''}">`,`<b>${esc(x.kw)}</b>`,x.rank?`<b>${x.rank}위</b>`:'<span class="muted">순위 밖</span>',x.rank?'<span style="color:var(--ok);font-weight:700">노출</span>':'<span class="muted">미노출</span>']))}
-      <div class="row" style="margin-top:12px;gap:6px">${xlsxBtn(k)}<button class="btn sm" onclick="trackChecked('blog',AN.b_check.res.url)">선택 키워드 추적 등록</button></div></div>`,
+      <div class="row" style="margin-top:12px;gap:6px"><button class="btn sm" onclick="trackChecked('blog',AN.b_check.res.url)">선택 키워드 추적 등록</button></div></div>`,
     csv:res=>[['키워드','블로그탭순위','노출'],...res.rows.map(x=>[x.kw,x.rank||'순위 밖',x.rank?'노출':'미노출'])]},
 
   b_bulk:{guide:['키워드를 줄바꿈으로 최대 10개 넣으면 키워드별 블로그 상위 10개 글을 한 번에 분석해요.','글자 수·이미지 수·공감 수로 상위 글의 공통점을 볼 수 있어요.'],
     form:[{id:'kw',label:'키워드',hint:'줄바꿈으로 최대 10개',type:'textarea',rows:3,req:true,def:'강남 맛집\n제주 숙소'}],btn:'조회 시작',limit:20,
     run:v=>({rows:v.kw.split('\n').map(s=>s.trim()).filter(Boolean).slice(0,10).flatMap(kw=>{const r=rng('bb'+kw);return Array.from({length:10},(_,i)=>{const b=pick(r,BLOGGERS);
       return {kw,rank:i+1,id:b[1],name:b[0],title:`${kw} ${pick(r,['솔직후기','BEST 5','내돈내산','추천','총정리'])}`,open:fmtD(daysAgo(Math.floor(r()*2500+300))),date:fmtD(daysAgo(Math.floor(r()*60))),visit:Math.floor(r()*5000+50),chars:Math.floor(r()*3000+800),img:Math.floor(r()*30+3),vid:Math.floor(r()*3),like:Math.floor(r()*150),cm:Math.floor(r()*40)}})})}),
-    view:(res,v,k)=>`<div class="card"><h3>블로그 상위 글 분석 <span class="more">${res.rows.length}개</span></h3>${T(['키워드','순위','블로그','제목','작성일','방문자','글자','이미지','동영상','공감','댓글'],res.rows.map(x=>[esc(x.kw),x.rank,esc(x.name),esc(x.title),x.date,fmtN(x.visit),fmtN(x.chars),x.img,x.vid,x.like,x.cm]))}
-      <div class="row" style="margin-top:12px">${xlsxBtn(k)}</div></div>`,
+    view:(res,v,k)=>`<div class="card"><h3>블로그 상위 글 분석 <span class="more">${res.rows.length}개</span>${xlsxBtn(k)}</h3>${T(['키워드','순위','블로그','제목','작성일','방문자','글자','이미지','동영상','공감','댓글'],res.rows.map(x=>[esc(x.kw),x.rank,esc(x.name),esc(x.title),x.date,fmtN(x.visit),fmtN(x.chars),x.img,x.vid,x.like,x.cm]))}
+      </div>`,
     csv:res=>[['키워드','순위','블로그ID','블로그명','제목','개설일','작성일','방문자','글자수','이미지','동영상','공감','댓글'],...res.rows.map(x=>[x.kw,x.rank,x.id,x.name,x.title,x.open,x.date,x.visit,x.chars,x.img,x.vid,x.like,x.cm])]},
 
   k_auto:{form:[{id:'kw',label:'키워드',hint:'한 줄에 하나씩',type:'textarea',rows:4,req:true,def:'강남 맛집\n성수 카페\n부산 여행\n홍대맛집'}],btn:'분석 시작',limit:100,
     run:v=>({rows:v.kw.split('\n').map(s=>s.trim()).filter(Boolean).map(kw=>({kw,list:acList(kw)}))}),
-    view:(res,v,k)=>`<div class="card"><h3>자동완성 체크 <span class="more">${res.rows.length}개</span></h3>${T(['No','키워드','자동완성','개수','목록'],res.rows.map((x,i)=>[i+1,esc(x.kw),x.list.length?'<b style="color:var(--pri)">O</b>':'<b class="muted">X</b>',x.list.length+'개',x.list.length?`<div class="chips" style="flex-wrap:wrap">${x.list.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>`:'-']))}
-      <div class="row" style="margin-top:12px;gap:6px">${xlsxBtn(k)}<button class="btn ghost sm" onclick="acCopy()">결과 복사하기</button></div></div>`,
+    view:(res,v,k)=>`<div class="card"><h3>자동완성 체크 <span class="more">${res.rows.length}개</span>${xlsxBtn(k)}</h3>${T(['No','키워드','자동완성','개수','목록'],res.rows.map((x,i)=>[i+1,esc(x.kw),x.list.length?'<b style="color:var(--pri)">O</b>':'<b class="muted">X</b>',x.list.length+'개',x.list.length?`<div class="chips" style="flex-wrap:wrap">${x.list.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>`:'-']))}
+      <div class="row" style="margin-top:12px;gap:6px"><button class="btn ghost sm" onclick="acCopy()">결과 복사하기</button></div></div>`,
     csv:res=>[['번호','키워드','유무','개수','자동완성'],...res.rows.map((x,i)=>[i+1,x.kw,x.list.length?'O':'X',x.list.length,x.list.join(', ')])]},
 
   k_related:{guide:['검색어를 넣으면 연관검색어 목록을 보여줘요.','체크할 연관검색어를 고르면 매일 노출 여부를 확인하는 목록에 넣을 수 있어요.'],
     form:[{id:'kw',label:'검색어',req:true,def:'강남 맛집'}],btn:'연관검색어 조회',limit:100,
-    run:(v,st)=>{const r=rng('rel'+v.kw),base=v.kw.split(' ')[0];const list=SFX.map(s=>`${base} ${s}`).filter(x=>x!==v.kw).sort(()=>r()-.5).slice(0,8);
-      const hist=[{kw:v.kw,n:list.length,at:fmtD(new Date())},...(st.res?.hist||[]).filter(h=>h.kw!==v.kw)].slice(0,20);return {kw:v.kw,list,hist}},
+    run:(v,st)=>{const r=rng('rel'+v.kw),base=v.kw.split(' ')[0];const list=SFX.map(s=>`${base} ${s}`).filter(x=>x!==v.kw).sort(()=>r()-.5).slice(0,8);return {kw:v.kw,list}},
     view:(res,v,k)=>`<div class="card"><h3>${esc(res.kw)} 연관검색어</h3><div class="chips" style="flex-wrap:wrap">${res.list.map(x=>`<label class="chip"><input type="checkbox" class="sel" data-kw="${esc(x)}"> ${esc(x)}</label>`).join('')}</div>
       <div class="row" style="margin-top:12px"><button class="btn sub sm" onclick="relWatch(this)">선택 항목 매일 노출 체크</button></div></div>
-      ${MG.relW.length?`<div class="card"><h3>매일 노출 체크 <span class="more">${MG.relW.length}개</span></h3>${T(['연관검색어','검색어','최근 7일','등록일',''],MG.relW.map((w,i)=>{const r=rng('rw'+w.rel);return [esc(w.rel),esc(w.kw),Array.from({length:7},()=>r()<.8?'●':'<span class="muted">○</span>').join(' '),w.at,`<a class="lnk" onclick="MG.relW.splice(${i},1);render()">해제</a>`]}))}<div class="tiny muted" style="margin-top:8px">● 노출 ○ 미노출 · 매일 09시 확인 (예시)</div></div>`:''}
-      <div class="card"><h3>조회 내역</h3>${T(['검색어','추출 수','조회일'],res.hist.map(h=>[esc(h.kw),h.n+'개',h.at]))}</div>`},
+      ${MG.relW.length?`<div class="card"><h3>매일 노출 체크 <span class="more">${MG.relW.length}개</span></h3>${T(['연관검색어','검색어','최근 7일','등록일',''],MG.relW.map((w,i)=>{const r=rng('rw'+w.rel);return [esc(w.rel),esc(w.kw),Array.from({length:7},()=>r()<.8?'●':'<span class="muted">○</span>').join(' '),w.at,`<a class="lnk" onclick="MG.relW.splice(${i},1);render()">해제</a>`]}))}<div class="tiny muted" style="margin-top:8px">● 노출 ○ 미노출 · 매일 09시 확인 (예시)</div></div>`:''}`},
 
 
   k_daum:{guide:['다음 통합웹 순위와 카카오 지역 트렌드 랭킹을 확인해요. 카카오맵 플레이스 순위는 "네이버 지도 vs 카카오맵"에서 봐요.','카카오 트렌드랭킹은 지역과 업종을 고르면 인기 업체 순위를 보여줘요.'],
@@ -1602,7 +1600,7 @@ const LOGIC={
   s_feedback:['고른 키워드로 가격비교 비교분석 데이터(상위 50개 상품의 최근 30일 순위, 가격, 리뷰 수, 가격비교/단독 유형)와 키워드 검색량·경쟁 강도를 불러와요.','내 순위 추이, 상위 3개 평균과의 가격·리뷰 차이, 상위 10개의 가격비교/단독 비율, 7일 사이 급상승 상품과 신규 진입, 1위 유지 기간을 계산해요.','가격·리뷰 차이가 큰 순으로 우선순위를 매겨 추천하고, 실서비스에선 같은 데이터를 LLM에 넘겨 문장으로 다듬어요.'],
   p_feedback:['업체 종합 진단: 플레이스 ID로 업체 상세를 읽어 기본정보 입력 상태, 사진·영상 수와 최근 업로드일, 메뉴·가격 등록, 리뷰 수·답글 응답률, 저장·공유, 예약·주문 연동을 항목별 0~100점으로 매기고 대표 키워드 상위 3곳 평균과 비교해요. 70점 미만 항목은 추천 대응에 넣어요.','고른 키워드로 키워드 순위 변동 데이터(상위 50곳의 최근 30일 순위, 방문자·블로그 리뷰, 저장 수)를 불러와요.','내 순위 추이(오늘·7일 전·30일 전), 상위 3곳 평균과의 리뷰·저장 차이, 7일 사이 급상승 업체와 10위 안 신규 진입, 1위 유지 기간을 계산해요.','차이가 큰 지표 순으로 우선순위(높음·보통)를 매겨 하루 목표량까지 추천하고, 실서비스에선 같은 데이터를 LLM에 넘겨 문장으로 다듬어요.'],
   s_compare:['쇼핑 키워드로 네이버 쇼핑 검색 결과 상위 N개 상품을 읽어 상품명·카테고리·판매처·브랜드·가격비교/단독 여부·가격·상품 ID를 가져와요.','최저가·평균가·가격비교/단독 상품 수를 요약해요.','날짜별로 매일 수집해 둔 상위 상품 순위(최대 30일)를 불러와, 날짜마다 1위부터 상품명을 세로로 나열해요(열 = 날짜, 오늘부터 기록이 있는 날까지). 추적 중인 내 상품은 상품 ID로 맞춰 강조해요.'],
-  b_level:['블로그 ID로 블로그 공개 정보(닉네임·제목·개설일·방문자·이웃·게시물·스크랩)를 읽어요.','최근 글마다 제목 키워드로 블로그 탭을 검색해 노출되는지 확인하고, 노출 비율·글 품질 지표로 블로그 지수(일반~최적화)를 추정해요.','조회한 블로그는 조회 내역에 쌓여요.'],
+  b_level:['블로그 ID로 블로그 공개 정보(닉네임·제목·개설일·방문자·이웃·게시물·스크랩)를 읽어요.','최근 글마다 제목 키워드로 블로그 탭을 검색해 노출되는지 확인하고, 노출 비율·글 품질 지표로 블로그 지수(일반~최적화)를 추정해요.'],
   b_check:['키워드마다 네이버 블로그 탭을 검색해 결과 글 주소 중 입력한 글 주소(블로그 아이디+글 번호)와 같은 글이 몇 번째인지 찾아요.','찾지 못하면 "순위 밖(미노출)"으로 표시하고, 체크한 키워드는 블로그 순위 체크(매일 추적)에 등록돼요.'],
   b_bulk:['키워드마다 블로그 탭 상위 10개 글을 읽고, 각 글 본문을 열어 글자·이미지·동영상·지도·링크·태그 수와 공감·댓글 수를 세요.','블로그 정보(개설일·방문자)도 함께 가져와 키워드별로 상위 글의 공통점을 비교할 수 있게 표로 만들어요.'],
   k_volume:['네이버 검색광고 API(키워드 도구)로 키워드의 최근 30일 PC·모바일 월간 검색수, 월평균 클릭수·클릭률, 경쟁 정도를 조회해요.','여러 키워드는 한 번에 묶어 요청하고, 조회한 키워드는 목록에 쌓아 조회일과 함께 보관해요.','월별 추이: 검색광고 데이터의 월별 검색수(최근 12개월)를 불러와 막대로 보여주고, 가장 많은 달·적은 달로 계절성을 계산해요.'],
@@ -1745,10 +1743,10 @@ Object.assign(CFG.p_hidden,{
   run:v=>{const res=_hidRun(v);if(HM!=='직접 입력')return res;
     res.kws=v.kws.split('\n').map(s=>s.trim()).filter(Boolean).slice(0,50).map(kw=>{const r=rng('hd'+kw+res.mid);const q=r();return {kw,rank:q<.12?999:q<.6?Math.floor(r()*20)+1:Math.floor(r()*100)+21,vol:genVolume(kw).sum,stores:Math.floor(r()*900+30)}});res.direct=true;return res},
   view:(res,v,k)=>{if(!res.direct)return _hidView(res,v,k);const lim=parseInt(v.range);
-    return `<div class="card"><h3>${esc(res.name)} · 직접 입력 키워드 순위 <span class="more">${v.range}</span></h3>
+    return `<div class="card"><h3>${esc(res.name)} · 직접 입력 키워드 순위 <span class="more">${v.range}</span>${xlsxBtn(k)}</h3>
     ${T([allChk,'키워드','순위','월 검색량','업체 수'],res.kws.map(x=>[`<input type="checkbox" class="sel" data-kw="${esc(x.kw)}" data-name="${esc(res.name)}" data-rank="${x.rank<999?x.rank:''}">`,esc(x.kw),`<b style="color:${x.rank<=lim?'var(--down)':'var(--up)'}">${x.rank<999?x.rank+'위':'순위 밖'}</b>`,fmtN(x.vol),fmtN(x.stores)]))}
     <div class="tiny muted" style="margin-top:6px"><b style="color:var(--down)">파란색</b> = ${v.range} 안 · <b style="color:var(--up)">빨간색</b> = 범위 밖</div>
-    <div class="row" style="margin-top:12px;gap:6px"><button class="btn sub sm" onclick="selCopy()">선택 키워드 복사</button>${xlsxBtn(k)}</div></div>`}});
+    <div class="row" style="margin-top:12px;gap:6px"><button class="btn sub sm" onclick="selCopy()">선택 키워드 복사</button></div></div>`}});
 Object.defineProperty(CFG.p_hidden,'form',{get:()=>[{id:'url',label:'플레이스 URL 또는 ID',ph:'https://m.place.naver.com/restaurant/1938472610',req:true,def:'https://m.place.naver.com/restaurant/1938472610'}, // 탭(HM)에 따라 입력칸이 바뀜
   ...(HM==='직접 입력'?[{id:'kws',label:'조회할 키워드',hint:'줄바꿈으로 최대 50개',act:['조합기에서 불러오기','hidLoad()'],type:'textarea',rows:3,req:true,def:'강남 맛집\n강남역 고기집\n역삼 회식\n선릉 갈비'}]:[]),{id:'range',label:'범위',type:'select',opts:['5위 이내','10위 이내','20위 이내','30위 이내','50위 이내','100위 이내'],def:'20위 이내'}]});
 LOGIC.p_hidden=[...LOGIC.p_hidden,'직접 입력: 사용자가 넣은 키워드만 하나씩 플레이스 검색을 돌려 이 업체의 순위를 찾고, 범위 안이면 파란색·밖이면 빨간색으로 표시해요.'];
@@ -1764,7 +1762,7 @@ function acList(q){const h=Math.abs(hash(q)),sfx=['추천','맛집','후기','�
 function acCopy(){navigator.clipboard.writeText(CFG.k_auto.csv(AN.k_auto.res).map(r=>r.join('\t')).join('\n')).then(()=>toast('결과를 복사했어요. 엑셀에 바로 붙여넣으세요'))}
 function relWatch(b){const kw=AN.k_related.res.kw;const a=[...b.closest('.card').querySelectorAll('.sel:checked')].map(e=>e.dataset.kw).filter(x=>!MG.relW.some(w=>w.rel===x));
   if(!a.length)return toast('새로 넣을 연관검색어를 체크해주세요');MG.relW.unshift(...a.map(rel=>({rel,kw,at:fmtD(new Date())})));render();toast(a.length+'개를 매일 노출 체크해요')}
-function blogTrack(id){if(MG.blogs.some(b=>b.id===id))return toast('이미 매일 추적 중이에요');const i=AN.b_level.res.hist.find(h=>h.id===id);MG.blogs.unshift({id,grade:i.grade,nb:i.nb,at:fmtD(new Date())});render();toast('매일 추적을 시작했어요')}
+function blogTrack(id){if(MG.blogs.some(b=>b.id===id))return toast('이미 매일 추적 중이에요');const i=AN.b_level.res.info;MG.blogs.unshift({id,grade:i.grade,nb:i.nb,at:fmtD(new Date())});render();toast('매일 추적을 시작했어요')}
 LOGIC.b_level=[...LOGIC.b_level,'매일 추적: 등록한 블로그는 매일 같은 시각에 다시 읽어 방문자·이웃·지수 변화와 최근 글 노출률을 기록해요.'];
 
 /* 파워링크: 입찰가 조회 + 내 광고 순위 체크 */
